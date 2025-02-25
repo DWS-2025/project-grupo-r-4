@@ -51,7 +51,7 @@ public class ProductService {
         long id = nextId.getAndIncrement();
         product.setId(id);
 
-        products.put(id, product);
+        products.put(String.valueOf(id), product);
         return product;
     }
 
