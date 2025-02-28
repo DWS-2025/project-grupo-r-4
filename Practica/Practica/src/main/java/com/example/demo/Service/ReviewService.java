@@ -1,11 +1,13 @@
 package com.example.demo.Service;
 
 import com.example.demo.Model.Review;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
+@Service
 public class ReviewService {
     private ConcurrentHashMap<Long, Review> reviews = new ConcurrentHashMap<>();
     private AtomicLong nextId = new AtomicLong();

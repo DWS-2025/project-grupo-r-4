@@ -41,7 +41,7 @@ public class ProductService {
         }
     }
 
-    public Product Save(Product product, MultipartFile imageField) {
+    public Product save(Product product, MultipartFile imageField) {
         if(imageField.isEmpty() && imageField!=null){
             String path = imageService.createImage(imageField);
             product.setImage(path);

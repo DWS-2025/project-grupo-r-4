@@ -1,6 +1,7 @@
 package com.example.demo.Service;
 
 import com.example.demo.Model.Purchase;
+import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.concurrent.ConcurrentHashMap;
@@ -8,6 +9,7 @@ import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 
+@Service
 public class PurchaseService {
     private final ConcurrentMap<Long, Purchase> purchases = new ConcurrentHashMap<>();
     private final AtomicLong nextId = new AtomicLong(1);
@@ -22,7 +24,7 @@ public class PurchaseService {
         return purchases.get(id);
     }
 
-    public Purchase Save(Purchase purchase) {
+    public Purchase save(Purchase purchase) {
         long id = nextId.getAndIncrement();
         purchase.setId(id);
         purchases.put(id, purchase);
