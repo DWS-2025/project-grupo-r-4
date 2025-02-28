@@ -1,0 +1,85 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>JUGUETES STORE - Mis Compras</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" href="/css/style.css" />
+    <!--[if IE 6]>
+    <link rel="stylesheet" type="text/css" href="/css/iecss.css"/>
+    <![endif]-->
+    <script type="text/javascript" src="/js/windowopen.js"></script>
+    <script type="text/javascript" src="/js/boxOver.js"></script>
+</head>
+<body>
+<div id="main_container">
+    <div class="top_bar"></div>
+    <div id="header">
+        <div id="logo"> <a href="#"><img src="/images/logo-tienda-juguetes.jpg" alt="" border="0" width="500" height="140" /></a> </div>
+    </div>
+    <!-- end of header -->
+
+    <div id="main_content">
+        <div id="menu_tab">
+            <div class="left_menu_corner"></div>
+            <ul class="menu">
+                <li><a href="/" class="nav1">Página Principal</a></li>
+                <li class="divider"></li>
+                <li><a href="/products/" class="nav2">Productos</a></li>
+                <li class="divider"></li>
+                <li><a href="/myAccount" class="nav3">Mi Cuenta</a></li>
+                <li class="divider"></li>
+                <li><a href="/register" class="nav4">Registro</a></li>
+                <li class="divider"></li>
+                <li><a href="/contact" class="nav5">Contáctanos</a></li>
+                <li class="divider"></li>
+                <li class="currencies">Moneda
+                    <select>
+                        <option>Euro</option>
+                    </select>
+                </li>
+            </ul>
+        </div>
+        <!-- end of menu tab -->
+
+        <div class="crumb_navigation"> <a href="/">Página Principal</a> &gt; <a href="/myAccount">Mi Cuenta</a> > <a href="/user/{{user.id}}/buys">Mis Compras</a> </div>
+        <div class="left_content">
+        </div>
+        <!-- end of left content -->
+
+        <div class="center_content">
+            <div class="prod_box_big">
+                <div class="mid_prod_box_big">
+
+                    <div class="oferta_title">Mis Compras</div>
+                    <br><label class="formlabel-label">Usuario:</label>
+                    <div class="formlabel-text">{{#user}}{{name}}{{/user}}</div></br>
+                    {{#user.products}}  {{#products}}
+                    <br><label class="formlabel-label">Producto:</label>
+                    <div class="formlabel-text">{{name}} </div></br>
+                    <br><label class="formlabel-label">Precio:</label>
+                    <div class="formlabel-text">{{price}}€ </div></br>
+                    <br></br>
+                    {{/products}} {{/user.products}}
+                </div>
+            </div>
+        </div>
+        <!-- end of center content -->
+
+        <div class="right_content">
+            <!-- Puedes agregar contenido derecho aquí -->
+        </div>
+        <!-- end of right content -->
+
+        <div class="clear"></div>
+    </div>
+    <!-- end of main content -->
+
+    <div class="footer">
+        <div class="left_footer"> <img src="/images/logo-tienda-juguetes.jpg" alt="" width="170" height="49"/> </div>
+        <div class="center_footer"> JUGUETES STORE. All Rights Reserved 2025<br /> <img src="/images/payment.gif" alt="" /> </div>
+        <div class="right_footer"> <a href="/">Página Principal</a> <a href="/ubication">Dónde Encontrarnos</a> <a href="/contact">Contacto</a> </div>
+    </div>
+</div>
+<!-- end of main_container -->
+</body>
+</html>
