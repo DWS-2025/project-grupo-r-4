@@ -1,6 +1,6 @@
 package com.example.demo.Controller;
 
-import ch.qos.logback.core.model.Model;
+import org.springframework.ui.Model;
 import com.example.demo.Model.Product;
 import com.example.demo.Model.User;
 import com.example.demo.Service.ProductService;
@@ -65,7 +65,7 @@ public class WebController {
 
     @GetMapping("/myAccount")
     public String myAccount(Model model) {
-        User user = UserService.findByUserName("user");
+        User user = userService.findByUserName("user");
         model.addAttribute("user", user);
 
         //Mejor oferta en el html

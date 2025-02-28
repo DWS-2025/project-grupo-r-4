@@ -32,8 +32,9 @@ public class ProductController {
     private ProductService productService;
     @Autowired
     private PurchaseService purchaseService;
-    @Autowired
+
     private User user;
+
     @Autowired
     private ImageService imageService;
     @Autowired
