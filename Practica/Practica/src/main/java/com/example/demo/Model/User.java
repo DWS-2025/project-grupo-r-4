@@ -1,10 +1,14 @@
 package com.example.demo.Model;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import org.springframework.stereotype.Component;
+import org.springframework.web.context.annotation.SessionScope;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
+@SessionScope
 public class User {
     public interface RevInt{}
     public interface UserInfo{}

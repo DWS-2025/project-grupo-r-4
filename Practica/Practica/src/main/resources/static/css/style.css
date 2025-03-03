@@ -1,5 +1,5 @@
 body {
-    background: url(../images/bg_toys.jpg) no-repeat #ffccff center top;
+    background: url(../images/bg_toys.jpg) no-repeat #ADD8E6 center top; /* Azul pastel */
     padding: 0;
     font-family: 'Comic Sans MS', Arial, sans-serif;
     font-size: 12px;
@@ -129,11 +129,12 @@ a.details {
     height: auto;
     float: left;
     padding: 12px;
-    background: #ffccff;
-    border: 1px solid #ff99cc;
+    background: #B0E0E6; /* Azul pastel más suave */
+    border: 1px solid #87CEEB;
     border-radius: 10px;
 }
 
+/* Estilos de detalles y reviews */
 .prod_details_tab {
     width: 180px;
     height: 34px;
@@ -149,7 +150,7 @@ a.prod_details {
     background: url(../images/square-pink-add.gif) no-repeat left;
     padding: 0 0 0 20px;
     text-decoration: none;
-    color: #ff3399;
+    color: #0077b6; /* Azul más oscuro */
 }
 
 a.prod_review {
@@ -159,7 +160,13 @@ a.prod_review {
     background: url(../images/favs.png) no-repeat left;
     padding: 0 0 0 24px;
     text-decoration: none;
-    color: #ff3399;
+    color: #0077b6; /* Azul más oscuro */
+}
+
+/* Nueva regla para los precios en oferta */
+.precio-oferta {
+    color: red;
+    font-weight: bold;
 }
 
 .footer {

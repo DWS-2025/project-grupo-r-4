@@ -32,9 +32,8 @@ public class ProductController {
     private ProductService productService;
     @Autowired
     private PurchaseService purchaseService;
-
+    @Autowired
     private User user;
-
     @Autowired
     private ImageService imageService;
     @Autowired
@@ -44,12 +43,12 @@ public class ProductController {
 
     @GetMapping("/products/")
     public String showProducts(Model model) {
-        Collection<Product> products = productService.findAll();
+        Collection<Product> products = this.productService.findAll();
         model.addAttribute("products", products);
 
-        Optional<Product> product0 = productService.findById(0);
-        Optional<Product> product1 = productService.findById(1);
-        Optional<Product> product2 = productService.findById(2);
+        Optional<Product> product0 = this.productService.findById(0);
+        Optional<Product> product1 = this.productService.findById(1);
+        Optional<Product> product2 = this.productService.findById(2);
 
         model.addAttribute("product0", product0.orElse(null));
         model.addAttribute("product1", product1.orElse(null));

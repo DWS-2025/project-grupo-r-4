@@ -18,17 +18,17 @@ public class ProductService {
     @Autowired
     private ImageService imageService;
 
-    private ConcurrentMap<String, Product> products = new ConcurrentHashMap<>();
+    private ConcurrentMap<Long, Product> products = new ConcurrentHashMap<>();
     private AtomicLong nextId = new AtomicLong();
 
     public ProductService(){
 
-        Product product0 = new Product ("Oso De Pelcuhe", 19, "Oso de peluche ideal" +
+        Product product0 = new Product ("Oso De Peluche", 19, "Oso de peluche ideal" +
                 " para niños.", "Peluches");
         product0.setImage("oso-peluche.jpg");
         save(product0, null);
 
-        Product product1 = new Product ("Muñeco bebé", 29, "Muñeco bebé para niños", "Muñecosd");
+        Product product1 = new Product ("Muñeco bebé", 29, "Muñeco bebé para niños", "Muñecas");
         product1.setImage("muñeco-bebe.jpg");
         save(product1, null);
 
@@ -58,7 +58,11 @@ public class ProductService {
     }
 
     public Product save(Product product, MultipartFile imageField) {
-        if(imageField.isEmpty() && imageField!=null){
+        for(p : products.strem){
+
+        }
+
+        if(imageField != null && !imageField.isEmpty()){
             String path = imageService.createImage(imageField);
             product.setImage(path);
         }
@@ -67,7 +71,7 @@ public class ProductService {
         long id = nextId.getAndIncrement();
         product.setId(id);
 
-        products.put(String.valueOf(id), product);
+        products.put(id, product);
         return product;
     }
 
