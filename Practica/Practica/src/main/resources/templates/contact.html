@@ -1,110 +1,70 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html lang="es">
 <head>
-  <title>JUGUETES STORE - Contacto</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <link rel="stylesheet" type="text/css" href="/css/style.css" />
-  <!--[if IE 6]>
-  <link rel="stylesheet" type="text/css" href="/css/style.css"/>
-  <![endif]-->
-  <script type="text/javascript" src="/js/boxOver.js"></script>
-  <style>
-    .field {
-      margin-bottom: 5px;
-      overflow: hidden;
-    }
-
-    .field label {
-      float: left;
-      width: 120px;
-      text-align: right;
-      padding-right: 10px;
-    }
-
-    .field input[type="text"],
-    .field input[type="tel"] {
-      width: 200px;
-      float: left;
-    }
-    .field textarea{
-      width: 200px;
-      float: left;
-    }
-    button{
-      float: left;
-    }
-  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contáctanos - Juguetes Store</title>
+  <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-<div id="main_container">
-  <div class="top_bar"></div>
-  <div id="header">
-    <div id="logo"> <a href="#"><img src="/images/logo-tienda-juguetes.jpg" alt="" border="0" width="500" height="140" /></a> </div>
-  </div>
-
-  <!-- end of oferte_content-->
-  <div id="main_content">
-    <div id="menu_tab">
-
-
-      <div class="left_menu_corner"></div>
-      <ul class="menu">
-        <li><a href="/" class="nav1"> Página Principal</a></li>
-        <li class="divider"></li>
-        <li><a href="/products/" class="nav2">Productos</a></li>
-        <li class="divider"></li>
-        <li><a href="/myAccount" class="nav3">Mi cuenta</a></li>
-        <li class="divider"></li>
-        <li><a href="/register" class="nav4">Registro</a></li>
-        <li class="divider"></li>
-        <li><a href="/contact" class="nav5">Contáctanos</a></li>
-        <li class="divider"></li>
-        <li class="currencies">Moneda
-          <select>
-            <option>Euros</option>
-          </select>
-        </li>
+<header class="header">
+  <div class="container">
+    <div class="logo">
+      <a href="/"><img src="/images/logo-tienda-juguetes.jpg" alt="Juguetes Store" width="500"></a>
+    </div>
+    <nav class="nav">
+      <ul>
+        <li><a href="/">Inicio</a></li>
+        <li><a href="/products/">Productos</a></li>
+        <li><a href="/myAccount">Mi cuenta</a></li>
+        <li><a href="/register">Registro</a></li>
+        <li><a href="/contact">Contáctanos</a></li>
       </ul>
-      <div class="right_menu_corner"></div>
-    </div>
-    <!-- end of menu tab -->
-    <div class="crumb_navigation"><a href="/">Página Principal</a> > <a href="/contact">Contacto</a> </div>
-    <!-- end of left content -->
-    <div class="center_content">
-      <div class="oferta_title">Contacta con nosotros</div>
-      <div class="prod_box_big">
-        <div class="top_prod_box_big"></div>
-        <div class="center_prod_box_big">
-          <form action="/contact" method="post">
-            <div class="field">
-              <label for="user">Usuario:</label>
-              <input type="text" id="user" name="user" required><span class="error-message" id="userError">Ingresa un nombre de usuario válido</span>
-            </div>
-            <div class="field">
-              <label for="phone">Teléfono:</label>
-              <input type="tel" id="phone" name="phone" required><span class="error-message" id="phoneError">Ingresa un número de teléfono válido</span>
-            </div>
-            <div class="field">
-              <label for="message">Mensaje:</label>W
-              <textarea id="message" name="message" rows="4" required></textarea>
-            </div>
-            <button type="submit" style="margin-left: 170px">Enviar</button>
-            <button type="button" style="margin-left: 5px" onclick="location.href='/contact';">Cancelar</button>
-          </form>
-        </div>
-        <div class="bottom_prod_box_big"></div>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <section class="contact">
+    <h2>Contacta con nosotros</h2>
+    <form action="/contact" method="post">
+      <div class="form-field">
+        <label for="user">Nombre de Usuario:</label>
+        <input type="text" id="user" name="user" required>
+        <span class="error-message" id="userError">Ingresa un nombre de usuario válido</span>
       </div>
-      <!-- end of center content -->
+      <div class="form-field">
+        <label for="phone">Teléfono:</label>
+        <input type="tel" id="phone" name="phone" required>
+        <span class="error-message" id="phoneError">Ingresa un número de teléfono válido</span>
+      </div>
+      <div class="form-field">
+        <label for="message">Mensaje:</label>
+        <textarea id="message" name="message" rows="4" required></textarea>
+      </div>
+      <div class="form-buttons">
+        <button type="submit" class="btn-submit">Enviar</button>
+        <button type="button" class="btn-cancel" onclick="location.href='/contact';">Cancelar</button>
+      </div>
+    </form>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-left">
+      <img src="/images/logo-tienda-juguetes.jpg" alt="Juguetes Store" width="170">
     </div>
-    <!-- end of main content -->
-    <div class="footer">
-      <div class="left_footer"> <img src="/images/logo-tienda-juguetes.jpg" alt="" width="170" height="49"/> </div>
-      <div class="center_footer">JUGUETES STORE. All Rights Reserved 2025<br />
-        <img src="/images/payment.gif" alt="" /> </div>
-      <div class="right_footer"> <a href="/">Página Principal</a><a href="/ubication">Dónde Encontrarnos</a> <a href="/contact">Contacto</a> </div>
+    <div class="footer-center">
+      <p>&copy; 2025 Juguetes Store. Todos los derechos reservados.</p>
+      <img src="/images/payment.gif" alt="Métodos de pago">
+    </div>
+    <div class="footer-right">
+      <a href="/">Inicio</a>
+      <a href="/ubication">Dónde encontrarnos</a>
+      <a href="/contact">Contacto</a>
     </div>
   </div>
-</div>
-<!-- end of main_container -->
+</footer>
 </body>
 </html>
