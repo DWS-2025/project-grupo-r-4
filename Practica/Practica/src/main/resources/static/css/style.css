@@ -21,7 +21,7 @@ body {
 }
 
 .header .logo img {
-    width: 200px; /* Aumenta el tamaño de la imagen principal */
+    width: 200px;
     height: auto;
     display: block;
 }
@@ -175,7 +175,7 @@ body {
     color: #ff6699;
 }
 
-/* Estilos para el formulario de contacto */
+
 .contact {
     width: 70%;
     margin: auto;
@@ -244,7 +244,7 @@ body {
     background: #ff3366;
 }
 
-/* Estilos para la sección de ubicación */
+
 .location {
     margin-top: 50px;
     text-align: center;
@@ -298,7 +298,7 @@ footer .footer-right a:hover {
     color: #ff6699;
 }
 
-/* Estilos para la página de producto */
+
 .product-details {
     display: flex;
     justify-content: space-between;
@@ -387,7 +387,7 @@ footer .footer-right a:hover {
     color: #333;
 }
 
-/* Estilos para la página de Mis Compras */
+
 .purchase-info {
     margin-top: 50px;
     padding: 20px;
@@ -420,7 +420,7 @@ footer .footer-right a:hover {
     color: #ff6699;
 }
 
-/* Breadcrumbs */
+
 .breadcrumbs {
     font-size: 16px;
     margin-bottom: 20px;
@@ -436,7 +436,7 @@ footer .footer-right a:hover {
     text-decoration: underline;
 }
 
-/* Pie de página */
+
 .footer {
     background-color: #222;
     color: #fff;
@@ -473,7 +473,7 @@ footer .footer-right a:hover {
     margin-right: auto;
 }
 
-/* Estilo para el título principal de la página */
+
 .delete-product h2 {
     text-align: center;
     margin-bottom: 20px;
@@ -482,7 +482,7 @@ footer .footer-right a:hover {
     color: #333;
 }
 
-/* Estilo para los detalles del producto */
+
 .delete-product .product-details p {
     font-size: 16px;
     margin: 5px 0;
@@ -490,12 +490,12 @@ footer .footer-right a:hover {
     color: #555;
 }
 
-/* Espaciado entre las etiquetas y los valores */
+
 .delete-product .product-details p strong {
     color: #333;
 }
 
-/* Estilo para los botones */
+
 .delete-product button {
     padding: 12px 20px;
     font-size: 16px;
@@ -507,7 +507,7 @@ footer .footer-right a:hover {
     margin: 10px 0;
 }
 
-/* Estilo del botón de eliminar */
+
 .delete-product .delete-button {
     background-color: #f44336;
     color: white;
@@ -527,7 +527,7 @@ footer .footer-right a:hover {
     background-color: #45a049;
 }
 
-/* Estilo para el formulario de modificación */
+
 .modify-product {
     background-color: white;
     padding: 30px;
@@ -563,7 +563,7 @@ footer .footer-right a:hover {
 .modify-product .error-message {
     color: red;
     font-size: 12px;
-    display: none; /* Ocultamos el mensaje de error por defecto */
+    display: none;
 }
 
 .modify-product .form-actions {
@@ -600,12 +600,12 @@ footer .footer-right a:hover {
     background-color: #1976D2;
 }
 
-/* Mostrar el mensaje de error si es necesario */
+
 .modify-product input:invalid ~ .error-message {
     display: block;
 }
 
-/* Estilo para la sección de Reseñas */
+
 .reviews {
     background-color: white;
     padding: 30px;
@@ -651,7 +651,7 @@ footer .footer-right a:hover {
     font-size: 18px;
 }
 
-/* Estilo para el formulario de reseña */
+
 .review-form {
     background-color: white;
     padding: 30px;
@@ -715,7 +715,7 @@ footer .footer-right a:hover {
     display: none;
 }
 
-/* Estilo para el footer */
+
 .footer {
     background-color: #333;
     color: white;
@@ -733,7 +733,7 @@ footer .footer-right a:hover {
 .footer a:hover {
     text-decoration: underline;
 }
-/* Estilo para el formulario de nuevo producto */
+
 .product-form {
     background-color: white;
     padding: 30px;
@@ -793,7 +793,7 @@ footer .footer-right a:hover {
     display: none;
 }
 
-/* Estilo para el footer */
+
 .footer {
     background-color: #333;
     color: white;
@@ -812,7 +812,7 @@ footer .footer-right a:hover {
     text-decoration: underline;
 }
 
-/* Estilo para el formulario de compra */
+
 .purchase-form {
     background-color: white;
     padding: 30px;
@@ -872,7 +872,7 @@ footer .footer-right a:hover {
     display: none;
 }
 
-/* Estilo para el footer */
+
 .footer {
     background-color: #333;
     color: white;
@@ -890,7 +890,7 @@ footer .footer-right a:hover {
 .footer a:hover {
     text-decoration: underline;
 }
-/* Estilos para la página de error 404 */
+
 #right_container {
     text-align: center;
     margin-top: 50px;
