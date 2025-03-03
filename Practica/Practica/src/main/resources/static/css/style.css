@@ -1,0 +1,142 @@
+body {
+    background: url(../images/toy_bg.jpg) no-repeat #ffefd5 center top;
+    font-family: 'Comic Sans MS', 'Poppins', sans-serif;
+    font-size: 13px;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+p {
+    padding: 5px;
+    margin: 0px;
+}
+
+#main_container {
+    width: 1000px;
+    margin: auto;
+    padding: 0px;
+}
+
+.top_bar {
+    width: 1000px;
+    height: 50px;
+    background-color: #ff6f61;
+    color: #fff;
+    text-align: center;
+    font-size: 16px;
+    line-height: 50px;
+}
+
+#header {
+    width: 1000px;
+    height: 200px;
+    background: url(../images/toy_header.jpg) no-repeat center;
+    margin: auto;
+}
+
+#logo {
+    float: left;
+    padding: 20px;
+}
+
+/* ---------------- Menu ---------------- */
+#menu_tab {
+    width: 1000px;
+    height: 60px;
+    background-color: #ffd700;
+    border-radius: 10px;
+}
+
+ul.menu {
+    list-style-type: none;
+    float: left;
+    display: block;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+    background: linear-gradient(45deg, #ffcc00, #ff5733);
+    border-radius: 10px;
+}
+
+ul.menu li {
+    display: inline;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 10px 20px;
+}
+
+ul.menu li a {
+    text-decoration: none;
+    color: white;
+    transition: color 0.3s ease-in-out;
+}
+
+ul.menu li a:hover {
+    color: #4caf50;
+}
+
+/* ---------------- Product Listings ---------------- */
+.prod_box {
+    width: 200px;
+    height: auto;
+    float: left;
+    padding: 15px;
+    border-radius: 15px;
+    background: #fff;
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    margin: 10px;
+}
+
+.product_title {
+    font-size: 16px;
+    color: #ff4500;
+    font-weight: bold;
+}
+
+.product_title a {
+    text-decoration: none;
+    color: #ff4500;
+}
+
+.product_title a:hover {
+    color: #ff1493;
+}
+
+.prod_price {
+    font-size: 18px;
+    color: #32cd32;
+    font-weight: bold;
+}
+
+/* ---------------- Buttons ---------------- */
+a.details {
+    display: block;
+    width: 100px;
+    height: 30px;
+    background: linear-gradient(45deg, #ff4500, #ffcc00);
+    color: white;
+    text-align: center;
+    line-height: 30px;
+    border-radius: 10px;
+    text-decoration: none;
+    margin: 10px auto;
+    font-weight: bold;
+}
+
+a.details:hover {
+    background: linear-gradient(45deg, #ffcc00, #ff4500);
+}
+
+/* ---------------- Footer ---------------- */
+.footer {
+    width: 1000px;
+    height: 80px;
+    background: url(../images/footer_bg_toys.jpg) repeat-x top;
+    text-align: center;
+    color: white;
+    line-height: 80px;
+    font-size: 14px;
+}

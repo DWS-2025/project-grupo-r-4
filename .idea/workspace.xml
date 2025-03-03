@@ -4,34 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="dffe2e45-760d-4c54-bcbe-f83ef775f13d" name="Changes" comment="imagenes y algun html">
-      <change afterPath="$PROJECT_DIR$/Practica/Practica/src/main/resources/templates/contact.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+    <list default="true" id="dffe2e45-760d-4c54-bcbe-f83ef775f13d" name="Changes" comment="algun html, correccion de errores y eliminacion de fotos">
+      <change afterPath="$PROJECT_DIR$/Practica/Practica/src/main/resources/static/css/style.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Practica/Practica/images/logo-tienda-juguetes.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Practica/Practica/images/muñeco-bebe.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Practica/Practica/images/oso-peluche.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Practica/Practica/images/scalextric.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Controller/ProductController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Controller/ProductController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Controller/WebController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Controller/WebController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/demo/Controller/ProductController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/demo/Controller/ProductController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/demo/Controller/ProductRestController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/demo/Controller/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/demo/Controller/UserController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/demo/Controller/UserRestController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/demo/Controller/WebController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/demo/Model/Image.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/demo/Model/Product.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/demo/Model/Product.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/demo/Model/Purchase.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/demo/Model/Purchase.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/demo/Model/Review.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/demo/Model/Review.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/demo/Model/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/demo/Model/User.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/demo/Service/ImageService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/demo/Service/ImageService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/demo/Service/ProductService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/demo/Service/ProductService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/demo/Service/PurchaseService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/demo/Service/PurchaseService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/demo/Service/ReviewService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/demo/Service/ReviewService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/demo/Service/UserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/demo/Service/UserService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Practica/Practica/src/main/resources/templates/404.html" beforeDir="false" afterPath="$PROJECT_DIR$/Practica/Practica/src/main/resources/templates/404.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Practica/Practica/src/main/resources/templates/buys.html" beforeDir="false" afterPath="$PROJECT_DIR$/Practica/Practica/src/main/resources/templates/buys.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Practica/Practica/src/main/resources/templates/contact.html" beforeDir="false" afterPath="$PROJECT_DIR$/Practica/Practica/src/main/resources/templates/contact.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,6 +20,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="HTML File" />
+        <option value="CSS File" />
       </list>
     </option>
   </component>
@@ -88,6 +67,7 @@
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/hugom/OneDrive/Documentos/GitHub/project-grupo-r-4/Practica/Practica/pom.xml",
+    "list.type.of.created.stylesheet": "CSS",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -143,7 +123,7 @@
       <workItem from="1739958119706" duration="7312000" />
       <workItem from="1740475349437" duration="6399000" />
       <workItem from="1740651581168" duration="4438000" />
-      <workItem from="1740735881666" duration="7804000" />
+      <workItem from="1740735881666" duration="9900000" />
     </task>
     <task id="LOCAL-00001" summary="inicio">
       <option name="closed" value="true" />
@@ -241,7 +221,23 @@
       <option name="project" value="LOCAL" />
       <updated>1740741559949</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="algun html, correccion de errores y eliminacion de fotos">
+      <option name="closed" value="true" />
+      <created>1740748946033</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1740748946033</updated>
+    </task>
+    <task id="LOCAL-00014" summary="algun html, correccion de errores y eliminacion de fotos">
+      <option name="closed" value="true" />
+      <created>1740748960425</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1740748960425</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -258,6 +254,7 @@
     <MESSAGE value="Arreglos de algunos service y hechos algunos controllers." />
     <MESSAGE value="imagenes" />
     <MESSAGE value="imagenes y algun html" />
-    <option name="LAST_COMMIT_MESSAGE" value="imagenes y algun html" />
+    <MESSAGE value="algun html, correccion de errores y eliminacion de fotos" />
+    <option name="LAST_COMMIT_MESSAGE" value="algun html, correccion de errores y eliminacion de fotos" />
   </component>
 </project>
