@@ -99,7 +99,10 @@ public class ProductController {
     @PostMapping("/product/{id}/modify")
     public String modifyProduct(Model model, Product product, @PathVariable int id) throws IOException {
         Optional<Product> productOptional = productService.findById(id);
-        productService.updateProduct(id, productOptional.get());
+        Product product1 = productOptional.get();
+        product1.setDescription(product.getDescription());
+        product1.setPrice(product.getPrice());
+        product1.setType(product.getType());
         model.addAttribute("product", productOptional.get());
 
         return "redirect:/product/" + productOptional.get().getId();
