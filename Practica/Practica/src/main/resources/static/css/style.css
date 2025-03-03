@@ -605,3 +605,318 @@ footer .footer-right a:hover {
     display: block;
 }
 
+/* Estilo para la sección de Reseñas */
+.reviews {
+    background-color: white;
+    padding: 30px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+.reviews h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 22px;
+}
+
+.reviews .user-info {
+    margin-bottom: 20px;
+    font-size: 18px;
+}
+
+.reviews .user-info strong {
+    color: #333;
+}
+
+.review-list {
+    margin-top: 20px;
+}
+
+.review-item {
+    border-bottom: 1px solid #ddd;
+    padding: 15px 0;
+}
+
+.review-item p {
+    margin: 5px 0;
+}
+
+.review-item strong {
+    color: #333;
+}
+
+.review-item p:first-child {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+/* Estilo para el formulario de reseña */
+.review-form {
+    background-color: white;
+    padding: 30px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+.review-form h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+.review-form .form-group {
+    margin-bottom: 15px;
+}
+
+.review-form label {
+    font-size: 16px;
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.review-form input, .review-form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.review-form textarea {
+    height: 100px;
+}
+
+.review-form .form-actions {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.review-form button, .review-form input[type="submit"] {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 5px;
+}
+
+.review-form button:hover, .review-form input[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+.review-form .error-message {
+    color: red;
+    font-size: 12px;
+    display: none;
+}
+
+/* Estilo para el footer */
+.footer {
+    background-color: #333;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    margin-top: 40px;
+}
+
+.footer a {
+    color: white;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
+/* Estilo para el formulario de nuevo producto */
+.product-form {
+    background-color: white;
+    padding: 30px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+.product-form h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+.product-form .form-group {
+    margin-bottom: 15px;
+}
+
+.product-form label {
+    font-size: 16px;
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.product-form input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.product-form .form-actions {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.product-form button, .product-form input[type="submit"] {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 5px;
+}
+
+.product-form button:hover, .product-form input[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+.product-form .error-message {
+    color: red;
+    font-size: 12px;
+    display: none;
+}
+
+/* Estilo para el footer */
+.footer {
+    background-color: #333;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    margin-top: 40px;
+}
+
+.footer a {
+    color: white;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
+
+/* Estilo para el formulario de compra */
+.purchase-form {
+    background-color: white;
+    padding: 30px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+.purchase-form h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+.purchase-form .form-group {
+    margin-bottom: 15px;
+}
+
+.purchase-form label {
+    font-size: 16px;
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.purchase-form .forminput-imput {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.purchase-form .form-actions {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.purchase-form button, .purchase-form input[type="submit"] {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 5px;
+}
+
+.purchase-form button:hover, .purchase-form input[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+.purchase-form .error-message {
+    color: red;
+    font-size: 12px;
+    display: none;
+}
+
+/* Estilo para el footer */
+.footer {
+    background-color: #333;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    margin-top: 40px;
+}
+
+.footer a {
+    color: white;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
+/* Estilos para la página de error 404 */
+#right_container {
+    text-align: center;
+    margin-top: 50px;
+}
+
+.formlabel-text2 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+footer {
+    margin-top: 100px;
+    padding: 20px;
+    text-align: center;
+}
+
+footer .footer-links a {
+    color: #007BFF;
+    margin: 0 15px;
+    text-decoration: none;
+}
+
+footer .footer-links a:hover {
+    text-decoration: underline;
+}
+
+
+
