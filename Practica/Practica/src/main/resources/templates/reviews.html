@@ -1,0 +1,49 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>JUGUETES STORE - Details</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" href="/css/style.css" />
+    <!--[if IE 6]>
+    <link rel="stylesheet" type="text/css" href="/css/iecss.css"/>
+    <![endif]-->
+    <script type="text/javascript" src="/js/windowopen.js"></script>
+    <script type="text/javascript" src="/js/boxOver.js"></script>
+</head>
+<body>
+<div id="main_container">
+    <div class="top_bar"></div>
+    <div id="header">
+        <div id="logo"> <a href="#"><img src="/images/logo-tienda-juguetes.jpg" width="500" height="140" /></a> </div>
+    </div>
+    <div>
+        <div class="center_content">
+            <div class="prod_box_big" style="margin-left: 176px">
+                <div class="center_prod_box_big">
+
+                    <div class="oferta_title">Nueva Reseña </div>
+                    <form action="/product/{{product.id}}/review" method="Post" enctype="multipart/form-data">
+                        <br><label class="formlabel-label">Producto: {{product.name}}</label>
+                        <br>
+                        <br><label class="formlabel-label"> <!--for="user"-->Usuario: user</label>
+                        <!--<input class="forminput-imput" type="text" id="user" name="user" placeholder="user" required><span class="error-message" id="userError">Ingresa un nombre de usuario válido</span>--></br>
+                        <br><label class="formlabel-label" for="review">Comentario:</label>
+                        <input class="forminput-imput" type="text" id="review" name="review" placeholder="review" required><span class="error-message" id="reviewError">Ingresa un comentario válido</span></br>
+                        <br><label class="formlabel-label" for="rating">Rating:</label>
+                        <input class="forminput-imput" type="number" id="rating" name="rating" placeholder="rating" min="0" max="5" required><span class="error-message" id="ratingError">Ingresa un rating válido (entre 0 y 5)</span></br>
+                        <br><button onclick="location.href='/product/{{product.id}}'; return false;">Cancelar</button>
+                        <input type="submit" value="Guardar"></br>
+                    </form>
+                </div>
+            </div>
+            <div class="footer">
+                <div class="left_footer"> <img src="/images/logo-tienda-juguetes.jpg" alt="" width="170" height="49"/> </div>
+                <div class="center_footer"> MANNY OBRITAS STORE. All Rights Reserved 2025<br />
+                    <img src="/images/payment.gif" alt="" /> </div>
+                <div class="right_footer"> <a href="/">Página Principal</a> <a href="/ubication">Dónde encontrarnos</a> <a href="/contact">Contacto</a> </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

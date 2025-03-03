@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+    <title>JUGUETES STORE</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" href="/css/style.css" />
+    <!--[if IE 6]>
+    <link rel="stylesheet" type="text/css" href="/css/iecss.css"/>
+    <![endif]-->
+    <script type="text/javascript" src="/js/boxOver.js"></script>
+</head>
+<body>
+<div id="main_container">
+    <div class="top_bar"></div>
+    <div id="header">
+        <div id="logo"> <a href="#"><img src="/images/logo-tienda-juguetes.jpg" width="500" height="140" /></a> </div>
+    </div>
+    <div>
+        <div class="center_content">
+            <div class="prod_box_big" style="margin-left: 176px">
+                <div class="center_prod_box_big">
+
+                    <div class="oferta_title">Compra</div>
+                    <form action="/product/{{product.id}}/purchase" method="Post" enctype="multipart/form-data">
+                        <br>
+                        <div class="product_title_big">Compra del producto</div>
+                        <div></br>
+                            <br><label class="formlabel-label">Producto: {{product.name}}</label></br>
+                            <br><label class="formlabel-label"> <!--for="user"-->Usuario: user</label>
+                            <!--<input class="forminput-imput" type="text" id="user" name="user" placeholder="user" required><span class="error-message" id="nameError">Ingresa un nombre válido</span>--></br>
+                            <br><label class="formlabel-label" for="price">Introduzca la siguiente cantidad {{precio}}€:</label>
+                            <input class="forminput-imput" type="number" id="price" name="price" placeholder="price" min="{{precio}}" max="{{precio}}" step="0.01" required><span class="error-message" id="priceError">Ingresa un precio válido</span></br>
+
+                        </div>
+                        <br>
+                        <button onclick="location.href='/product/{{product.id}}'; return false;">Cancelar</button>
+                        <input type="submit" value="Comprar"></br>
+                    </form>
+                </div>
+            </div>
+            <div class="footer">
+                <div class="left_footer"> <img src="/images/logo-tienda-juguetes.jpg" alt="" width="170" height="49"/> </div>
+                <div class="center_footer"> JUGUETES STORE. All Rights Reserved 2025<br />
+                    <img src="/images/payment.gif" alt="" /> </div>
+                <div class="right_footer"> <a href="/">Página Principal</a> <a href="/ubication">Dónde encontrarnos</a> <a href="/contact">Contacto</a> </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

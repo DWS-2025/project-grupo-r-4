@@ -4,8 +4,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="dffe2e45-760d-4c54-bcbe-f83ef775f13d" name="Changes" comment="cambio css">
+    <list default="true" id="dffe2e45-760d-4c54-bcbe-f83ef775f13d" name="Changes" comment="productos subidos nada mas inicializar la pagina web">
+      <change afterPath="$PROJECT_DIR$/Practica/Practica/src/main/resources/templates/deleteProduct.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Practica/Practica/src/main/resources/templates/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Practica/Practica/src/main/resources/templates/modify.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Practica/Practica/src/main/resources/templates/myAccount.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Practica/Practica/src/main/resources/templates/myReview.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Practica/Practica/src/main/resources/templates/newProduct.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Practica/Practica/src/main/resources/templates/newPurchase.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Practica/Practica/src/main/resources/templates/product.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Practica/Practica/src/main/resources/templates/products.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Practica/Practica/src/main/resources/templates/register.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Practica/Practica/src/main/resources/templates/reviews.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Practica/Practica/src/main/resources/templates/ubication.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Practica/Practica/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/Practica/Practica/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -15,8 +28,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="HTML File" />
         <option value="CSS File" />
+        <option value="HTML File" />
       </list>
     </option>
   </component>
@@ -120,7 +133,7 @@
       <workItem from="1740475349437" duration="6399000" />
       <workItem from="1740651581168" duration="4438000" />
       <workItem from="1740735881666" duration="9900000" />
-      <workItem from="1740993110807" duration="1151000" />
+      <workItem from="1740993110807" duration="4823000" />
     </task>
     <task id="LOCAL-00001" summary="inicio">
       <option name="closed" value="true" />
@@ -250,7 +263,15 @@
       <option name="project" value="LOCAL" />
       <updated>1740993875739</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="productos subidos nada mas inicializar la pagina web">
+      <option name="closed" value="true" />
+      <created>1740994879943</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1740994879943</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -270,6 +291,7 @@
     <MESSAGE value="algun html, correccion de errores y eliminacion de fotos" />
     <MESSAGE value="css" />
     <MESSAGE value="cambio css" />
-    <option name="LAST_COMMIT_MESSAGE" value="cambio css" />
+    <MESSAGE value="productos subidos nada mas inicializar la pagina web" />
+    <option name="LAST_COMMIT_MESSAGE" value="productos subidos nada mas inicializar la pagina web" />
   </component>
 </project>

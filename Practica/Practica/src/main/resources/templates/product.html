@@ -1,0 +1,135 @@
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+    <title>JUGUETES STORE</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" href="/css/style.css" />
+    <!--[if IE 6]>
+    <link rel="stylesheet" type="text/css" href="/css/iecss.css"/>
+    <![endif]-->
+    <script type="text/javascript" src="/js/boxOver.js"></script>
+</head>
+<body>
+<div id="main_container">
+    <div class="top_bar">
+    </div>
+    <div id="header">
+        <div id="logo"> <a href="#"><img src="/images/logo-tienda-juguetes.jpg" width="500" height="140" /></a> </div>
+        <div class="oferte_content">
+            <div class="top_divider"><img src="/images/header_divider.png" alt="" width="1" height="164" /></div>
+            <div class="oferta">
+                <div class="oferta_content">{{#product0.image}} <img src="/product/{{product0.id}}/image" width="100" height="80" alt="" class="oferta_img" />{{/product0.image}}
+                    <div class="oferta_details">
+                        {{#product0}}
+                        <div class="oferta_title">{{product0.name}}</div>
+                        <div class="oferta_text"> {{product0.description}} </div>
+                        <a href="/product/0" class="details"> Detalles</a> </div>
+                    {{/product0}}
+                </div>
+            </div>
+            <div class="top_divider"><img src="/images/header_divider.png" alt="" width="1" height="164" /></div>
+        </div>
+        <!-- end of oferte_content-->
+    </div>
+    <div id="main_content">
+        <div id="menu_tab">
+            <div class="left_menu_corner"></div>
+            <ul class="menu">
+                <li><a href="/" class="nav1"> Página Principal</a></li>
+                <li class="divider"></li>
+                <li><a href="/products/" class="nav2">Productos</a></li>
+                <li class="divider"></li>
+                <li><a href="/myAccount" class="nav3">Mi cuenta</a></li>
+                <li class="divider"></li>
+                <li><a href="/register" class="nav4">Registro</a></li>
+                <li class="divider"></li>
+                <li><a href="/contact" class="nav5">Contáctanos</a></li>
+                <li class="divider"></li>
+                <li class="currencies">Moneda
+                    <select>
+                        <option>Euros</option>
+                    </select>
+                </li>
+            </ul>
+            <div class="right_menu_corner"></div>
+        </div>
+        <!-- end of menu tab -->
+        <div class="crumb_navigation"><a href="/">Página Principal</a> > <a href="/products">Productos</a></div>
+        <div class="left_content">
+            <div class="title_box">Categorías</div>
+            <ul class="left_menu">
+                <li class="even"><a href="#">Peluches</a></li>
+                <li class="odd"><a href="#">Muñecas</a></li>
+                <li class="even"><a href="#">Juguetes</a></li>
+                <li class="odd"><a href="#">Accesorios</a></li>
+            </ul>
+            <div class="title_box">Mejor oferta</div>
+            <div class="border_box">
+                {{#product0}}
+                <div class="product_title"><a href="/product/0">{{product0.name}}</a></div>
+                <div class="product_img"><a href="/product/0">{{#product0.image}}<img src="/product/{{product0.id}}/image" width="150" height="75" /></a></div>{{/product0.image}}
+                <div class="prod_price"><span class="reduce">49,99€</span> <span class="price">{{product0.price}}€</span></div>
+                {{/product0}}
+            </div>
+        </div>
+        <!-- end of left content -->
+        <div class="center_content">
+            <div class="prod_box_big">
+                <div class="mid_prod_box_big">
+
+                    <div class="oferta_title">{{product.name}}</div>
+                    <br>{{#product.image}}
+                    <img src="/product/{{product.id}}/image"></br>
+                    {{/product.image}}
+
+                    <br><label class="formlabel-label">Precio:</label>
+                    <div class="formlabel-text">{{product.price}}€ </div></br>
+                    <br><label class="formlabel-label">Descripción:</label>
+                    <div class="formlabel-text">{{product.description}} </div></br>
+                    <br><label class="formlabel-label">Reseñas:</label>
+
+                    <div class="formlabel-text">{{#product.reviews}}
+                        {{user.name}}:   {{rating}}/5   {{review}}<br>
+                        {{/product.reviews}}
+                    </div>
+
+                    <button  class="formlabel-text" onclick="location.href='/product/{{product.id}}/review'">Añadir reseña</button></br>
+                    <button  class="formlabel-text" onclick="location.href='/product/{{id}}/purchase'">Comprar</button></br>
+                    <button  class="formlabel-text" onclick="location.href='/products/'">Atras</button></br>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- end of center content -->
+    <div class="right_content">
+        <div class="title_box">Novedad</div>
+        <div class="border_box">
+            {{#product1}}
+            <div class="product_title"><a href="/product/1">{{product1.name}}</a></div>
+            <div class="product_img"><a href="/product/1">{{#product1.image}}<img src="/product/{{product1.id}}/image" width="175" alt="" border="0" /></a></div>{{/product1.image}}
+            <div class="prod_price"><span class="price">{{product1.price}}€</span></div>
+            {{/product1}}
+        </div>
+
+        <div class="title_box">Admin panel</div>
+        <div class="border_box">
+            <div class="formlabel-text"><br>{{#product.purchase}}
+                {{user.name}}  {{price}}
+                {{/product.purchase}}</br></div>
+            <button  class="formlabel-text" onclick="location.href='/product/{{id}}/modify'">Modificar </button></br>
+            <button  class="formlabel-text" onclick="location.href='/deleteProduct/{{product.id}}'">Borrar</button></br>
+            </form>
+        </div>
+    </div>
+    <!-- end of right content -->
+    <!-- end of main content -->
+    <div class="footer">
+        <div class="left_footer"> <img src="/images/logo-tienda-juguetes.jpg" alt="" width="170" height="49"/> </div>
+        <div class="center_footer"> JUGUETES STORE. All Rights Reserved 2025<br />
+            <img src="/images/payment.gif" alt="" /> </div>
+        <div class="right_footer"> <a href="/">Página Principal</a> <a href="/ubication">Dónde encontrarnos</a> <a href="/contact">Contacto</a> </div>
+    </div>
+</div>
+</body>
+</html>

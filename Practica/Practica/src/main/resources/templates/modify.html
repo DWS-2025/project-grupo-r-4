@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+    <title>JUGUETES STORE</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" href="/css/style.css" />
+    <!--[if IE 6]>
+    <link rel="stylesheet" type="text/css" href="/css/iecss.css"/>
+    <![endif]-->
+    <script type="text/javascript" src="/js/boxOver.js"></script>
+</head>
+<body>
+<div id="main_container">
+    <div class="top_bar"></div>
+    <div id="header">
+        <div id="logo"> <a href="#"><img src="/images/logo-tienda-juguetes.jpg" width="500" height="140" /></a> </div>
+    </div>
+    <div>
+        <div class="center_content">
+            <div class="prod_box_big" style="margin-left: 176px">
+                <div class="center_prod_box_big">
+
+                    <div class="oferta_title">Modificar Producto </div>
+                    <form action="/product/{{product.id}}/modify" method="Post" enctype="multipart/form-data">
+                        <br>
+                        <div class="product_title_big">Modificación del producto</div>
+                        <div></br>
+                            <br><div class="formlabel-label">Producto: {{product.name}} </div></br>
+                            <br><label class="formlabel-label" for="description">Descripción:</label>
+                            <input class="forminput-imput" type="text" id="description" name="description" placeholder="description" required><span class="error-message" id="descriptionError">Ingresa una descripción válida</span></br>
+                            <br><label class="formlabel-label" for="price">Precio:</label>
+                            <input class="forminput-imput" type="number" id="price" name="price" placeholder="price" min="0" step="0.01" required><span class="error-message" id="priceError">Ingresa un precio válido</span></br>
+                            <br><label class="formlabel-label" for="type">Tipo:</label>
+                            <input class="forminput-imput" type="text" id="type" name="type" placeholder="type" required><span class="error-message" id="typeError">Ingresa un tipo válido</span></br>
+                        </div>
+                        <br>
+                        <button onclick="location.href='/product/{{product.id}}'; return false;">Cancelar</button>
+                        <input type="submit" value="Guardar"></br>
+                    </form>
+                </div>
+            </div>
+            <div class="footer">
+                <div class="left_footer"> <img src="/images/logo-tienda-juguetes.jpg" alt="" width="170" height="49"/> </div>
+                <div class="center_footer"> JUGUETES STORE. All Rights Reserved 2025<br />
+                    <img src="/images/payment.gif" alt="" /> </div>
+                <div class="right_footer"> <a href="/">Página Principal</a> <a href="/ubication">Dónde encontrarnos</a> <a href="/contact">Contacto</a> </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
