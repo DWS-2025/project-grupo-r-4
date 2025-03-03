@@ -1,53 +1,77 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/html">
+<html lang="es">
 <head>
-    <title>JUGUETES STORE</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" type="text/css" href="/css/style.css" />
-    <!--[if IE 6]>
-    <link rel="stylesheet" type="text/css" href="/css/iecss.css"/>
-    <![endif]-->
-    <script type="text/javascript" src="/js/boxOver.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modificar Producto - Juguetes Store</title>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-<div id="main_container">
-    <div class="top_bar"></div>
-    <div id="header">
-        <div id="logo"> <a href="#"><img src="/images/logo-tienda-juguetes.jpg" width="500" height="140" /></a> </div>
+<header class="header">
+    <div class="container">
+        <div class="logo">
+            <a href="/"><img src="/images/logo-tienda-juguetes.jpg" alt="Juguetes Store" width="500"></a>
+        </div>
+        <nav class="nav">
+            <ul>
+                <li><a href="/">Inicio</a></li>
+                <li><a href="/products/">Productos</a></li>
+                <li><a href="/myAccount">Mi cuenta</a></li>
+                <li><a href="/register">Registro</a></li>
+                <li><a href="/contact">Contáctanos</a></li>
+            </ul>
+        </nav>
     </div>
-    <div>
-        <div class="center_content">
-            <div class="prod_box_big" style="margin-left: 176px">
-                <div class="center_prod_box_big">
+</header>
 
-                    <div class="oferta_title">Modificar Producto </div>
-                    <form action="/product/{{product.id}}/modify" method="Post" enctype="multipart/form-data">
-                        <br>
-                        <div class="product_title_big">Modificación del producto</div>
-                        <div></br>
-                            <br><div class="formlabel-label">Producto: {{product.name}} </div></br>
-                            <br><label class="formlabel-label" for="description">Descripción:</label>
-                            <input class="forminput-imput" type="text" id="description" name="description" placeholder="description" required><span class="error-message" id="descriptionError">Ingresa una descripción válida</span></br>
-                            <br><label class="formlabel-label" for="price">Precio:</label>
-                            <input class="forminput-imput" type="number" id="price" name="price" placeholder="price" min="0" step="0.01" required><span class="error-message" id="priceError">Ingresa un precio válido</span></br>
-                            <br><label class="formlabel-label" for="type">Tipo:</label>
-                            <input class="forminput-imput" type="text" id="type" name="type" placeholder="type" required><span class="error-message" id="typeError">Ingresa un tipo válido</span></br>
-                        </div>
-                        <br>
-                        <button onclick="location.href='/product/{{product.id}}'; return false;">Cancelar</button>
-                        <input type="submit" value="Guardar"></br>
-                    </form>
-                </div>
+<main class="container">
+    <section class="modify-product">
+        <h2>Modificar Producto</h2>
+        <form action="/product/{{product.id}}/modify" method="post" enctype="multipart/form-data" class="modify-form">
+            <div class="product-details">
+                <p><strong>Producto:</strong> {{product.name}}</p>
+
+                <!-- Campo para descripción -->
+                <label for="description" class="formlabel-label">Descripción:</label>
+                <input type="text" id="description" name="description" placeholder="Descripción" value="{{product.description}}" required>
+                <span class="error-message" id="descriptionError">Ingresa una descripción válida</span>
+
+                <!-- Campo para precio -->
+                <label for="price" class="formlabel-label">Precio:</label>
+                <input type="number" id="price" name="price" placeholder="Precio" value="{{product.price}}" min="0" step="0.01" required>
+                <span class="error-message" id="priceError">Ingresa un precio válido</span>
+
+                <!-- Campo para tipo -->
+                <label for="type" class="formlabel-label">Tipo:</label>
+                <input type="text" id="type" name="type" placeholder="Tipo" value="{{product.type}}" required>
+                <span class="error-message" id="typeError">Ingresa un tipo válido</span>
             </div>
-            <div class="footer">
-                <div class="left_footer"> <img src="/images/logo-tienda-juguetes.jpg" alt="" width="170" height="49"/> </div>
-                <div class="center_footer"> JUGUETES STORE. All Rights Reserved 2025<br />
-                    <img src="/images/payment.gif" alt="" /> </div>
-                <div class="right_footer"> <a href="/">Página Principal</a> <a href="/ubication">Dónde encontrarnos</a> <a href="/contact">Contacto</a> </div>
+
+            <!-- Botones para cancelar o guardar -->
+            <div class="form-actions">
+                <button type="button" class="cancel-button" onclick="location.href='/product/{{product.id}}';">Cancelar</button>
+                <input type="submit" value="Guardar" class="save-button">
             </div>
+        </form>
+    </section>
+</main>
+
+<footer class="footer">
+    <div class="container">
+        <div class="footer-left">
+            <img src="/images/logo-tienda-juguetes.jpg" alt="Juguetes Store" width="170">
+        </div>
+        <div class="footer-center">
+            <p>&copy; 2025 Juguetes Store. Todos los derechos reservados.</p>
+            <img src="/images/payment.gif" alt="Métodos de pago">
+        </div>
+        <div class="footer-right">
+            <a href="/">Inicio</a>
+            <a href="/ubication">Dónde encontrarnos</a>
+            <a href="/contact">Contacto</a>
         </div>
     </div>
-</div>
+</footer>
 
 </body>
 </html>

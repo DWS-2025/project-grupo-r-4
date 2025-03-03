@@ -44,8 +44,14 @@
                 <img src="/product/{{id}}/image" alt="{{name}}">
                 <p class="price">{{price}}€</p>
                 <a href="/product/{{id}}" class="details">Detalles</a>
+
             </div>
             {{/products}}
+        </div>
+
+        <!-- Botón para añadir producto -->
+        <div class="add-product">
+            <button onclick="location.href='/newProduct'">Añadir Producto</button>
         </div>
     </section>
 </main>

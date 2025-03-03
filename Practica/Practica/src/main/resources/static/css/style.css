@@ -244,3 +244,364 @@ body {
     background: #ff3366;
 }
 
+/* Estilos para la sección de ubicación */
+.location {
+    margin-top: 50px;
+    text-align: center;
+}
+
+.location-title {
+    font-size: 36px;
+    color: #ff6699;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.location-details h3 {
+    font-size: 24px;
+    color: #333;
+    margin-top: 20px;
+}
+
+.location-details p {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+footer .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+}
+
+footer .footer-left img {
+    width: 170px;
+}
+
+footer .footer-center {
+    text-align: center;
+}
+
+footer .footer-center img {
+    margin-top: 10px;
+}
+
+footer .footer-right a {
+    margin: 0 10px;
+    text-decoration: none;
+    color: #333;
+}
+
+footer .footer-right a:hover {
+    color: #ff6699;
+}
+
+/* Estilos para la página de producto */
+.product-details {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 50px;
+}
+
+.product-image {
+    width: 45%;
+}
+
+.product-image img {
+    width: 100%;
+    height: auto;
+}
+
+.product-info {
+    width: 50%;
+    padding-left: 20px;
+}
+
+.product-info h1 {
+    font-size: 36px;
+    color: #ff6699;
+}
+
+.product-info .price {
+    font-size: 28px;
+    color: #333;
+    font-weight: bold;
+}
+
+.product-info .description {
+    font-size: 18px;
+    margin-top: 20px;
+    color: #555;
+}
+
+.reviews {
+    margin-top: 20px;
+}
+
+.reviews h3 {
+    font-size: 20px;
+    color: #333;
+}
+
+.product-actions button {
+    background-color: #ff6699;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    font-size: 16px;
+    margin-top: 15px;
+    cursor: pointer;
+    width: 100%;
+}
+
+.product-actions button:hover {
+    background-color: #ff3366;
+}
+
+.sidebar {
+    width: 25%;
+}
+
+.featured-product {
+    margin-top: 50px;
+}
+
+.featured-product h2 {
+    font-size: 24px;
+    color: #ff6699;
+}
+
+.product-item {
+    margin-top: 20px;
+}
+
+.product-item img {
+    width: 100%;
+}
+
+.product-item p {
+    text-align: center;
+    font-size: 16px;
+    color: #333;
+}
+
+/* Estilos para la página de Mis Compras */
+.purchase-info {
+    margin-top: 50px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+}
+
+.purchase-box {
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+.purchase-box h1 {
+    font-size: 28px;
+    color: #ff6699;
+}
+
+.purchase-item {
+    margin-bottom: 20px;
+}
+
+.purchase-item p {
+    font-size: 16px;
+    color: #333;
+}
+
+.purchase-item p strong {
+    color: #ff6699;
+}
+
+/* Breadcrumbs */
+.breadcrumbs {
+    font-size: 16px;
+    margin-bottom: 20px;
+    color: #555;
+}
+
+.breadcrumbs a {
+    color: #ff6699;
+    text-decoration: none;
+}
+
+.breadcrumbs a:hover {
+    text-decoration: underline;
+}
+
+/* Pie de página */
+.footer {
+    background-color: #222;
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+}
+
+.footer .footer-left img {
+    width: 170px;
+}
+
+.footer .footer-center p {
+    margin: 10px 0;
+}
+
+.footer .footer-right a {
+    color: #fff;
+    margin: 0 10px;
+    text-decoration: none;
+}
+
+.footer .footer-right a:hover {
+    text-decoration: underline;
+}
+
+.delete-product {
+    background-color: white;
+    padding: 30px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    margin-top: 20px;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Estilo para el título principal de la página */
+.delete-product h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Estilo para los detalles del producto */
+.delete-product .product-details p {
+    font-size: 16px;
+    margin: 5px 0;
+    line-height: 1.6;
+    color: #555;
+}
+
+/* Espaciado entre las etiquetas y los valores */
+.delete-product .product-details p strong {
+    color: #333;
+}
+
+/* Estilo para los botones */
+.delete-product button {
+    padding: 12px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 45%;
+    transition: background-color 0.3s ease;
+    border: none;
+    margin: 10px 0;
+}
+
+/* Estilo del botón de eliminar */
+.delete-product .delete-button {
+    background-color: #f44336;
+    color: white;
+}
+
+.delete-product .delete-button:hover {
+    background-color: #e53935;
+}
+
+/* Estilo del botón de cancelar */
+.delete-product .cancel-button {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.delete-product .cancel-button:hover {
+    background-color: #45a049;
+}
+
+/* Estilo para el formulario de modificación */
+.modify-product {
+    background-color: white;
+    padding: 30px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+.modify-product h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.modify-product .product-details {
+    margin-bottom: 20px;
+}
+
+.modify-product label {
+    font-size: 16px;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.modify-product .forminput-imput {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+}
+
+.modify-product .error-message {
+    color: red;
+    font-size: 12px;
+    display: none; /* Ocultamos el mensaje de error por defecto */
+}
+
+.modify-product .form-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.modify-product .cancel-button, .modify-product .save-button {
+    padding: 12px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 45%;
+}
+
+.modify-product .cancel-button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+}
+
+.modify-product .cancel-button:hover {
+    background-color: #45a049;
+}
+
+.modify-product .save-button {
+    background-color: #2196F3;
+    color: white;
+    border: none;
+}
+
+.modify-product .save-button:hover {
+    background-color: #1976D2;
+}
+
+/* Mostrar el mensaje de error si es necesario */
+.modify-product input:invalid ~ .error-message {
+    display: block;
+}
+

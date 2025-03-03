@@ -1,49 +1,62 @@
-<html>
+<!DOCTYPE html>
+<html lang="es">
 <head>
-    <title>JUGUETES STORE - Eliminar Producto</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" type="text/css" href="/css/style.css" />
-    <!--[if IE 6]>
-    <link rel="stylesheet" type="text/css" href="/css/iecss.css"/>
-    <![endif]-->
-    <script type="text/javascript" src="/js/boxOver.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eliminar Producto - Juguetes Store</title>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-<div id="main_container">
-    <div class="top_bar"></div>
-    <div id="header">
-        <div id="logo"> <a href="#"><img src="/images/logo-tienda-juguetes.jpg" width="500" height="140" /></a> </div>
+<header class="header">
+    <div class="container">
+        <div class="logo">
+            <a href="/"><img src="/images/logo-tienda-juguetes.jpg" alt="Juguetes Store" width="500"></a>
+        </div>
+        <nav class="nav">
+            <ul>
+                <li><a href="/">Inicio</a></li>
+                <li><a href="/products/">Productos</a></li>
+                <li><a href="/myAccount">Mi cuenta</a></li>
+                <li><a href="/register">Registro</a></li>
+                <li><a href="/contact">Contáctanos</a></li>
+            </ul>
+        </nav>
     </div>
-    <div>
-        <div class="center_content" >
-            <div class="prod_box_big" style="margin-left: 176px">
-                <div class="center_prod_box_big">
+</header>
 
-                    <div class="oferta_title">Eliminar Producto </div>
-                    <form action="/deleteProduct/{{product.id}}" method="post">
-                        <br>
-                        <div class="product_title_big">¿Desea eliminar el producto?</div>
-                        <div></br>
-                            <br><div class="formlabel-label">Nombre: {{product.name}} </div></br>
-                            <br><div class="formlabel-label">Descripción: {{product.description}}</div></br>
-                            <br><div class="formlabel-label">Precio: {{product.price}}€</div></br>
-                            <br><div class="formlabel-label">Tipo: {{product.type}}</div></br>
-                        </div>
-                        <br>
-                        <button type="submit">Eliminar</button>
-                        <button type="button" onclick="location.href='/product/{{product.id}}';">Cancelar</button>
-                    </form>
-                </div>
+<main class="container">
+    <section class="delete-product">
+        <h2>Eliminar Producto</h2>
+        <form action="/deleteProduct/{{product.id}}" method="post" class="delete-form">
+            <div class="product-details">
+                <p><strong>Nombre:</strong> {{product.name}}</p>
+                <p><strong>Descripción:</strong> {{product.description}}</p>
+                <p><strong>Precio:</strong> {{product.price}}€</p>
+                <p><strong>Tipo:</strong> {{product.type}}</p>
             </div>
-            <div class="footer">
-                <div class="left_footer"> <img src="/images/logo-tienda-juguetes.jpg" alt="" width="170" height="49"/> </div>
-                <div class="center_footer"> JUGUETES STORE. All Rights Reserved 2025<br />
-                    <img src="/images/payment.gif" alt="" /> </div>
-                <div class="right_footer"> <a href="/">Página Principal</a> <a href="/ubication">Dónde encontrarnos</a> <a href="/contact">Contacto</a> </div>
+            <div class="form-actions">
+                <button type="submit" class="delete-button">Eliminar</button>
+                <button type="button" class="cancel-button" onclick="location.href='/product/{{product.id}}';">Cancelar</button>
             </div>
+        </form>
+    </section>
+</main>
+
+<footer class="footer">
+    <div class="container">
+        <div class="footer-left">
+            <img src="/images/logo-tienda-juguetes.jpg" alt="Juguetes Store" width="170">
+        </div>
+        <div class="footer-center">
+            <p>&copy; 2025 Juguetes Store. Todos los derechos reservados.</p>
+            <img src="/images/payment.gif" alt="Métodos de pago">
+        </div>
+        <div class="footer-right">
+            <a href="/">Inicio</a>
+            <a href="/ubication">Dónde encontrarnos</a>
+            <a href="/contact">Contacto</a>
         </div>
     </div>
-</div>
-
+</footer>
 </body>
 </html>
