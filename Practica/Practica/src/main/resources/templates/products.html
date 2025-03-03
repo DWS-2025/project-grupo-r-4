@@ -91,6 +91,20 @@
             </div>
         </div>
 
+        <div class="center_content">
+            <div class="prod_box">
+                <div class="top_prod_box"></div>
+                <div class="center_prod_box">
+                    {{#product2}}
+                    <div class="product_title"><a href="/product/2">{{product2.name}}</a></div>
+                    <div class="product_img"><a href="/product/2">{{#product2.image}}<img src="/product/{{product2.id}}/image"  width="175" alt="" border="0"/></a></div>{{/product2.image}}
+                    <div class="prod_price"><span class="price">{{product2.price}}€</span></div>
+                    {{/product2}}
+                </div>
+                <div class="bottom_prod_box"></div>
+            </div>
+        </div>
+
         <!-- end of center content -->
         <div class="right_content">
             <div class="title_box">Novedad</div>

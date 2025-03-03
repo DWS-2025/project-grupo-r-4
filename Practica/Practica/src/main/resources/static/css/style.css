@@ -175,3 +175,51 @@ a.prod_review {
     height: 70px;
     background: url(../images/footer_toybg.gif) repeat-x top;
 }
+.border_box.mejor_oferta {
+    width: 180px; /* Mismo ancho que .prod_box */
+    background: #B0E0E6; /* Azul pastel como .prod_box */
+    border: 1px solid #87CEEB; /* Borde azul */
+    border-radius: 10px; /* Bordes redondeados */
+    padding: 12px;
+    text-align: center;
+    float: right; /* Lo manda a la derecha */
+    margin-right: 200px;
+}
+
+.border_box.mejor_oferta .product_info {
+    margin-bottom: 10px;
+}
+
+.border_box.mejor_oferta .product_title {
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+}
+
+.border_box.mejor_oferta .product_img {
+    margin: 10px 0;
+}
+
+.border_box.mejor_oferta .product_img img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+}
+
+.border_box.mejor_oferta .prod_price {
+    font-size: 16px;
+    font-weight: bold;
+    color: #ff6600; /* Color naranja */
+}
+
+.right_content {
+    width: 250px;  /* Tamaño fijo para la columna de la derecha */
+    float: right; /* Coloca la sección a la derecha */
+    padding: 10px;
+}
+.border_box {
+    border: 1px solid #ccc;
+    background: #f9f9f9;
+    padding: 10px;
+    text-align: center;
+}

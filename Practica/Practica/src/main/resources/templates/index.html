@@ -62,13 +62,20 @@
           <li class="odd"><a href="#">Accesorios</a></li>
         </ul>
         <div class="title_box">Mejor oferta</div>
-        <div class="border_box">
+        <div class="border_box mejor_oferta">
           {{#product0}}
-          <div class="product_title"><a href="/product/0">{{product0.name}}</a></div>
-          <div class="product_img"><a href="/product/0">{{#product0.image}}<img src="/product/{{product0.id}}/image" width="150" height="75" /></a></div>{{/product0.image}}
-          <div class="prod_price"><span class="reduce">49,99€</span> <span class="price">{{product0.price}}€</span></div>
+          <div class="product_info">
+            <div class="product_title"><a href="/product/0">{{product0.name}}</a></div>
+            <div class="price"><span class="reduce">49,99€</span> <span class="prod_price">{{product0.price}}€</span></div>
+          </div>
+          <div class="product_img">
+            {{#product0.image}}
+            <a href="/product/0"><img src="/product/{{product0.id}}/image" width="150" height="75" /></a>
+            {{/product0.image}}
+          </div>
           {{/product0}}
         </div>
+
       </div>
       <!-- end of left content -->
       <div class="center_content">
@@ -88,7 +95,7 @@
     <!-- end of center content -->
     <div class="right_content">
       <div class="title_box">Novedad</div>
-      <div class="border_box">
+      <div class="prod_box">
         {{#product1}}
         <div class="product_title"><a href="/product/1">{{product1.name}}</a></div>
         <div class="product_img"><a href="/product/1">{{#product1.image}}<img src="/product/{{product1.id}}/image" width="175" alt="" border="0" /></a></div>{{/product1.image}}
