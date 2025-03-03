@@ -21,7 +21,23 @@ public class ProductService {
     private ConcurrentMap<String, Product> products = new ConcurrentHashMap<>();
     private AtomicLong nextId = new AtomicLong();
 
-    //Constructor
+    public ProductService(){
+
+        Product product0 = new Product ("Oso De Pelcuhe", 19, "Oso de peluche ideal" +
+                " para niños.", "Peluches");
+        product0.setImage("oso-peluche.jpg");
+        save(product0, null);
+
+        Product product1 = new Product ("Muñeco bebé", 29, "Muñeco bebé para niños", "Muñecosd");
+        product1.setImage("muñeco-bebe.jpg");
+        save(product1, null);
+
+        Product product2 = new Product ("Scalextric", 49, "Scalextric con 50 piezas y dos coches de carreras", "Juguetes");
+        product2.setImage("scalextric.jpg");
+        save(product2, null);
+
+
+    }
 
     public Collection<Product> findAll() {
         return products.values().stream().toList();

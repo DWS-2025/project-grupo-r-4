@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="dffe2e45-760d-4c54-bcbe-f83ef775f13d" name="Changes" comment="css" />
+    <list default="true" id="dffe2e45-760d-4c54-bcbe-f83ef775f13d" name="Changes" comment="cambio css">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -118,7 +120,7 @@
       <workItem from="1740475349437" duration="6399000" />
       <workItem from="1740651581168" duration="4438000" />
       <workItem from="1740735881666" duration="9900000" />
-      <workItem from="1740993110807" duration="534000" />
+      <workItem from="1740993110807" duration="1151000" />
     </task>
     <task id="LOCAL-00001" summary="inicio">
       <option name="closed" value="true" />
@@ -240,7 +242,15 @@
       <option name="project" value="LOCAL" />
       <updated>1740993645022</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="cambio css">
+      <option name="closed" value="true" />
+      <created>1740993875739</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1740993875739</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -259,6 +269,7 @@
     <MESSAGE value="imagenes y algun html" />
     <MESSAGE value="algun html, correccion de errores y eliminacion de fotos" />
     <MESSAGE value="css" />
-    <option name="LAST_COMMIT_MESSAGE" value="css" />
+    <MESSAGE value="cambio css" />
+    <option name="LAST_COMMIT_MESSAGE" value="cambio css" />
   </component>
 </project>
