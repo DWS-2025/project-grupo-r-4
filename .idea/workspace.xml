@@ -4,13 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="dffe2e45-760d-4c54-bcbe-f83ef775f13d" name="Changes" comment="mas imagenes y htmls">
+    <list default="true" id="dffe2e45-760d-4c54-bcbe-f83ef775f13d" name="Changes" comment="correcciones">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Controller/ProductController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Controller/ProductController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Model/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Service/ImageService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Service/ImageService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Controller/WebController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Controller/WebController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Service/ProductService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Service/ProductService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Practica/Practica/src/main/resources/static/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/Practica/Practica/src/main/resources/static/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Service/ReviewService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Service/ReviewService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -125,7 +124,7 @@
       <workItem from="1740475349437" duration="6399000" />
       <workItem from="1740651581168" duration="4438000" />
       <workItem from="1740735881666" duration="9900000" />
-      <workItem from="1740993110807" duration="11099000" />
+      <workItem from="1740993110807" duration="13146000" />
     </task>
     <task id="LOCAL-00001" summary="inicio">
       <option name="closed" value="true" />
@@ -271,7 +270,15 @@
       <option name="project" value="LOCAL" />
       <updated>1740999751325</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="correcciones">
+      <option name="closed" value="true" />
+      <created>1741006120634</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1741006120634</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -293,6 +300,7 @@
     <MESSAGE value="cambio css" />
     <MESSAGE value="productos subidos nada mas inicializar la pagina web" />
     <MESSAGE value="mas imagenes y htmls" />
-    <option name="LAST_COMMIT_MESSAGE" value="mas imagenes y htmls" />
+    <MESSAGE value="correcciones" />
+    <option name="LAST_COMMIT_MESSAGE" value="correcciones" />
   </component>
 </project>

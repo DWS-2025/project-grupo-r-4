@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Collection;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -58,9 +59,6 @@ public class ProductService {
     }
 
     public Product save(Product product, MultipartFile imageField) {
-        for(p : products.strem){
-
-        }
 
         if(imageField != null && !imageField.isEmpty()){
             String path = imageService.createImage(imageField);
@@ -75,7 +73,30 @@ public class ProductService {
         return product;
     }
 
+    public boolean existByName(String name) {
+        for(Product p : products.values().stream().toList()){
+            if(p.getName().equals(name)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void deleteById(long id) {
         this.products.remove(id);
+    }
+
+    public void updateProduct(long id, Product productDetails) {
+        Optional<Product> productOptional = findById(id);
+        if (productOptional.isPresent()) {
+            productOptional.get().setName(productDetails.getName());
+            productOptional.get().setDescription(productDetails.getDescription());
+            productOptional.get().setPrice(productDetails.getPrice());
+            productOptional.get().setProductType(productDetails.getProductType());
+            products.put(id, productOptional.get());
+            save(productOptional.get(), null);
+        } else {
+            throw new IllegalArgumentException("Producto no encontrado");
+        }
     }
 }

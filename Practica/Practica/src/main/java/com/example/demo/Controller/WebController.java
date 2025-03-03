@@ -13,17 +13,11 @@ import java.util.Optional;
 
 @Controller
 public class WebController {
-    private ProductController productController;
-    private UserController userController;
+
     @Autowired
     private UserService userService;
     @Autowired
     private ProductService productService;
-
-    public WebController(ProductController productController, UserController userController) {
-        this.productController = productController;
-        this.userController = userController;
-    }
 
     @GetMapping("/")
     public String index(Model model) {

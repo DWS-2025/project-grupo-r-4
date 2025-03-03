@@ -76,6 +76,9 @@ public class ProductController {
 
     @PostMapping("/product/new")
     public String newProduct(Model model, Product product, MultipartFile imageField) throws IOException {
+        if(productService.existByName(product.getName())) {
+            return "404";
+        }
         Product newProduct = productService.save(product, imageField);
 
 
@@ -96,10 +99,7 @@ public class ProductController {
     @PostMapping("/product/{id}/modify")
     public String modifyProduct(Model model, Product product, @PathVariable int id) throws IOException {
         Optional<Product> productOptional = productService.findById(id);
-        Product product1 = productOptional.get();
-        product1.setDescription(product.getDescription());
-        product1.setPrice(product.getPrice());
-        product1.setType(product.getType());
+        productService.updateProduct(id, productOptional.get());
         model.addAttribute("product", productOptional.get());
 
         return "redirect:/product/" + productOptional.get().getId();
