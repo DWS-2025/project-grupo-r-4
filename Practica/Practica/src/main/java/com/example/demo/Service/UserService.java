@@ -14,7 +14,7 @@ public class UserService {
     private AtomicLong nextId = new AtomicLong();
     private ConcurrentMap<String, User> users = new ConcurrentHashMap<>();
 
-    public Collection<User> finAll() {
+    public Collection<User> findAll() {
         return users.values();
     }
 

@@ -4,10 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="dffe2e45-760d-4c54-bcbe-f83ef775f13d" name="Changes" comment="MAS ERRORES CORREGIDOS">
-      <change afterPath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Controller/ProductRestController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Controller/UserRestController.java" afterDir="false" />
+    <list default="true" id="dffe2e45-760d-4c54-bcbe-f83ef775f13d" name="Changes" comment="productRestController hecho">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Controller/UserRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Controller/UserRestController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Service/UserService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,6 +75,7 @@
     "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "reference.settings.project.maven.repository.indices",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -126,7 +127,7 @@
       <workItem from="1740993110807" duration="17737000" />
       <workItem from="1741040226859" duration="453000" />
       <workItem from="1741895301477" duration="1063000" />
-      <workItem from="1743436054606" duration="1881000" />
+      <workItem from="1743436054606" duration="3444000" />
     </task>
     <task id="LOCAL-00001" summary="inicio">
       <option name="closed" value="true" />
@@ -296,7 +297,15 @@
       <option name="project" value="LOCAL" />
       <updated>1741012022911</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="productRestController hecho">
+      <option name="closed" value="true" />
+      <created>1743437966476</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1743437966476</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -331,6 +340,7 @@
     <MESSAGE value="mas imagenes y htmls" />
     <MESSAGE value="correcciones" />
     <MESSAGE value="MAS ERRORES CORREGIDOS" />
-    <option name="LAST_COMMIT_MESSAGE" value="MAS ERRORES CORREGIDOS" />
+    <MESSAGE value="productRestController hecho" />
+    <option name="LAST_COMMIT_MESSAGE" value="productRestController hecho" />
   </component>
 </project>
