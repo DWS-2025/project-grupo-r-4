@@ -97,12 +97,14 @@ public class ProductController {
     }
 
     @PostMapping("/product/{id}/modify")
-    public String modifyProduct(Model model, Product product, @PathVariable int id) throws IOException {
+    public String modifyProduct(Model model, Product product, @PathVariable int id,MultipartFile imageField) throws IOException {
         Optional<Product> productOptional = productService.findById(id);
         Product product1 = productOptional.get();
+        product1.setName(product.getName());
         product1.setDescription(product.getDescription());
         product1.setPrice(product.getPrice());
         product1.setType(product.getType());
+        productService.updateProduct(id, product1, imageField);
         model.addAttribute("product", productOptional.get());
 
         return "redirect:/product/" + productOptional.get().getId();
