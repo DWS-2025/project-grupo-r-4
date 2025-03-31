@@ -208,21 +208,44 @@ public class ProductController {
     }
 
     @PostMapping("/product/{id}/purchase")
-    public String newPurchase(org.springframework.ui.Model model, @PathVariable long id/*@RequestParam String user*/, @RequestParam double price) throws IOException {
-        User user1 = userService.findByUserName("user");
-        Purchase purchase = new Purchase(user1, price);
-        purchaseService.save(purchase);
-        Optional<Product> optionalProduct = productService.findById(id);
-        Product product = optionalProduct.get();
-        product.getPurchase().add(purchase);
-        purchase.getProducts().add(product);
-        user1.getProducts().add(purchase);
-        user1.getProductList().add(product);
-        purchase.setUser(user1);
-        product.getUsers().add(user1);
+    public String newPurchase(@PathVariable long id) {
+        try {
+            // Verificar si el producto existe
+            Optional<Product> optionalProduct = productService.findById(id);
+            if (optionalProduct.isEmpty()) {
+                System.out.println("Error: Producto con ID " + id + " no encontrado.");
+                return "404";
+            }
+            Product product = optionalProduct.get();
+            double price = product.getPrice(); // Obtener el precio directamente del producto
 
+            // Verificar si el usuario existe
+            User user1 = userService.findByUserName("user");
+            if (user1 == null) {
+                System.out.println("Error: Usuario no encontrado.");
+                return "404";
+            }
 
-        return "redirect:/product/" + id;
+            // Crear la compra y asociarla con el usuario y el producto
+            Purchase purchase = new Purchase(user1, price);
+            purchaseService.save(purchase);
+
+            // Establecer relaciones
+            product.getPurchase().add(purchase);
+            purchase.getProducts().add(product);
+            user1.getProducts().add(purchase);
+            user1.getProductList().add(product);
+            purchase.setUser(user1);
+            product.getUsers().add(user1);
+
+            System.out.println("Compra realizada con éxito para el usuario: " + user1.getName());
+            return "redirect:/product/" + id;
+
+        } catch (Exception e) {
+            System.out.println("Error durante la compra: " + e.getMessage());
+            return "404";
+        }
     }
+
 
 }
