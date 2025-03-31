@@ -22,23 +22,25 @@ public class ProductService {
     private ConcurrentMap<Long, Product> products = new ConcurrentHashMap<>();
     private AtomicLong nextId = new AtomicLong();
 
-    public ProductService(){
-
-        Product product0 = new Product ("Oso De Peluche", 19, "Oso de peluche ideal" +
-                " para niños.", "Peluches");
+    public ProductService() {
+        Product product0 = new Product("Oso De Peluche", 19, "Oso de peluche ideal para niños.", "Peluches");
+        product0.setId(nextId.getAndIncrement());  // Asignamos ID antes de guardar
         product0.setImage("oso-peluche.jpg");
-        save(product0, null);
+        products.put(product0.getId(), product0);
 
-        Product product1 = new Product ("Muñeco bebé", 29, "Muñeco bebé para niños", "Muñecas");
+        Product product1 = new Product("Muñeco bebé", 29, "Muñeco bebé para niños", "Muñecas");
+        product1.setId(nextId.getAndIncrement());
         product1.setImage("muñeco-bebe.jpg");
-        save(product1, null);
+        products.put(product1.getId(), product1);
 
-        Product product2 = new Product ("Scalextric", 49, "Scalextric con 50 piezas y dos coches de carreras", "Juguetes");
+        Product product2 = new Product("Scalextric", 49, "Scalextric con 50 piezas y dos coches de carreras", "Juguetes");
+        product2.setId(nextId.getAndIncrement());
         product2.setImage("scalextric.jpg");
-        save(product2, null);
-
-
+        products.put(product2.getId(), product2);
     }
+
+
+
 
     public Collection<Product> findAll() {
         return products.values().stream().toList();
@@ -59,19 +61,25 @@ public class ProductService {
     }
 
     public Product save(Product product, MultipartFile imageField) {
-
-        if(imageField != null && !imageField.isEmpty()){
+        if (imageField != null && !imageField.isEmpty()) {
             String path = imageService.createImage(imageField);
             product.setImage(path);
         }
-        if(product.getImage() == null || product.getImage().isEmpty()) product.setImage("no-image.png");
 
-        long id = nextId.getAndIncrement();
-        product.setId(id);
+        if (product.getImage() == null || product.getImage().isEmpty()) {
+            product.setImage("no-image.png");
+        }
 
-        products.put(id, product);
+        // Si el producto no tiene ID asignado (producto nuevo)
+        if (product.getId() == 0) {
+            long id = nextId.getAndIncrement();
+            product.setId(id);
+        }
+
+        products.put(product.getId(), product);
         return product;
     }
+
 
     public boolean existByName(String name) {
         for(Product p : products.values().stream().toList()){
@@ -86,17 +94,32 @@ public class ProductService {
         this.products.remove(id);
     }
 
-    public void updateProduct(long id, Product productDetails) {
+    public void updateProduct(long id, Product productDetails, MultipartFile imageField) {
         Optional<Product> productOptional = findById(id);
+
         if (productOptional.isPresent()) {
-            productOptional.get().setName(productDetails.getName());
-            productOptional.get().setDescription(productDetails.getDescription());
-            productOptional.get().setPrice(productDetails.getPrice());
-            productOptional.get().setProductType(productDetails.getProductType());
-            products.put(id, productOptional.get());
-            save(productOptional.get(), null);
+            Product existingProduct = productOptional.get();
+
+            // Actualizar datos del producto
+            existingProduct.setName(productDetails.getName());
+            existingProduct.setDescription(productDetails.getDescription());
+            existingProduct.setPrice(productDetails.getPrice());
+            existingProduct.setProductType(productDetails.getProductType());
+
+            // Si hay una nueva imagen, actualizamos
+            if (imageField != null && !imageField.isEmpty()) {
+                String path = imageService.createImage(imageField);
+                existingProduct.setImage(path);
+            }
+
+            // No generamos un nuevo ID, solo actualizamos el producto en la colección
+            products.put(id, existingProduct);
+
         } else {
             throw new IllegalArgumentException("Producto no encontrado");
         }
     }
+
+
 }
+

@@ -25,32 +25,46 @@
 </header>
 
 <main class="container">
-    <section class="modify-product">
+    <section class="product-form">
         <h2>Modificar Producto</h2>
-        <form action="/product/{{product.id}}/modify" method="post" enctype="multipart/form-data" class="modify-form">
-            <div class="product-details">
-                <p><strong>Producto:</strong> {{product.name}}</p>
+        <form action="/product/{{product.id}}/modify" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="name">Nombre del producto:</label>
+                <input class="forminput-imput" type="text" id="name" name="name" placeholder="Nombre del producto" value="{{product.name}}" required>
+                <span class="error-message" id="nameError">Ingresa un nombre válido</span>
+            </div>
 
-                <!-- Campo para descripción -->
-                <label for="description" class="formlabel-label">Descripción:</label>
-                <input type="text" id="description" name="description" placeholder="Descripción" value="{{product.description}}" required>
+            <div class="form-group">
+                <label for="description">Descripción:</label>
+                <input class="forminput-imput" type="text" id="description" name="description" placeholder="Descripción del producto" value="{{product.description}}" required>
                 <span class="error-message" id="descriptionError">Ingresa una descripción válida</span>
+            </div>
 
-                <!-- Campo para precio -->
-                <label for="price" class="formlabel-label">Precio:</label>
-                <input type="number" id="price" name="price" placeholder="Precio" value="{{product.price}}" min="0" step="0.01" required>
+            <div class="form-group">
+                <label for="price">Precio:</label>
+                <input class="forminput-imput" type="number" id="price" name="price" placeholder="Precio" value="{{product.price}}" min="0" step="0.01" required>
                 <span class="error-message" id="priceError">Ingresa un precio válido</span>
+            </div>
 
-                <!-- Campo para tipo -->
-                <label for="type" class="formlabel-label">Tipo:</label>
-                <input type="text" id="type" name="type" placeholder="Tipo" value="{{product.type}}" required>
+            <div class="form-group">
+                <label for="type">Tipo de producto:</label>
+                <input class="forminput-imput" type="text" id="type" name="type" placeholder="Tipo de producto" value="{{product.type}}" required>
                 <span class="error-message" id="typeError">Ingresa un tipo válido</span>
             </div>
 
-            <!-- Botones para cancelar o guardar -->
+            <div class="form-group">
+                <label>Imagen actual:</label><br>
+                <img src="/uploads/{{product.image}}" alt="Imagen del producto" width="150">
+            </div>
+
+            <div class="form-group">
+                <label for="imageField">Cambiar imagen del producto:</label>
+                <input class="forminput-imput" type="file" id="imageField" name="imageField" accept=".jpg, .png">
+            </div>
+
             <div class="form-actions">
-                <button type="button" class="cancel-button" onclick="location.href='/product/{{product.id}}';">Cancelar</button>
-                <input type="submit" value="Guardar" class="save-button">
+                <button type="button" onclick="location.href='/product/{{product.id}}'; return false;">Cancelar</button>
+                <input type="submit" value="Guardar Cambios">
             </div>
         </form>
     </section>
