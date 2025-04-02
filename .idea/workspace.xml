@@ -4,14 +4,25 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="dffe2e45-760d-4c54-bcbe-f83ef775f13d" name="Changes" comment="productRestController hecho">
-      <change afterPath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Repository/ImageRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Repository/ProductRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Repository/PurchaseRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Repository/ReviewRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Repository/UserRepository.java" afterDir="false" />
+    <list default="true" id="dffe2e45-760d-4c54-bcbe-f83ef775f13d" name="Changes" comment="repository">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Practica/Practica/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Practica/Practica/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Controller/ProductController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Controller/ProductController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Model/Image.java" beforeDir="false" afterPath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Model/Image.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Model/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Model/Product.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Model/Purchase.java" beforeDir="false" afterPath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Model/Purchase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Model/Review.java" beforeDir="false" afterPath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Model/Review.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Model/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Repository/ImageRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Repository/ImageRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Repository/ProductRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Repository/ProductRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Repository/PurchaseRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Repository/PurchaseRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Repository/ReviewRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Repository/ReviewRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Repository/UserRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Service/ProductService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Service/ProductService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Service/PurchaseService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Service/PurchaseService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Service/ReviewService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Service/ReviewService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Practica/Practica/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/Practica/Practica/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,8 +34,8 @@
       <list>
         <option value="CSS File" />
         <option value="HTML File" />
-        <option value="Class" />
         <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -58,32 +69,32 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "DefaultHtmlFileTemplate": "HTML File",
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "Spring Boot.DemoApplication.executor": "Run",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/hugom/OneDrive/Documentos/GitHub/project-grupo-r-4",
-    "list.type.of.created.stylesheet": "CSS",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
-    "settings.editor.selected.configurable": "reference.settings.project.maven.repository.indices",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;Spring Boot.DemoApplication.executor&quot;: &quot;Run&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/hugom/OneDrive/Documentos/GitHub/project-grupo-r-4&quot;,
+    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.project.maven.repository.indices&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration default="true" type="JetRunConfigurationType">
       <module name="project-grupo-r-4" />
@@ -132,7 +143,9 @@
       <workItem from="1740993110807" duration="17737000" />
       <workItem from="1741040226859" duration="453000" />
       <workItem from="1741895301477" duration="1063000" />
-      <workItem from="1743436054606" duration="6323000" />
+      <workItem from="1743436054606" duration="15895000" />
+      <workItem from="1743614173714" duration="319000" />
+      <workItem from="1743614716229" duration="2891000" />
     </task>
     <task id="LOCAL-00001" summary="inicio">
       <option name="closed" value="true" />
@@ -318,7 +331,15 @@
       <option name="project" value="LOCAL" />
       <updated>1743439732954</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="repository">
+      <option name="closed" value="true" />
+      <created>1743442415747</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1743442415747</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -354,6 +375,7 @@
     <MESSAGE value="correcciones" />
     <MESSAGE value="MAS ERRORES CORREGIDOS" />
     <MESSAGE value="productRestController hecho" />
-    <option name="LAST_COMMIT_MESSAGE" value="productRestController hecho" />
+    <MESSAGE value="repository" />
+    <option name="LAST_COMMIT_MESSAGE" value="repository" />
   </component>
 </project>

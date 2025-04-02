@@ -1,20 +1,32 @@
 package com.example.demo.Model;
 
 import com.fasterxml.jackson.annotation.JsonView;
-
+import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-
+@Entity
 public class Purchase {
+
     public interface Basic{}
     public interface Products{}
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonView(Basic.class)
     private long id;
+    @ManyToOne
+    @JsonView(Products.class)
     private User user;
     @JsonView(Products.class)
+    @ManyToMany
     private List<Product> products;
     @JsonView(Basic.class)
     private double price;
+
+    public Purchase() {
+
+    }
 
     public Purchase(User userId, double price) {
         this.user = userId;

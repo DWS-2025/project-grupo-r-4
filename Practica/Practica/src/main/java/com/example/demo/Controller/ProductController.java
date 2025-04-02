@@ -100,10 +100,6 @@ public class ProductController {
     public String modifyProduct(Model model, Product product, @PathVariable int id,MultipartFile imageField) throws IOException {
         Optional<Product> productOptional = productService.findById(id);
         Product product1 = productOptional.get();
-        product1.setName(product.getName());
-        product1.setDescription(product.getDescription());
-        product1.setPrice(product.getPrice());
-        product1.setType(product.getType());
         productService.updateProduct(id, product1, imageField);
         model.addAttribute("product", productOptional.get());
 
@@ -156,16 +152,10 @@ public class ProductController {
     @PostMapping("/product/{id}/review")
     public String postReview(Model model, @PathVariable long id, @RequestParam String review, @RequestParam int rating) {
         Optional<Product> product = productService.findById(id);
+
         if (product.isPresent()) {
-            User user1 = userService.findByUserName("user");
-            Product product1 = product.get();
-            Review review1 = new Review(user1, product1, rating, review);
-            reviewService.save(review1);
-            product1.getReviews().add(review1);
-            review1.setProduct(product1);
-            user1.getReviews().add(review1);
-            review1.setUser(user1);
-            user1.setNumReviews(user1.getNumReviews()+1);
+            User user = userService.findByUserName("user");
+            reviewService.createReview(user, product.get(), rating, review);
             return "redirect:/product/" + id;
         } else {
             return "404";
@@ -210,42 +200,14 @@ public class ProductController {
     @PostMapping("/product/{id}/purchase")
     public String newPurchase(@PathVariable long id) {
         try {
-            // Verificar si el producto existe
-            Optional<Product> optionalProduct = productService.findById(id);
-            if (optionalProduct.isEmpty()) {
-                System.out.println("Error: Producto con ID " + id + " no encontrado.");
-                return "404";
-            }
-            Product product = optionalProduct.get();
-            double price = product.getPrice(); // Obtener el precio directamente del producto
-
-            // Verificar si el usuario existe
-            User user1 = userService.findByUserName("user");
-            if (user1 == null) {
-                System.out.println("Error: Usuario no encontrado.");
-                return "404";
-            }
-
-            // Crear la compra y asociarla con el usuario y el producto
-            Purchase purchase = new Purchase(user1, price);
-            purchaseService.save(purchase);
-
-            // Establecer relaciones
-            product.getPurchase().add(purchase);
-            purchase.getProducts().add(product);
-            user1.getProducts().add(purchase);
-            user1.getProductList().add(product);
-            purchase.setUser(user1);
-            product.getUsers().add(user1);
-
-            System.out.println("Compra realizada con éxito para el usuario: " + user1.getName());
+            purchaseService.createPurchase(id, "user");
             return "redirect:/product/" + id;
-
-        } catch (Exception e) {
-            System.out.println("Error durante la compra: " + e.getMessage());
+        } catch (RuntimeException e) {
+            System.out.println("Error: " + e.getMessage());
             return "404";
+        } catch (Exception e) {
+            System.out.println("Error inesperado: " + e.getMessage());
+            return "500";
         }
     }
-
-
 }

@@ -1,18 +1,23 @@
 package com.example.demo.Model;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import jakarta.persistence.Entity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
-
+import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
 @Component
 @SessionScope
 public class User {
     public interface RevInt{}
     public interface UserInfo{}
     public interface PurchInt{}
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonView(UserInfo.class)
     private long id;
     @JsonView(UserInfo.class)
@@ -25,11 +30,14 @@ public class User {
     private String phone;
     @JsonView(UserInfo.class)
     private int numReviews;
-
+    @OneToMany
     @JsonView(RevInt.class)
     private List<Review> reviews;
     @JsonView(PurchInt.class)
+    @OneToMany
     private List<Purchase> products;
+    @JsonView(PurchInt.class)
+    @ManyToMany
     private List<Product> productList;
 
     public User(String name) {

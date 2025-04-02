@@ -1,18 +1,33 @@
 package com.example.demo.Model;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 
+@Entity
 public class Review {
+
+
     public interface Basic{}
     public interface Products{}
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long reviewId;
     @JsonView(Products.class)
+    @ManyToOne
     private Product productId;
     @JsonView (Basic.class)
     private int rating;
-    @JsonView (Basic.class)
+    @JsonView (Products.class)
     private String review;
+    @JsonView (Products.class)
+    @ManyToOne
     private User user;
+
+    public Review() {
+
+    }
 
     public Review(User user, Product productId, int rating, String review) {
         this.user = user;

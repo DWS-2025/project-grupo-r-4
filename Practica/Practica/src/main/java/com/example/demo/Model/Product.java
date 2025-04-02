@@ -1,15 +1,22 @@
 package com.example.demo.Model;
 
 import com.fasterxml.jackson.annotation.JsonView;
-
+import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
+@Table(name = "products")
 public class Product {
+
     public interface Basic{}
     public interface ProdRev{}
     public interface ProdPurch{}
     public interface ProdUser{}
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonView(Basic.class)
     private long id;
     @JsonView (Basic.class)
@@ -21,12 +28,19 @@ public class Product {
     private String description;
     @JsonView(Basic.class)
     private String type;
+    @OneToMany
     @JsonView(ProdRev.class)
     private List<Review> reviews;
     @JsonView(ProdUser.class)
+    @ManyToMany
     private List<User> users;
     @JsonView(ProdPurch.class)
+    @ManyToMany
     private List<Purchase> purchase;
+
+    public Product() {
+
+    }
 
     public Product(String name,double price,String description, String type) {
         super();

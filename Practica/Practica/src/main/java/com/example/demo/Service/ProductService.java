@@ -2,28 +2,28 @@ package com.example.demo.Service;
 
 
 import com.example.demo.Model.Product;
+import com.example.demo.Repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Collection;
-import java.util.Objects;
 import java.util.Optional;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
-import java.util.concurrent.atomic.AtomicLong;
-import java.util.stream.Collectors;
+
 
 @Service
 public class ProductService {
     @Autowired
+    private ProductRepository productRepository;
+
+    @Autowired
     private ImageService imageService;
 
-    private ConcurrentMap<Long, Product> products = new ConcurrentHashMap<>();
-    private AtomicLong nextId = new AtomicLong();
 
-    public ProductService() {
-        Product product0 = new Product("Oso De Peluche", 19, "Oso de peluche ideal para niños.", "Peluches");
+    /*public ProductService() {
+        /*Product product0 = new Product("Oso De Peluche", 19, "Oso de peluche ideal para niños.", "Peluches");
         product0.setId(nextId.getAndIncrement());  // Asignamos ID antes de guardar
         product0.setImage("oso-peluche.jpg");
         products.put(product0.getId(), product0);
@@ -37,27 +37,22 @@ public class ProductService {
         product2.setId(nextId.getAndIncrement());
         product2.setImage("scalextric.jpg");
         products.put(product2.getId(), product2);
-    }
+
+    }*/
 
 
 
 
     public Collection<Product> findAll() {
-        return products.values().stream().toList();
+        return productRepository.findAll();
     }
 
     public Collection<Product> findByType(String type) {
-        return products.values().stream()
-                .filter(product -> product.getProductType().equalsIgnoreCase(type))
-                .collect(Collectors.toList());
+        return productRepository.findByTypeIgnoreCase(type);
     }
 
     public Optional<Product> findById(long id) {
-        if(this.products.containsKey(id)){
-            return Optional.of(products.get(id));
-        }else{
-            return Optional.empty();
-        }
+        return productRepository.findById(id);
     }
 
     public Product save(Product product, MultipartFile imageField) {
@@ -70,56 +65,38 @@ public class ProductService {
             product.setImage("no-image.png");
         }
 
-        // Si el producto no tiene ID asignado (producto nuevo)
-        if (product.getId() == 0) {
-            long id = nextId.getAndIncrement();
-            product.setId(id);
-        }
-
-        products.put(product.getId(), product);
-        return product;
+        return productRepository.save(product);
     }
 
 
     public boolean existByName(String name) {
-        for(Product p : products.values().stream().toList()){
-            if(p.getName().equals(name)) {
-                return true;
-            }
-        }
-        return false;
+        return productRepository.existsByName(name);
     }
 
     public void deleteById(long id) {
-        this.products.remove(id);
+        if (!productRepository.existsById(id)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Producto no encontrado");
+        }
+        productRepository.deleteById(id);
     }
 
     public void updateProduct(long id, Product productDetails, MultipartFile imageField) {
-        Optional<Product> productOptional = findById(id);
+        Product existingProduct = productRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Producto no encontrado"));
 
-        if (productOptional.isPresent()) {
-            Product existingProduct = productOptional.get();
+        existingProduct.setName(productDetails.getName());
+        existingProduct.setDescription(productDetails.getDescription());
+        existingProduct.setPrice(productDetails.getPrice());
+        existingProduct.setProductType(productDetails.getProductType());
 
-            // Actualizar datos del producto
-            existingProduct.setName(productDetails.getName());
-            existingProduct.setDescription(productDetails.getDescription());
-            existingProduct.setPrice(productDetails.getPrice());
-            existingProduct.setProductType(productDetails.getProductType());
-
-            // Si hay una nueva imagen, actualizamos
-            if (imageField != null && !imageField.isEmpty()) {
-                String path = imageService.createImage(imageField);
-                existingProduct.setImage(path);
-            }
-
-            // No generamos un nuevo ID, solo actualizamos el producto en la colección
-            products.put(id, existingProduct);
-
-        } else {
-            throw new IllegalArgumentException("Producto no encontrado");
+        if (imageField != null && !imageField.isEmpty()) {
+            String path = imageService.createImage(imageField);
+            existingProduct.setImage(path);
         }
-    }
 
+        productRepository.save(existingProduct);
+
+    }
 
 }
 
