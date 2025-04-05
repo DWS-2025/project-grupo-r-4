@@ -107,7 +107,6 @@ public class User {
         this.id = id;
     }
 
-
     public List<Review> getReviews(){
         return reviews;
     }

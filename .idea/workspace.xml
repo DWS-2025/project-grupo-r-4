@@ -4,15 +4,26 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="dffe2e45-760d-4c54-bcbe-f83ef775f13d" name="Changes" comment="inicio de la base de datos y algunos errores corregidos">
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Model/ProductDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Model/PurchaseDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Model/ReviewDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Model/UserDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Service/DataBaseInitializer.java" afterDir="false" />
+    <list default="true" id="dffe2e45-760d-4c54-bcbe-f83ef775f13d" name="Changes" comment="Creacion de los DTOS">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Service/ProductService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Service/ProductService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Practica/Practica/images/Casa-moderna-lego.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Practica/Practica/images/Fifa-25-PS5.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Practica/Practica/images/Hot-wheels-circuito.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Practica/Practica/images/Nerf-Scar-Fortnite.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Practica/Practica/images/Pasteleria-barbie.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Practica/Practica/images/Peluqiería-play-doh.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Practica/Practica/images/Robot-teledirigido.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Practica/Practica/images/Trivial-pursuit.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Practica/Practica/images/hatchimals.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Practica/Practica/images/muñeco-bebe.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Practica/Practica/images/oso-peluche.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Practica/Practica/images/scalextric.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Practica/Practica/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Practica/Practica/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Model/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Model/Product.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Model/ProductDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Model/ProductDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Model/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Service/DataBaseInitializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Service/DataBaseInitializer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Service/ImageService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Service/ImageService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,6 +55,9 @@
     &quot;accountId&quot;: &quot;301bfc65-77c0-4814-8851-91a96326d168&quot;
   }
 }</component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="jar://$USER_HOME$/.jdks/openjdk-23.0.2/lib/src.zip!/java.base/java/util/List.java" root0="SKIP_INSPECTION" />
+  </component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>
@@ -82,7 +96,7 @@
     "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.0",
-    "settings.editor.selected.configurable": "reference.settings.project.maven.repository.indices",
+    "settings.editor.selected.configurable": "ml.llm.LLMConfigurable",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -137,7 +151,7 @@
       <workItem from="1743436054606" duration="15895000" />
       <workItem from="1743614173714" duration="319000" />
       <workItem from="1743614716229" duration="8171000" />
-      <workItem from="1743845297526" duration="6288000" />
+      <workItem from="1743845297526" duration="12092000" />
     </task>
     <task id="LOCAL-00001" summary="inicio">
       <option name="closed" value="true" />
@@ -339,7 +353,15 @@
       <option name="project" value="LOCAL" />
       <updated>1743618036478</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="Creacion de los DTOS">
+      <option name="closed" value="true" />
+      <created>1743852233887</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1743852233887</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -377,6 +399,7 @@
     <MESSAGE value="productRestController hecho" />
     <MESSAGE value="repository" />
     <MESSAGE value="inicio de la base de datos y algunos errores corregidos" />
-    <option name="LAST_COMMIT_MESSAGE" value="inicio de la base de datos y algunos errores corregidos" />
+    <MESSAGE value="Creacion de los DTOS" />
+    <option name="LAST_COMMIT_MESSAGE" value="Creacion de los DTOS" />
   </component>
 </project>

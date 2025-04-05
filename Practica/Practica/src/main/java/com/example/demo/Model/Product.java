@@ -126,8 +126,11 @@ public class Product {
         return users;
     }
 
-    public void setUsers(List<User> users){
-        this.users = users;
+    public void setUsers(User user) {
+        if (this.users == null) {
+            this.users = new ArrayList<>();
+        }
+        this.users.add(user);
     }
 
     public void addUser(User user){
