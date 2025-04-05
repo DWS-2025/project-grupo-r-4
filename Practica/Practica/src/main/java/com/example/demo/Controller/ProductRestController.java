@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 import java.io.IOException;
 import java.net.URI;
@@ -132,5 +134,15 @@ public class ProductRestController {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+    @JsonView(Products.class)
+    @GetMapping("/products")
+    public List<Product> getAllProducts(@RequestParam(defaultValue = "0") int page) {
+        int pageSize = 10;
+        return productService.findAll()
+                .stream()
+                .skip(page * pageSize)
+                .limit(pageSize)
+                .toList();
     }
 }

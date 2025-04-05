@@ -91,17 +91,28 @@ body {
 }
 
 .product {
+    display: flex;
+    flex-direction: column;
     background: white;
-    padding: 20px;
     text-align: center;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 200px;           /* Ancho fijo para cada producto */
+    height: 400px;          /* Altura fija para cada producto (incluyendo la imagen y texto) */
+    margin: 10px;           /* Espacio entre productos */
+    border: 1px solid #ddd; /* Añadir un borde para mejorar la apariencia */
+    padding: 10px;          /* Espaciado dentro de cada producto */
+    box-sizing: border-box;
+
+
 }
 
 .product img {
     max-width: 100%;
-    height: auto;
     border-radius: 5px;
+    width: 100%;            /* Hacer que las imágenes ocupen todo el ancho del contenedor */
+    height: 150px;          /* Altura fija para todas las imágenes */
+    object-fit: contain;
 }
 
 .price {

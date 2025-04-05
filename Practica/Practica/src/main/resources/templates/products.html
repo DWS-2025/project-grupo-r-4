@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Productos - Juguetes Store</title>
     <link rel="stylesheet" href="/css/style.css">
+    <script defer src="/js/products.js"></script>
 </head>
 <body>
 <header class="header">
@@ -37,16 +38,18 @@
 
     <section class="products">
         <h2>Todos los Productos</h2>
-        <div class="product-list">
-            {{#products}}
-            <div class="product">
-                <h3><a href="/product/{{id}}">{{name}}</a></h3>
-                <img src="/product/{{id}}/image" alt="{{name}}">
-                <p class="price">{{price}}€</p>
-                <a href="/product/{{id}}" class="details">Detalles</a>
+        <div class="product-list" id="product-list">
+            <!-- Los productos se insertarán aquí con JavaScript -->
+        </div>
 
-            </div>
-            {{/products}}
+        <!-- Spinner de carga -->
+        <div id="spinner" class="spinner" style="display: none;">
+            <img src="/images/spinner.gif" alt="Cargando...">
+        </div>
+
+        <!-- Botón para cargar más productos -->
+        <div class="load-more">
+            <button id="load-more-btn">Más resultados</button>
         </div>
 
         <!-- Botón para añadir producto -->
@@ -72,5 +75,54 @@
         </div>
     </div>
 </footer>
+
+<script>
+    let currentPage = 0;
+    const loadMoreBtn = document.getElementById("load-more-btn");
+    const productList = document.getElementById("product-list");
+    const spinner = document.getElementById("spinner");
+
+    function loadProducts() {
+        spinner.style.display = "block"; // Mostrar spinner mientras se cargan los productos
+        loadMoreBtn.style.display = "none"; // Ocultar botón temporalmente
+
+        fetch(`/api/products?page=${currentPage}`)
+            .then(response => response.json())
+            .then(products => {
+                spinner.style.display = "none"; // Ocultar spinner cuando termine la carga
+
+                if (products.length > 0) {
+                    products.forEach(product => {
+                        const productHTML = `
+                            <div class="product">
+                                <h3><a href="/product/${product.id}">${product.name}</a></h3>
+                                <img src="/product/${product.id}/image" alt="${product.name}">
+                                <p class="price">${product.price}€</p>
+                                <a href="/product/${product.id}" class="details">Detalles</a>
+                            </div>
+                        `;
+                        productList.innerHTML += productHTML;
+                    });
+
+                    currentPage++; // Pasar a la siguiente página
+                    loadMoreBtn.style.display = "block"; // Volver a mostrar el botón si hay más productos
+                } else {
+                    loadMoreBtn.style.display = "none"; // Ocultar el botón si no hay más productos
+                }
+            })
+            .catch(error => {
+                console.error("Error cargando productos:", error);
+                spinner.style.display = "none";
+                loadMoreBtn.style.display = "block"; // Restaurar el botón en caso de error
+            });
+    }
+
+    // Cargar la primera tanda de productos cuando se carga la página
+    document.addEventListener("DOMContentLoaded", loadProducts);
+
+    // Cargar más productos cuando se pulsa el botón
+    loadMoreBtn.addEventListener("click", loadProducts);
+</script>
+
 </body>
 </html>
