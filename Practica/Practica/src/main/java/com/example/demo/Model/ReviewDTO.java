@@ -48,5 +48,15 @@ public class ReviewDTO {
     public void setReview(String review) {
         this.review = review;
     }
+
+    public static ReviewDTO fromEntity(Review review) {
+        ReviewDTO reviewDTO = new ReviewDTO();
+        reviewDTO.setReviewId(review.getReviewId());
+        reviewDTO.setUserId(review.getUser().getId());
+        reviewDTO.setProductId(review.getProduct().getId());
+        reviewDTO.setRating(review.getRating());
+        reviewDTO.setReview(reviewDTO.getReview());
+        return reviewDTO;
+    }
 }
 

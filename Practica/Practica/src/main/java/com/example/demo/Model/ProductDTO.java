@@ -8,12 +8,12 @@ public class ProductDTO {
     private String type;
     private String image;
 
-    public ProductDTO(String name, String description, double price, String image) {
+    public ProductDTO(String name, String description, double price, String image, String type) {
         this.name = name;
         this.description = description;
         this.price = price;
         this.image = image;
-        this.type = "default";  // Puedes asignar un valor por defecto si no es necesario
+        this.type = type;
     }
 
     public ProductDTO(Long id, String name, double price, String description, String type) {

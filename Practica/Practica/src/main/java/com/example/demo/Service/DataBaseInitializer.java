@@ -30,7 +30,7 @@ public class DataBaseInitializer {
     @Autowired
     private ImageService imageService;
 
-    private static final String IMAGE_DIR = "src/main/resources/static/images/";
+    private static final String IMAGE_DIR = "Practica/Practica/src/main/resources/static/images";
 
     @PostConstruct
     public void initData() throws IOException {
@@ -48,21 +48,28 @@ public class DataBaseInitializer {
         List<ProductDTO> productDTOs = new ArrayList<>();
 
         // Crear DTOs para los productos
-        productDTOs.add(new ProductDTO("Casa Moderna", "Casa moderna de lego", 100.0, "Casa-moderna-lego.jpg"));
-        productDTOs.add(new ProductDTO("Fifa 25 PS5", "Juego de fútbol para PS5", 60.0, IMAGE_DIR + "Fifa-25-PS5.jpg"));
-        productDTOs.add(new ProductDTO("Hatchimals", "Muñeco interactivo", 40.0, IMAGE_DIR + "hatchimals.jpg"));
-        productDTOs.add(new ProductDTO("Hot Wheels Circuito", "Circuito de autos Hot Wheels", 25.0, IMAGE_DIR + "Hot-wheels-circuito.jpg"));
-        productDTOs.add(new ProductDTO("Muñeco Bebé", "Muñeco de bebé", 30.0, IMAGE_DIR + "muñeco-bebe.jpg"));
-        productDTOs.add(new ProductDTO("Nerf Scar Fortnite", "Pistola Nerf de Fortnite", 45.0, IMAGE_DIR + "Nerf-Scar-Fortnite.jpg"));
-        productDTOs.add(new ProductDTO("Oso Peluche", "Oso de peluche suave", 20.0, IMAGE_DIR + "oso-peluche.jpg"));
-        productDTOs.add(new ProductDTO("Pastelería Barbie", "Set de pastelería de Barbie", 35.0, IMAGE_DIR + "Pasteleria-barbie.jpg"));
-        productDTOs.add(new ProductDTO("Peluquería Play Doh", "Set de peluquería Play Doh", 22.0, IMAGE_DIR + "Peluqiería-play-doh.jpg"));
-        productDTOs.add(new ProductDTO("Robot Teledirigido", "Robot teledirigido", 50.0, IMAGE_DIR + "Robot-teledirigido.jpg"));
-        productDTOs.add(new ProductDTO("Scalextric", "Juego de Scalextric", 80.0, IMAGE_DIR + "scalextric.jpg"));
-        productDTOs.add(new ProductDTO("Trivial Pursuit", "Juego de mesa Trivial Pursuit", 30.0, IMAGE_DIR + "Trivial-pursuit.jpg"));
+        productDTOs.add(new ProductDTO("Casa Moderna", "Casa moderna de lego", 100.0, "Casa-moderna-lego.jpg", ""));
+        productDTOs.add(new ProductDTO("Fifa 25 PS5", "Juego de fútbol para PS5", 60.0, IMAGE_DIR + "Fifa-25-PS5.jpg",""));
+        productDTOs.add(new ProductDTO("Hatchimals", "Muñeco interactivo", 40.0, IMAGE_DIR + "hatchimals.jpg",""));
+        productDTOs.add(new ProductDTO("Hot Wheels Circuito", "Circuito de autos Hot Wheels", 25.0, IMAGE_DIR + "Hot-wheels-circuito.jpg",""));
+        productDTOs.add(new ProductDTO("Muñeco Bebé", "Muñeco de bebé", 30.0, IMAGE_DIR + "muñeco-bebe.jpg",""));
+        productDTOs.add(new ProductDTO("Nerf Scar Fortnite", "Pistola Nerf de Fortnite", 45.0, IMAGE_DIR + "Nerf-Scar-Fortnite.jpg",""));
+        productDTOs.add(new ProductDTO("Oso Peluche", "Oso de peluche suave", 20.0, IMAGE_DIR + "oso-peluche.jpg",""));
+        productDTOs.add(new ProductDTO("Pastelería Barbie", "Set de pastelería de Barbie", 35.0, IMAGE_DIR + "Pasteleria-barbie.jpg",""));
+        productDTOs.add(new ProductDTO("Peluquería Play Doh", "Set de peluquería Play Doh", 22.0, IMAGE_DIR + "Peluqiería-play-doh.jpg",""));
+        productDTOs.add(new ProductDTO("Robot Teledirigido", "Robot teledirigido", 50.0, IMAGE_DIR + "Robot-teledirigido.jpg",""));
+        productDTOs.add(new ProductDTO("Scalextric", "Juego de Scalextric", 80.0, IMAGE_DIR + "scalextric.jpg",""));
+        productDTOs.add(new ProductDTO("Trivial Pursuit", "Juego de mesa Trivial Pursuit", 30.0, IMAGE_DIR + "Trivial-pursuit.jpg",""));
 
-        // Obtener el usuario (asumiendo que hay un método para obtenerlo)
-        User user = userService.findByUserName("user");
+        // Obtener el UserDTO (usando el servicio)
+        UserDTO userDTO = userService.findByUserName("user");
+
+        if (userDTO == null) {
+            throw new RuntimeException("Usuario no encontrado");
+        }
+
+        // Convertir el UserDTO a un objeto User usando el servicio
+        User user = userService.convertToEntity(userDTO);
 
         // Guardar los productos en la base de datos
         for (ProductDTO productDTO : productDTOs) {
@@ -84,7 +91,7 @@ public class DataBaseInitializer {
                 product.setUsers(user); // Establecer relación con el usuario
 
                 // Guardar el producto con la imagen
-                productService.save(product, imageFile);
+                productService.save(productDTO, imageFile);
             } catch (IOException e) {
                 System.err.println("Error al cargar imagen para producto: " + productDTO.getName());
                 e.printStackTrace();
@@ -95,7 +102,8 @@ public class DataBaseInitializer {
     public void initializeUser() {
         // Verificar si el usuario ya existe para evitar duplicados
         if (userService.findByUserName("user") == null) {
-            User user = userService.findByUserName("user");
+            UserDTO user = new UserDTO();
+            user.setName("user");
             userService.save(user);
         }
     }

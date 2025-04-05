@@ -4,26 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="dffe2e45-760d-4c54-bcbe-f83ef775f13d" name="Changes" comment="Creacion de los DTOS">
+    <list default="true" id="dffe2e45-760d-4c54-bcbe-f83ef775f13d" name="Changes" comment="databaseInitializer creado (inicializacion de la base de datos)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Practica/Practica/images/Casa-moderna-lego.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Practica/Practica/images/Fifa-25-PS5.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Practica/Practica/images/Hot-wheels-circuito.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Practica/Practica/images/Nerf-Scar-Fortnite.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Practica/Practica/images/Pasteleria-barbie.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Practica/Practica/images/Peluqiería-play-doh.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Practica/Practica/images/Robot-teledirigido.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Practica/Practica/images/Trivial-pursuit.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Practica/Practica/images/hatchimals.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Practica/Practica/images/muñeco-bebe.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Practica/Practica/images/oso-peluche.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Practica/Practica/images/scalextric.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Practica/Practica/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Practica/Practica/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Model/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Model/Product.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Model/ProductDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Model/ProductDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Model/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Model/PurchaseDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Model/PurchaseDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Model/ReviewDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Model/ReviewDTO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Service/DataBaseInitializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Service/DataBaseInitializer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Service/ImageService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Service/ImageService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Service/ProductService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Service/ProductService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Service/PurchaseService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Service/PurchaseService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Service/ReviewService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Service/ReviewService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Service/UserService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -151,7 +141,7 @@
       <workItem from="1743436054606" duration="15895000" />
       <workItem from="1743614173714" duration="319000" />
       <workItem from="1743614716229" duration="8171000" />
-      <workItem from="1743845297526" duration="12092000" />
+      <workItem from="1743845297526" duration="21098000" />
     </task>
     <task id="LOCAL-00001" summary="inicio">
       <option name="closed" value="true" />
@@ -361,7 +351,15 @@
       <option name="project" value="LOCAL" />
       <updated>1743852233887</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="databaseInitializer creado (inicializacion de la base de datos)">
+      <option name="closed" value="true" />
+      <created>1743863328780</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1743863328780</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -400,6 +398,7 @@
     <MESSAGE value="repository" />
     <MESSAGE value="inicio de la base de datos y algunos errores corregidos" />
     <MESSAGE value="Creacion de los DTOS" />
-    <option name="LAST_COMMIT_MESSAGE" value="Creacion de los DTOS" />
+    <MESSAGE value="databaseInitializer creado (inicializacion de la base de datos)" />
+    <option name="LAST_COMMIT_MESSAGE" value="databaseInitializer creado (inicializacion de la base de datos)" />
   </component>
 </project>

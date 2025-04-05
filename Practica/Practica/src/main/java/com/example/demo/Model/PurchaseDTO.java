@@ -1,7 +1,7 @@
 package com.example.demo.Model;
 
-
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class PurchaseDTO {
 
@@ -9,6 +9,17 @@ public class PurchaseDTO {
     private long userId;
     private List<Long> productIds;
     private double price;
+
+    public PurchaseDTO() {
+    }
+
+
+    public PurchaseDTO(long id, long userId, List<Long> productIds, double price) {
+        this.id = id;
+        this.userId = userId;
+        this.productIds = productIds;
+        this.price = price;
+    }
 
 
     public long getId() {
@@ -42,5 +53,24 @@ public class PurchaseDTO {
     public void setPrice(double price) {
         this.price = price;
     }
-}
 
+    public static PurchaseDTO fromEntity(Purchase purchase) {
+        PurchaseDTO purchaseDTO = new PurchaseDTO();
+        purchaseDTO.setId(purchase.getId());
+        purchaseDTO.setUserId(purchase.getUser().getId());
+        purchaseDTO.setPrice(purchase.getPrice());
+        purchaseDTO.setProductIds(purchase.getProducts().stream()
+                .map(Product::getId)
+                .collect(Collectors.toList()));
+        return purchaseDTO;
+    }
+
+    public static Purchase toEntity(PurchaseDTO purchaseDTO, User user, List<Product> products) {
+        Purchase purchase = new Purchase();
+        purchase.setId(purchaseDTO.getId());
+        purchase.setPrice(purchaseDTO.getPrice());
+        purchase.setUser(user);
+        purchase.setProducts(products);
+        return purchase;
+    }
+}
