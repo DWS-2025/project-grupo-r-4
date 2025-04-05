@@ -23,7 +23,7 @@ public class ProductService {
 
 
     public ProductService() {
-        Product product0 = new Product("Oso De Peluche", 19, "Oso de peluche ideal para niños.", "Peluches");
+       /* Product product0 = new Product("Oso De Peluche", 19, "Oso de peluche ideal para niños.", "Peluches");
         Product product1 = new Product("Muñeco bebé", 29, "Muñeco bebé para niños", "Muñecas");
         Product product2 = new Product("Scalextric", 49, "Scalextric con 50 piezas y dos coches de carreras", "Juguetes");
         Product product3 = new Product("Casa moderna lego", 89, "Set de construcción de una casa muy bonita", "Construcción");
@@ -75,7 +75,7 @@ public class ProductService {
         products.put(product9.getId(), product9);
         products.put(product10.getId(), product10);
         products.put(product11.getId(), product11);
-
+    */
 
     }
 
