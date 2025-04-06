@@ -39,8 +39,6 @@ public class Product {
     @JsonView(ProdPurch.class)
     @ManyToMany
     private List<Purchase> purchase;
-    @Version
-    private Integer version;
 
 
     public Product() {

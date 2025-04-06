@@ -5,7 +5,9 @@ import com.example.demo.Model.UserDTO;
 import com.example.demo.Model.Product;
 import com.example.demo.Model.User;
 import jakarta.annotation.PostConstruct;
+import jakarta.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.UrlResource;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
@@ -45,25 +47,23 @@ public class DataBaseInitializer {
             e.printStackTrace();
         }
     }
-
-
     public void initializeProducts() {
-        List<ProductDTO> productDTOs = new ArrayList<>();
 
         // Crear DTOs para los productos usando el nuevo constructor
-        productDTOs.add(new ProductDTO(0L, "Casa Moderna", 100.0, "Casa moderna de lego", ""));
-        productDTOs.add(new ProductDTO(1L, "Fifa 25 PS5", 60.0, "Juego de fútbol para PS5", ""));
-        productDTOs.add(new ProductDTO(2L, "Hatchimals", 40.0, "Muñeco interactivo", ""));
-        productDTOs.add(new ProductDTO(3L, "Hot Wheels Circuito", 25.0, "Circuito de autos Hot Wheels", ""));
-        productDTOs.add(new ProductDTO(4L, "Muñeco Bebe", 30.0, "Muñeco de bebé", ""));
-        productDTOs.add(new ProductDTO(5L, "Nerf Scar Fortnite", 45.0, "Pistola Nerf de Fortnite", ""));
-        productDTOs.add(new ProductDTO(6L, "Oso Peluche", 20.0, "Oso de peluche suave", ""));
-        productDTOs.add(new ProductDTO(7L, "Pasteleria Barbie", 35.0, "Set de pastelería de Barbie", ""));
-        productDTOs.add(new ProductDTO(8L, "Peluqueria Play Doh", 22.0, "Set de peluquería Play Doh", ""));
-        productDTOs.add(new ProductDTO(9L, "Robot Teledirigido", 50.0, "Robot teledirigido", ""));
-        productDTOs.add(new ProductDTO(10L, "Scalextric", 80.0, "Juego de Scalextric", ""));
-        productDTOs.add(new ProductDTO(11L, "Trivial Pursuit", 30.0, "Juego de mesa Trivial Pursuit", ""));
+        productService.save(new ProductDTO( "Casa Moderna", 100.0, "Casa moderna de lego", ""), null);
+        productService.save(new ProductDTO( "Fifa 25 PS5", 60.0, "Juego de fútbol para PS5", ""),null);
+        productService.save(new ProductDTO( "Hatchimals", 40.0, "Muñeco interactivo", ""),null);
+        productService.save(new ProductDTO( "Hot Wheels Circuito", 25.0, "Circuito de autos Hot Wheels", ""),null);
+        productService.save(new ProductDTO("Muñeco Bebe", 30.0, "Muñeco de bebé", ""),null);
+        productService.save(new ProductDTO("Nerf Scar Fortnite", 45.0, "Pistola Nerf de Fortnite", ""),null);
+        productService.save(new ProductDTO("Oso Peluche", 20.0, "Oso de peluche suave", ""),null);
+        productService.save(new ProductDTO("Pasteleria Barbie", 35.0, "Set de pastelería de Barbie", ""),null);
+        productService.save(new ProductDTO("Peluqueria Play Doh", 22.0, "Set de peluquería Play Doh", ""),null);
+        productService.save(new ProductDTO("Robot Teledirigido", 50.0, "Robot teledirigido", ""),null);
+        productService.save(new ProductDTO( "Scalextric", 80.0, "Juego de Scalextric", ""),null);
+        productService.save(new ProductDTO("Trivial Pursuit", 30.0, "Juego de mesa Trivial Pursuit", ""),null);
 
+        List<ProductDTO> productDTOs = productService.findAll();
         // Obtener el User
         User user = userService.findByNameDatabse("user");
 

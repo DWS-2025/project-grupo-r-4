@@ -79,7 +79,6 @@ public class ProductService {
                 .map(this::convertToDTO);
     }
 
-    @Transactional
     public ProductDTO save(ProductDTO productDTO, MultipartFile imageField) {
         Product product = convertToEntity(productDTO);
 
@@ -95,6 +94,7 @@ public class ProductService {
         Product savedProduct = productRepository.save(product);
         return convertToDTO(savedProduct);
     }
+
 
     public boolean existByName(String name) {
         return productRepository.existsByName(name);

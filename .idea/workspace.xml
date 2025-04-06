@@ -4,33 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="dffe2e45-760d-4c54-bcbe-f83ef775f13d" name="Changes" comment="cambio de todos los controllers con funciones comentadas">
+    <list default="true" id="dffe2e45-760d-4c54-bcbe-f83ef775f13d" name="Changes" comment="cambio de nombres de fotografias, cambio de database, cambios en los services para algunas funciones y cambios en los controllers para que funcionen con los dtos.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Practica/Practica/images/image_ee7d4360-2e8b-4ab9-b8b4-504e588ea2ed_Casa-moderna-lego.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Controller/ProductRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Controller/ProductRestController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Controller/UserRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Controller/UserRestController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Controller/WebController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Controller/WebController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/DemoApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/DemoApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Practica/Practica/images/image_11f8de33-812b-499a-9450-235daba7770f_Casa-Moderna.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Practica/Practica/images/image_1206a53d-d13c-428e-b679-4c568ea7a74d_Casa-Moderna.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Practica/Practica/images/image_34f9acab-c14d-460f-9b11-2a70aaba6dd7_Casa-Moderna.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Practica/Practica/images/image_3dc20f7b-2d09-4402-b559-b713c1ee698c_Casa-Moderna.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Practica/Practica/images/image_4b6a4f98-5ce3-4531-b4a6-9ebed731a6a8_Hatchimals.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Practica/Practica/images/image_609b0cee-5b39-499b-ac1f-86ec6bee9f34_Casa-Moderna.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Practica/Practica/images/image_71bf0c08-7d3d-4be6-83e6-1d7f54e6426d_Casa-Moderna.jpg" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Model/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Model/Product.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Model/ProductDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Model/ProductDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Repository/ReviewRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Repository/ReviewRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Service/DataBaseInitializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Service/DataBaseInitializer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Service/ProductService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Service/ProductService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Service/PurchaseService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Service/PurchaseService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Service/ReviewService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Service/ReviewService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Service/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Practica/Practica/src/main/resources/static/images/Casa-moderna-lego.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Practica/Practica/src/main/resources/static/images/Fifa-25-PS5.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Practica/Practica/src/main/resources/static/images/Hot-wheels-circuito.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Practica/Practica/src/main/resources/static/images/Nerf-Scar-Fortnite.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Practica/Practica/src/main/resources/static/images/Pasteleria-barbie.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Practica/Practica/src/main/resources/static/images/Peluqiería-play-doh.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Practica/Practica/src/main/resources/static/images/Robot-teledirigido.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Practica/Practica/src/main/resources/static/images/Trivial-pursuit.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Practica/Practica/src/main/resources/static/images/hatchimals.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Practica/Practica/src/main/resources/static/images/muñeco-bebe.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Practica/Practica/src/main/resources/static/images/oso-peluche.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Practica/Practica/src/main/resources/static/images/scalextric.jpg" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -163,7 +149,7 @@
       <workItem from="1743614173714" duration="319000" />
       <workItem from="1743614716229" duration="8171000" />
       <workItem from="1743845297526" duration="21722000" />
-      <workItem from="1743927673404" duration="27555000" />
+      <workItem from="1743927673404" duration="30802000" />
     </task>
     <task id="LOCAL-00001" summary="inicio">
       <option name="closed" value="true" />
@@ -397,7 +383,23 @@
       <option name="project" value="LOCAL" />
       <updated>1743934470678</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="cambio de nombres de fotografias, cambio de database, cambios en los services para algunas funciones y cambios en los controllers para que funcionen con los dtos.">
+      <option name="closed" value="true" />
+      <created>1743958478319</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1743958478319</updated>
+    </task>
+    <task id="LOCAL-00031" summary="cambio de nombres de fotografias, cambio de database, cambios en los services para algunas funciones y cambios en los controllers para que funcionen con los dtos.">
+      <option name="closed" value="true" />
+      <created>1743958483670</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1743958483670</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -439,6 +441,7 @@
     <MESSAGE value="databaseInitializer creado (inicializacion de la base de datos)" />
     <MESSAGE value="cambio de todos los services y database." />
     <MESSAGE value="cambio de todos los controllers con funciones comentadas" />
-    <option name="LAST_COMMIT_MESSAGE" value="cambio de todos los controllers con funciones comentadas" />
+    <MESSAGE value="cambio de nombres de fotografias, cambio de database, cambios en los services para algunas funciones y cambios en los controllers para que funcionen con los dtos." />
+    <option name="LAST_COMMIT_MESSAGE" value="cambio de nombres de fotografias, cambio de database, cambios en los services para algunas funciones y cambios en los controllers para que funcionen con los dtos." />
   </component>
 </project>
