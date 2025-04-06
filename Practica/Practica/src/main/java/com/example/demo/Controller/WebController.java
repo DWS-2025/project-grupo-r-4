@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -23,6 +24,10 @@ public class WebController {
 
     @GetMapping("/")
     public String index(Model model) {
+
+        List<ProductDTO> products = productService.findAll();
+
+        model.addAttribute("products", products);
 
         Optional<ProductDTO> product0Optional = productService.findById(0);
         Optional<ProductDTO> product1Optional = productService.findById(1);
@@ -98,6 +103,9 @@ public class WebController {
 
     @GetMapping("/products")
     public String products(Model model) {
+        List<ProductDTO> products = productService.findAll();
+
+        model.addAttribute("products", products);
         return "products";
     }
 

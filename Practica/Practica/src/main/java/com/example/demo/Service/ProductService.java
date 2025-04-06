@@ -40,18 +40,7 @@ public class ProductService {
 
     // Convertir de ProductDTO -> Product
     private Product convertToEntity(ProductDTO dto) {
-        Product product;
-
-        if (dto.getId() != null) {
-            // Si el producto tiene ID, buscamos la entidad existente en la base de datos
-            product = productRepository.findById(dto.getId()).orElse(new Product());
-        } else {
-            // Si no tiene ID (nuevo producto), creamos una nueva instancia
-            product = new Product();
-        }
-
-        // Asignamos los valores del DTO a la entidad
-        product.setId(dto.getId());
+        Product product = new Product();
         product.setName(dto.getName());
         product.setDescription(dto.getDescription());
         product.setPrice(dto.getPrice());

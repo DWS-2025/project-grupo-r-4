@@ -48,22 +48,24 @@ public class DataBaseInitializer {
         }
     }
     public void initializeProducts() {
+        List<ProductDTO> productDTOs = new ArrayList<ProductDTO>();
+
 
         // Crear DTOs para los productos usando el nuevo constructor
-        productService.save(new ProductDTO( "Casa Moderna", 100.0, "Casa moderna de lego", ""), null);
-        productService.save(new ProductDTO( "Fifa 25 PS5", 60.0, "Juego de fútbol para PS5", ""),null);
-        productService.save(new ProductDTO( "Hatchimals", 40.0, "Muñeco interactivo", ""),null);
-        productService.save(new ProductDTO( "Hot Wheels Circuito", 25.0, "Circuito de autos Hot Wheels", ""),null);
-        productService.save(new ProductDTO("Muñeco Bebe", 30.0, "Muñeco de bebé", ""),null);
-        productService.save(new ProductDTO("Nerf Scar Fortnite", 45.0, "Pistola Nerf de Fortnite", ""),null);
-        productService.save(new ProductDTO("Oso Peluche", 20.0, "Oso de peluche suave", ""),null);
-        productService.save(new ProductDTO("Pasteleria Barbie", 35.0, "Set de pastelería de Barbie", ""),null);
-        productService.save(new ProductDTO("Peluqueria Play Doh", 22.0, "Set de peluquería Play Doh", ""),null);
-        productService.save(new ProductDTO("Robot Teledirigido", 50.0, "Robot teledirigido", ""),null);
-        productService.save(new ProductDTO( "Scalextric", 80.0, "Juego de Scalextric", ""),null);
-        productService.save(new ProductDTO("Trivial Pursuit", 30.0, "Juego de mesa Trivial Pursuit", ""),null);
+        productDTOs.add(new ProductDTO("Casa Moderna", 100.0, "Casa moderna de lego", ""));
+        productDTOs.add(new ProductDTO("Fifa 25 PS5", 60.0, "Juego de fútbol para PS5", ""));
+        productDTOs.add(new ProductDTO("Hatchimals", 40.0, "Muñeco interactivo", ""));
+        productDTOs.add(new ProductDTO("Hot Wheels Circuito", 25.0, "Circuito de autos Hot Wheels", ""));
+        productDTOs.add(new ProductDTO("Muñeco Bebe", 30.0, "Muñeco de bebé", ""));
+        productDTOs.add(new ProductDTO("Nerf Scar Fortnite", 45.0, "Pistola Nerf de Fortnite", ""));
+        productDTOs.add(new ProductDTO("Oso Peluche", 20.0, "Oso de peluche suave", ""));
+        productDTOs.add(new ProductDTO("Pasteleria Barbie", 35.0, "Set de pastelería de Barbie", ""));
+        productDTOs.add(new ProductDTO("Peluqueria Play Doh", 22.0, "Set de peluquería Play Doh", ""));
+        productDTOs.add(new ProductDTO("Robot Teledirigido", 50.0, "Robot teledirigido", ""));
+        productDTOs.add(new ProductDTO("Scalextric", 80.0, "Juego de Scalextric", ""));
+        productDTOs.add(new ProductDTO("Trivial Pursuit", 30.0, "Juego de mesa Trivial Pursuit", ""));
 
-        List<ProductDTO> productDTOs = productService.findAll();
+
         // Obtener el User
         User user = userService.findByNameDatabse("user");
 
@@ -86,7 +88,8 @@ public class DataBaseInitializer {
                         "image/jpeg",
                         fis
                 );
-
+                String imageName = productDTO.getName().replaceAll("\\s+", "-") + ".jpg";
+                productDTO.setImage(imageName);
                 productService.save(productDTO, imageFile);
             } catch (IOException e) {
                 System.err.println("Error al cargar imagen para producto: " + productDTO.getName());
