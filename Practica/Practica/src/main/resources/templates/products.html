@@ -5,7 +5,66 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Productos - Juguetes Store</title>
     <link rel="stylesheet" href="/css/style.css">
-    <script defer src="/js/products.js"></script>
+    <style>
+        .product-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .product-card {
+            background-color: #fff;
+            border: 2px solid #e0e0e0;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            padding: 20px;
+            transition: transform 0.2s;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+        }
+
+        .product-card:hover {
+            transform: scale(1.02);
+        }
+
+        .product-card img {
+            max-width: 100%;
+            height: 200px;
+            object-fit: contain;
+            margin-bottom: 15px;
+        }
+
+        .product-card h3 {
+            font-size: 20px;
+            margin: 10px 0;
+        }
+
+        .product-card .price {
+            font-weight: bold;
+            color: #2b8a3e;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .btn-details {
+            background-color: #2b8a3e;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-details:hover {
+            background-color: #246e34;
+        }
+    </style>
 </head>
 <body>
 <header class="header">
@@ -26,20 +85,18 @@
 </header>
 
 <main class="container">
-    <aside class="sidebar">
-        <h2>Categorías</h2>
-        <ul>
-            <li><a href="#">Peluches</a></li>
-            <li><a href="#">Muñecas</a></li>
-            <li><a href="#">Juguetes</a></li>
-            <li><a href="#">Accesorios</a></li>
-        </ul>
-    </aside>
-
     <section class="products">
         <h2>Todos los Productos</h2>
+
         <div class="product-list" id="product-list">
-            <!-- Los productos se insertarán aquí con JavaScript -->
+            {{#products}}
+            <div class="product-card">
+                <img src="/product/{{id}}/image" alt="{{name}}">
+                <h3>{{name}}</h3>
+                <p class="price">{{price}} €</p>
+                <a href="/product/{{id}}" class="btn-details">Detalles</a>
+            </div>
+            {{/products}}
         </div>
 
         <!-- Spinner de carga -->
@@ -58,6 +115,8 @@
         </div>
     </section>
 </main>
+</body>
+
 
 <footer class="footer">
     <div class="container">

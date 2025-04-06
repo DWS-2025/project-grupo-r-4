@@ -19,6 +19,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
@@ -45,7 +46,7 @@ public class ProductController {
     @GetMapping("/products/")
     public String showProducts(Model model) {
         // Ahora usamos ProductDto
-        Collection<ProductDTO> products = this.productService.findAll();
+        List<ProductDTO> products = this.productService.findAll();
         model.addAttribute("products", products);
 
         return "products";
@@ -91,16 +92,10 @@ public class ProductController {
 
     @GetMapping("/product/{id}")
     public String showProduct(Model model, @PathVariable long id) {
-        ProductDTO productDto = productService.findById(id)
+        ProductDTO product = productService.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-        UserDTO userDto = userService.findByUserName("admin");
-        model.addAttribute("product", productDto);
-        model.addAttribute("user", userService.findByUserName("user"));
-
-        // También puedes cargar 12 productos si quieres mostrar recomendaciones:
-        Collection<ProductDTO> products = productService.findAll();
-        model.addAttribute("products", products);
+        model.addAttribute("product", product);
 
         return "product";
     }
