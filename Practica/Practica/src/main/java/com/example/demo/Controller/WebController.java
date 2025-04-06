@@ -1,5 +1,7 @@
 package com.example.demo.Controller;
 
+import com.example.demo.Model.ProductDTO;
+import com.example.demo.Model.UserDTO;
 import org.springframework.ui.Model;
 import com.example.demo.Model.Product;
 import com.example.demo.Model.User;
@@ -19,23 +21,18 @@ public class WebController {
     @Autowired
     private ProductService productService;
 
-    @GetMapping("/")
+    /*@GetMapping("/")
     public String index(Model model) {
-        Optional<Product> product0Optional = productService.findById(0);
-        Optional<Product> product1Optional = productService.findById(1);
-        Optional<Product> product2Optional = productService.findById(2);
+        ProductDTO product0DTO = productService.findProductById(0);
+        ProductDTO product1DTO = productService.findProductById(1);
+        ProductDTO product2DTO = productService.findProductById(2);
 
-        if(product0Optional.isPresent()) {
-            model.addAttribute("product0", product0Optional.get());
-        }
-        if(product1Optional.isPresent()) {
-            model.addAttribute("product1", product1Optional.get());
-        }
-        if(product2Optional.isPresent()) {
-            model.addAttribute("product2", product2Optional.get());
-        }
+        model.addAttribute("product0", product0DTO);
+        model.addAttribute("product1", product1DTO);
+        model.addAttribute("product2", product2DTO);
+
         return "index";
-    }
+    }*/
 
     @GetMapping("/buys")
     public String buys(Model model) {
@@ -57,34 +54,34 @@ public class WebController {
         return "details";
     }
 
-    @GetMapping("/myAccount")
+    /*@GetMapping("/myAccount")
     public String myAccount(Model model) {
-        User user = userService.findByUserName("user");
-        model.addAttribute("user", user);
+        UserDTO userDTO = userService.findByUserName("user");
+        model.addAttribute("user", userDTO);
 
-        //Mejor oferta en el html
-        Optional<Product> product0Optional = productService.findById(0);
-        if (product0Optional.isPresent()) {
-            model.addAttribute("product0", product0Optional.get());
+        // Mejor oferta en el HTML
+        ProductDTO product0DTO = productService.findProductById(0);
+        if (product0DTO != null) {
+            model.addAttribute("product0", product0DTO);
         } else {
             model.addAttribute("product0NotFound", true);
         }
 
-        //Novedad en el html
-        Optional<Product> product1Optional = productService.findById(1);
-        if (product1Optional.isPresent()) {
-            model.addAttribute("product1", product1Optional.get());
+        // Novedad en el HTML
+        ProductDTO product1DTO = productService.findProductById(1);
+        if (product1DTO != null) {
+            model.addAttribute("product1", product1DTO);
         } else {
             model.addAttribute("product1NotFound", true);
         }
 
         return "myAccount";
     }
-
+    */
     @GetMapping("/myReview")
-    public String myReview(Model model){
-        User user = userService.findByUserName("user");
-        model.addAttribute("user", user);
+    public String myReview(Model model) {
+        UserDTO userDTO = userService.findByUserName("user");
+        model.addAttribute("user", userDTO);
         return "myReview";
     }
 
@@ -112,5 +109,4 @@ public class WebController {
     public String ubication(Model model) {
         return "ubication";
     }
-
 }

@@ -1,10 +1,7 @@
 package com.example.demo.Controller;
 
 
-import com.example.demo.Model.Product;
-import com.example.demo.Model.Purchase;
-import com.example.demo.Model.Review;
-import com.example.demo.Model.User;
+import com.example.demo.Model.*;
 import com.example.demo.Service.UserService;
 import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,36 +16,30 @@ import java.util.List;
 @RestController
 @RequestMapping("/api")
 public class UserRestController {
-    interface UserRev extends User.RevInt, Review.Basic,Review.Products,Product.Basic{}
-    interface UserPurch extends User.PurchInt,Purchase.Basic,Purchase.Products,Product.Basic{}
+
+    /*interface UserRev extends UserDTO.RevInt, ReviewDTO.Basic, ReviewDTO.Products, ProductDTO.Basic {}
+    interface UserPurch extends UserDTO.PurchInt, PurchaseDTO.Basic, PurchaseDTO.Products, ProductDTO.Basic {}
 
     @Autowired
     private UserService userService;
 
     @GetMapping("/users/")
-    public List<User> getAllUsers() {
-        return userService.findAll().stream().toList();
+    public ResponseEntity<List<UserDTO>> getAllUsers() {
+        List<UserDTO> users = userService.findAll();
+        return ResponseEntity.ok(users);
     }
 
     @JsonView(UserPurch.class)
     @GetMapping("/user/{id}/buys")
-    public ResponseEntity<List<Purchase>> getUserPurchase(@PathVariable Long id) {
-        User user = userService.findByUserName("user");
-        if (user != null) {
-            return ResponseEntity.ok(user.getProducts());
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<List<PurchaseDTO>> getUserPurchases(@PathVariable Long id) {
+        List<PurchaseDTO> purchases = userService.findUserPurchases(id);
+        return ResponseEntity.ok(purchases);
     }
 
     @JsonView(UserRev.class)
     @GetMapping("/user/{id}/reviews")
-    public ResponseEntity<User> getUserReview() {
-        User user = userService.findByUserName("user");
-        if (user != null) {
-            return ResponseEntity.ok(user);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
+    public ResponseEntity<UserDTO> getUserReviews(@PathVariable Long id) {
+        UserDTO userDTO = userService.findUserWithReviews(id);
+        return ResponseEntity.ok(userDTO);
+    }*/
 }

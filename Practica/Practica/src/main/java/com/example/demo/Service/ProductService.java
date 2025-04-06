@@ -108,6 +108,11 @@ public class ProductService {
         Product updatedProduct = productRepository.save(existingProduct);
         return convertToDTO(updatedProduct);
     }
+
+    /*public ProductDTO findProductById(int id) {
+        Optional<Product> productOptional = productRepository.findById(id);
+        return productOptional.map(ProductDTO::fromEntity).orElse(null);
+    }*/
 }
 
 

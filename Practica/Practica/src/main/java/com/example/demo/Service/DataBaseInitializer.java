@@ -34,11 +34,13 @@ public class DataBaseInitializer {
 
     @PostConstruct
     public void initData() throws IOException {
+        // Inicializar el usuario primero
+        initializeUser();
+
+
         // Crear directorio de imágenes si no existe
         Files.createDirectories(Paths.get(IMAGE_DIR));
 
-        // Inicializar el usuario primero
-        initializeUser();
 
         // Luego los productos que pueden depender del usuario
         initializeProducts();
@@ -101,10 +103,16 @@ public class DataBaseInitializer {
 
     public void initializeUser() {
         // Verificar si el usuario ya existe para evitar duplicados
-        if (userService.findByUserName("user") == null) {
-            UserDTO user = new UserDTO();
-            user.setName("user");
-            userService.save(user);
+        UserDTO userDTO = userService.findByUserName("user");
+        if (userDTO == null) {
+            try {
+                UserDTO newUser = new UserDTO();
+                newUser.setName("user");
+                userService.save(newUser); // Guardar el nuevo usuario
+            } catch (Exception e) {
+                System.err.println("Error al crear el usuario 'user'.");
+                e.printStackTrace();
+            }
         }
     }
 }
