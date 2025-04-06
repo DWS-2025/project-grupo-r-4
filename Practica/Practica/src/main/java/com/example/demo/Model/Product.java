@@ -15,6 +15,8 @@ public class Product {
     public interface ProdPurch{}
     public interface ProdUser{}
 
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonView(Basic.class)
@@ -37,6 +39,9 @@ public class Product {
     @JsonView(ProdPurch.class)
     @ManyToMany
     private List<Purchase> purchase;
+    @Version
+    private Integer version;
+
 
     public Product() {
 

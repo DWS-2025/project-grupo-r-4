@@ -1,9 +1,6 @@
 package com.example.demo.Service;
 
-import com.example.demo.Model.Product;
-import com.example.demo.Model.Review;
-import com.example.demo.Model.ReviewDTO;
-import com.example.demo.Model.User;
+import com.example.demo.Model.*;
 import com.example.demo.Repository.ProductRepository;
 import com.example.demo.Repository.ReviewRepository;
 import com.example.demo.Repository.UserRepository;
@@ -30,6 +27,15 @@ public class ReviewService {
     @Autowired
     private UserRepository userRepository;
 
+    public ReviewDTO convertToDTO(Review review) {
+        ReviewDTO reviewDTO = new ReviewDTO();
+        reviewDTO.setReviewId(review.getReviewId());
+        reviewDTO.setUserId(review.getUser().getId());
+        reviewDTO.setProductId(review.getProduct().getId());
+        reviewDTO.setRating(review.getRating());
+        reviewDTO.setReview(review.getComment());
+        return reviewDTO;
+    }
 
     public List<ReviewDTO> findReviewsByProductId(long productId) {
         Product product = productRepository.findById(productId)
@@ -100,5 +106,14 @@ public class ReviewService {
 
         productRepository.save(product);
         userRepository.save(user);
+    }
+
+
+    public List<ReviewDTO> findByUser(UserDTO userDTO) {
+        User user = userRepository.findByName(userDTO.getName()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado"));
+        return reviewRepository.findByUser(user)
+                .stream()
+                .map(this::convertToDTO)
+                .toList();
     }
 }

@@ -21,18 +21,24 @@ public class WebController {
     @Autowired
     private ProductService productService;
 
-    /*@GetMapping("/")
+    @GetMapping("/")
     public String index(Model model) {
-        ProductDTO product0DTO = productService.findProductById(0);
-        ProductDTO product1DTO = productService.findProductById(1);
-        ProductDTO product2DTO = productService.findProductById(2);
 
-        model.addAttribute("product0", product0DTO);
-        model.addAttribute("product1", product1DTO);
-        model.addAttribute("product2", product2DTO);
+        Optional<ProductDTO> product0Optional = productService.findById(0);
+        Optional<ProductDTO> product1Optional = productService.findById(1);
+        Optional<ProductDTO> product2Optional = productService.findById(2);
 
+        if(product0Optional.isPresent()) {
+            model.addAttribute("product0", product0Optional.get());
+        }
+        if(product1Optional.isPresent()) {
+            model.addAttribute("product1", product1Optional.get());
+        }
+        if(product2Optional.isPresent()) {
+            model.addAttribute("product2", product2Optional.get());
+        }
         return "index";
-    }*/
+    }
 
     @GetMapping("/buys")
     public String buys(Model model) {
@@ -54,13 +60,13 @@ public class WebController {
         return "details";
     }
 
-    /*@GetMapping("/myAccount")
+    @GetMapping("/myAccount")
     public String myAccount(Model model) {
         UserDTO userDTO = userService.findByUserName("user");
         model.addAttribute("user", userDTO);
 
         // Mejor oferta en el HTML
-        ProductDTO product0DTO = productService.findProductById(0);
+        ProductDTO product0DTO = productService.findProductById((long)0);
         if (product0DTO != null) {
             model.addAttribute("product0", product0DTO);
         } else {
@@ -68,7 +74,7 @@ public class WebController {
         }
 
         // Novedad en el HTML
-        ProductDTO product1DTO = productService.findProductById(1);
+        ProductDTO product1DTO = productService.findProductById((long)1);
         if (product1DTO != null) {
             model.addAttribute("product1", product1DTO);
         } else {
@@ -77,7 +83,7 @@ public class WebController {
 
         return "myAccount";
     }
-    */
+
     @GetMapping("/myReview")
     public String myReview(Model model) {
         UserDTO userDTO = userService.findByUserName("user");

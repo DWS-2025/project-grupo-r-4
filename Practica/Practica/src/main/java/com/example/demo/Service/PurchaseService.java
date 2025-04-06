@@ -1,9 +1,6 @@
 package com.example.demo.Service;
 
-import com.example.demo.Model.Purchase;
-import com.example.demo.Model.PurchaseDTO;
-import com.example.demo.Model.Product;
-import com.example.demo.Model.User;
+import com.example.demo.Model.*;
 import com.example.demo.Repository.PurchaseRepository;
 import com.example.demo.Repository.ProductRepository;
 import com.example.demo.Repository.UserRepository;
@@ -77,5 +74,13 @@ public class PurchaseService {
 
     public PurchaseDTO createPurchase(PurchaseDTO purchaseDTO) {
         return save(purchaseDTO);
+    }
+
+    public List<PurchaseDTO> findByUser(UserDTO userDTO) {
+        User user = userRepository.findByName(userDTO.getName()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado"));
+        return purchaseRepository.findByUser(user)
+                .stream()
+                .map(this::convertToDTO)
+                .toList();
     }
 }

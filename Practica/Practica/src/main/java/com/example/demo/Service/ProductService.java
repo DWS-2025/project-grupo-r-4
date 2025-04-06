@@ -1,8 +1,9 @@
 package com.example.demo.Service;
 
-import com.example.demo.Model.Product;
-import com.example.demo.Model.ProductDTO;
+import com.example.demo.Model.*;
 import com.example.demo.Repository.ProductRepository;
+import com.example.demo.Repository.ReviewRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -15,12 +16,16 @@ import java.util.stream.Collectors;
 
 @Service
 public class ProductService {
+    @Autowired
+    private ReviewRepository reviewRepository;
 
     @Autowired
     private ProductRepository productRepository;
 
     @Autowired
     private ImageService imageService;
+    @Autowired
+    private UserService userService;
 
     // Convertir de Product -> ProductDTO
     private ProductDTO convertToDTO(Product product) {
@@ -35,7 +40,17 @@ public class ProductService {
 
     // Convertir de ProductDTO -> Product
     private Product convertToEntity(ProductDTO dto) {
-        Product product = new Product();
+        Product product;
+
+        if (dto.getId() != null) {
+            // Si el producto tiene ID, buscamos la entidad existente en la base de datos
+            product = productRepository.findById(dto.getId()).orElse(new Product());
+        } else {
+            // Si no tiene ID (nuevo producto), creamos una nueva instancia
+            product = new Product();
+        }
+
+        // Asignamos los valores del DTO a la entidad
         product.setId(dto.getId());
         product.setName(dto.getName());
         product.setDescription(dto.getDescription());
@@ -64,6 +79,7 @@ public class ProductService {
                 .map(this::convertToDTO);
     }
 
+    @Transactional
     public ProductDTO save(ProductDTO productDTO, MultipartFile imageField) {
         Product product = convertToEntity(productDTO);
 
@@ -109,10 +125,41 @@ public class ProductService {
         return convertToDTO(updatedProduct);
     }
 
-    /*public ProductDTO findProductById(int id) {
+    public ProductDTO findProductById(Long id) {
         Optional<Product> productOptional = productRepository.findById(id);
-        return productOptional.map(ProductDTO::fromEntity).orElse(null);
-    }*/
+        convertToDTO(productOptional.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Producto no encontrado")));
+        return convertToDTO(productOptional.get());
+    }
+
+    public Optional<ProductDTO> addReview(Long productId, String username, String reviewText, int rating) {
+        // Buscar el producto
+        Optional<Product> optionalProduct = productRepository.findById(productId);
+        if (optionalProduct.isEmpty()) {
+            return Optional.empty();
+        }
+
+        Product product = optionalProduct.get();
+
+        // Buscar el usuario
+        UserDTO user = userService.findByUserName(username);
+
+        // Crear la review
+        Review newReview = new Review();
+        newReview.setProduct(product);
+        newReview.setUser(userService.convertToEntity(user));
+        newReview.setComment(reviewText);
+        newReview.setRating(rating);
+
+        // Guardar la review
+        reviewRepository.save(newReview);
+
+        // (Opcional) Actualizar lista de reviews del producto, si las manejas en cascada
+        product.getReviews().add(newReview); // si tienes `@OneToMany(mappedBy = "product") List<Review> reviews` en `Product`
+        productRepository.save(product);
+
+        // Convertir el producto a DTO y devolver
+        return Optional.of(convertToDTO(product));  // Asumiendo que tienes un método `convertToDto()` en `Product`
+    }
 }
 
 

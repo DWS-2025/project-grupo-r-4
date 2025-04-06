@@ -1,8 +1,11 @@
 package com.example.demo.Service;
 
+import com.example.demo.Model.Purchase;
+import com.example.demo.Model.Review;
 import com.example.demo.Model.User;
 import com.example.demo.Model.UserDTO;
 import com.example.demo.Repository.UserRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -29,8 +32,8 @@ public class UserService {
         userDTO.setAddress(user.getAddress());
         userDTO.setPhone(user.getPhone());
         userDTO.setNumReviews(user.getNumReviews());
-        userDTO.setReviewIds(user.getReviews().stream().map(r -> r.getReviewId()).collect(Collectors.toList()));  // Convertir las Reviews a sus IDs
-        userDTO.setProductIds(user.getProducts().stream().map(p -> p.getId()).collect(Collectors.toList()));  // Convertir los productos a sus IDs
+        userDTO.setReviewIds(user.getReviews().stream().map(Review::getReviewId).collect(Collectors.toList()));  // Convertir las Reviews a sus IDs
+        userDTO.setProductIds(user.getProducts().stream().map(Purchase::getId).collect(Collectors.toList()));  // Convertir los productos a sus IDs
         return userDTO;
     }
 
@@ -83,5 +86,9 @@ public class UserService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado");
         }
         userRepository.deleteById(id);
+    }
+
+    public User findByNameDatabse(String name){
+        return userRepository.findByName(name).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado"));
     }
 }
