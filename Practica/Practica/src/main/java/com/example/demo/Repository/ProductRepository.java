@@ -1,6 +1,8 @@
 package com.example.demo.Repository;
 
 import com.example.demo.Model.Product;
+import com.example.demo.Model.ProductDTO;
+import org.springframework.data.domain.Example;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -13,4 +15,5 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     List<Product> findByTypeIgnoreCase(String type);
 
     boolean existsByName(String name);
+
 }

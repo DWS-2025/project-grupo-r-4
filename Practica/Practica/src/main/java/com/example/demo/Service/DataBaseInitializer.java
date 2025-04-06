@@ -52,18 +52,18 @@ public class DataBaseInitializer {
 
 
         // Crear DTOs para los productos usando el nuevo constructor
-        productDTOs.add(new ProductDTO("Casa Moderna", 100.0, "Casa moderna de lego", ""));
-        productDTOs.add(new ProductDTO("Fifa 25 PS5", 60.0, "Juego de fútbol para PS5", ""));
-        productDTOs.add(new ProductDTO("Hatchimals", 40.0, "Muñeco interactivo", ""));
-        productDTOs.add(new ProductDTO("Hot Wheels Circuito", 25.0, "Circuito de autos Hot Wheels", ""));
-        productDTOs.add(new ProductDTO("Muñeco Bebe", 30.0, "Muñeco de bebé", ""));
-        productDTOs.add(new ProductDTO("Nerf Scar Fortnite", 45.0, "Pistola Nerf de Fortnite", ""));
-        productDTOs.add(new ProductDTO("Oso Peluche", 20.0, "Oso de peluche suave", ""));
-        productDTOs.add(new ProductDTO("Pasteleria Barbie", 35.0, "Set de pastelería de Barbie", ""));
-        productDTOs.add(new ProductDTO("Peluqueria Play Doh", 22.0, "Set de peluquería Play Doh", ""));
-        productDTOs.add(new ProductDTO("Robot Teledirigido", 50.0, "Robot teledirigido", ""));
-        productDTOs.add(new ProductDTO("Scalextric", 80.0, "Juego de Scalextric", ""));
-        productDTOs.add(new ProductDTO("Trivial Pursuit", 30.0, "Juego de mesa Trivial Pursuit", ""));
+        productDTOs.add(new ProductDTO("Casa Moderna", 100.0, "Casa moderna de lego", "Muñecos"));
+        productDTOs.add(new ProductDTO("Fifa 25 PS5", 60.0, "Juego de fútbol para PS5", "Electronica"));
+        productDTOs.add(new ProductDTO("Hatchimals", 40.0, "Muñeco interactivo", "Muñecos"));
+        productDTOs.add(new ProductDTO("Hot Wheels Circuito", 25.0, "Circuito de autos Hot Wheels", "Otros"));
+        productDTOs.add(new ProductDTO("Muñeco Bebe", 30.0, "Muñeco de bebé", "Muñecos"));
+        productDTOs.add(new ProductDTO("Nerf Scar Fortnite", 45.0, "Pistola Nerf de Fortnite", "Otros"));
+        productDTOs.add(new ProductDTO("Oso Peluche", 20.0, "Oso de peluche suave", "Muñecos"));
+        productDTOs.add(new ProductDTO("Pasteleria Barbie", 35.0, "Set de pastelería de Barbie", "Muñecos"));
+        productDTOs.add(new ProductDTO("Peluqueria Play Doh", 22.0, "Set de peluquería Play Doh", "Muñecos"));
+        productDTOs.add(new ProductDTO("Robot Teledirigido", 50.0, "Robot teledirigido", "Electronica"));
+        productDTOs.add(new ProductDTO("Scalextric", 80.0, "Juego de Scalextric", "Electronica"));
+        productDTOs.add(new ProductDTO("Trivial Pursuit", 30.0, "Juego de mesa Trivial Pursuit", "JuegoMesa"));
 
 
         // Obtener el User

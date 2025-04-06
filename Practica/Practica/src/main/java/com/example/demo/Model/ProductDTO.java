@@ -8,6 +8,8 @@ public class ProductDTO {
     private String type;
     private String image;
 
+    public ProductDTO() {}
+
     public ProductDTO(String name, double price,String description, String type) {
         this.name = name;
         this.description = description;

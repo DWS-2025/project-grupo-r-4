@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 
 import java.util.List;
 import java.util.Optional;
@@ -148,6 +150,33 @@ public class ProductService {
 
         // Convertir el producto a DTO y devolver
         return Optional.of(convertToDTO(product));  // Asumiendo que tienes un método `convertToDto()` en `Product`
+    }
+
+    public List<ProductDTO> filterByTypeAndPrice(String type, Float price) {
+        Product exampleProduct = new Product();  // <-- Usa Product, no ProductDTO
+
+        if (type != null) {
+            exampleProduct.setType(type);
+        }
+        if (price != null) {
+            exampleProduct.setPrice(price);
+        }
+
+        ExampleMatcher matcher = ExampleMatcher
+                .matching()
+                .withIgnorePaths("id", "name", "description", "image")
+                .withIgnoreNullValues();
+
+        Example<Product> example = Example.of(exampleProduct, matcher);
+
+        List<Product> products = productRepository.findAll(example);
+
+        // Convertir List<Product> -> List<ProductDTO>
+        List<ProductDTO> productDTOS = products.stream()
+                .map(product -> new ProductDTO(product.getId(), product.getName(), product.getPrice(), product.getDescription(), product.getType()))
+                .toList();
+
+        return productDTOS;
     }
 }
 

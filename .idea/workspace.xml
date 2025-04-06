@@ -4,11 +4,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="dffe2e45-760d-4c54-bcbe-f83ef775f13d" name="Changes" comment="arreglo de errores en el database">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Controller/WebController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Controller/WebController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Service/DataBaseInitializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Service/DataBaseInitializer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Service/ProductService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Practica/Practica/src/main/java/com/example/demo/Service/ProductService.java" afterDir="false" />
+    <list default="true" id="dffe2e45-760d-4c54-bcbe-f83ef775f13d" name="Changes" comment="arreglo de errores en el database final excepto imagenes">
+      <change beforePath="$PROJECT_DIR$/Practica/Practica/images/image_0df20748-7d50-4297-aa65-5da8e6fc9170_Hatchimals.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Practica/Practica/images/image_0dfbdea9-7b45-442d-9893-7db8635ebc30_Fifa-25-PS5.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Practica/Practica/images/image_16d5c23a-0d90-401d-ad29-4a1f86e3584f_Fifa-25-PS5.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Practica/Practica/images/image_2422c859-ed05-4b7f-88b3-680eb44b92e6_Fifa-25-PS5.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Practica/Practica/images/image_63fce487-ba1c-4003-b0d1-45f1ba2d7726_Hatchimals.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Practica/Practica/images/image_69262217-050a-44e1-bb08-890a77ee648f_Fifa-25-PS5.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Practica/Practica/images/image_9f8b36af-a659-4a38-8a91-866af532c5f2_Fifa-25-PS5.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Practica/Practica/images/image_a8b42f0a-36bd-410c-bc66-2609dc372113_Fifa-25-PS5.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Practica/Practica/images/image_ae1a3edc-1a92-433d-8dc9-63b4b8b4f13e_Fifa-25-PS5.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Practica/Practica/images/image_c2c84ed5-0ab1-4e6a-9749-c34ea2ac6f54_Casa-Moderna.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Practica/Practica/images/image_c32ee7a5-0eb4-4e1c-99eb-7610408aaeb4_Casa-Moderna.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Practica/Practica/images/image_ccb59d8c-7c99-452a-be38-806c4bb0d7be_Casa-Moderna.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Practica/Practica/images/image_daae2fea-7d85-4962-bc16-b6c2799f9579_Casa-Moderna.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Practica/Practica/images/image_fe772570-7bb8-4314-87bc-f3e9c63694cd_Fifa-25-PS5.jpg" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -141,7 +151,7 @@
       <workItem from="1743614173714" duration="319000" />
       <workItem from="1743614716229" duration="8171000" />
       <workItem from="1743845297526" duration="21722000" />
-      <workItem from="1743927673404" duration="36231000" />
+      <workItem from="1743927673404" duration="38739000" />
     </task>
     <task id="LOCAL-00001" summary="inicio">
       <option name="closed" value="true" />
@@ -399,7 +409,15 @@
       <option name="project" value="LOCAL" />
       <updated>1743964065964</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL-00033" summary="arreglo de errores en el database final excepto imagenes">
+      <option name="closed" value="true" />
+      <created>1743972602205</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1743972602205</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -417,7 +435,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="inicio" />
     <MESSAGE value="WebController y modelos hechos" />
     <MESSAGE value="ImageService" />
     <MESSAGE value="ProductService" />
@@ -442,6 +459,7 @@
     <MESSAGE value="cambio de todos los controllers con funciones comentadas" />
     <MESSAGE value="cambio de nombres de fotografias, cambio de database, cambios en los services para algunas funciones y cambios en los controllers para que funcionen con los dtos." />
     <MESSAGE value="arreglo de errores en el database" />
-    <option name="LAST_COMMIT_MESSAGE" value="arreglo de errores en el database" />
+    <MESSAGE value="arreglo de errores en el database final excepto imagenes" />
+    <option name="LAST_COMMIT_MESSAGE" value="arreglo de errores en el database final excepto imagenes" />
   </component>
 </project>
