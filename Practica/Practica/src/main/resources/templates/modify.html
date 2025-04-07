@@ -52,16 +52,6 @@
                 <span class="error-message" id="typeError">Ingresa un tipo válido</span>
             </div>
 
-            <div class="form-group">
-                <label>Imagen actual:</label><br>
-                <img src="/uploads/{{product.image}}" alt="Imagen del producto" width="150">
-            </div>
-
-            <div class="form-group">
-                <label for="imageField">Cambiar imagen del producto:</label>
-                <input class="forminput-imput" type="file" id="imageField" name="imageField" accept=".jpg, .png">
-            </div>
-
             <div class="form-actions">
                 <button type="button" onclick="location.href='/product/{{product.id}}'; return false;">Cancelar</button>
                 <input type="submit" value="Guardar Cambios">

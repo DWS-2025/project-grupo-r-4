@@ -10,6 +10,7 @@ import com.example.demo.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 import java.util.Optional;
@@ -55,6 +56,11 @@ public class WebController {
         return "contact";
     }
 
+    @PostMapping("/contact")
+    public String contact() {
+        return "redirect:/";
+    }
+
     @GetMapping("/deleteProduct")
     public String deleteProduct(Model model) {
         return "deleteProduct";
@@ -69,23 +75,6 @@ public class WebController {
     public String myAccount(Model model) {
         UserDTO userDTO = userService.findByUserName("user");
         model.addAttribute("user", userDTO);
-
-        // Mejor oferta en el HTML
-        ProductDTO product0DTO = productService.findProductById((long)0);
-        if (product0DTO != null) {
-            model.addAttribute("product0", product0DTO);
-        } else {
-            model.addAttribute("product0NotFound", true);
-        }
-
-        // Novedad en el HTML
-        ProductDTO product1DTO = productService.findProductById((long)1);
-        if (product1DTO != null) {
-            model.addAttribute("product1", product1DTO);
-        } else {
-            model.addAttribute("product1NotFound", true);
-        }
-
         return "myAccount";
     }
 

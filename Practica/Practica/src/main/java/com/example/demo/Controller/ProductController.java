@@ -71,11 +71,11 @@ public class ProductController {
 
     @GetMapping("/product/{id}/modify")
     public String modifyProductForm(Model model, @PathVariable long id) {
-        ProductDTO productDto = productService.findById(id)
+        ProductDTO product = productService.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         model.addAttribute("user", userService.findByUserName("user"));
-        model.addAttribute("product", productDto);
+        model.addAttribute("product", product);
 
         return "modify";
     }
@@ -128,6 +128,9 @@ public class ProductController {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         UserDTO userDto = userService.findByUserName("user");
+
+        reviewDto.setProductId(productDto.getId());
+        reviewDto.setUserId(userDto.getId());
 
         reviewService.save(reviewDto);
 
