@@ -39,7 +39,9 @@ public class ProductRestController {
     @JsonView(Products.class)
     @GetMapping("/products/")
     public List<ProductDTO> getAllProducts() {
-        return productService.findAll();
+        List<ProductDTO> productDTO = productService.findAll();
+        return productDTO.stream().toList();
+
     }
 
     @JsonView(Products.class)
@@ -72,15 +74,15 @@ public class ProductRestController {
         return ResponseEntity.ok(purchasedProduct);
     }
 
-    @JsonView(ProductRev.class)
+   /* @JsonView(ProductRev.class)
     @PostMapping("/product/{id}/review")
     public ResponseEntity<ProductDTO> postReview(@PathVariable long id, @RequestParam String review, @RequestParam int rating) {
         Optional<ProductDTO> reviewedProduct = productService.addReview(id, "user", review, rating);
         return reviewedProduct.map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
-    }
+    }*/
 
-    @DeleteMapping("/product/{id}")
+    @DeleteMapping("/product/{id}")//funciona
     public ResponseEntity<String> deleteProduct(@PathVariable Long id) {
         productService.deleteById(id);
         return ResponseEntity.ok("producto eliminado");
