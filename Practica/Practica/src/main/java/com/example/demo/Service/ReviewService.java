@@ -51,7 +51,7 @@ public class ReviewService {
     public ReviewDTO findById(long id) {
         Review review = reviewRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Reseña no encontrada"));
-        return ReviewDTO.fromEntity(review);
+        return convertToDTO(review);
     }
 
 

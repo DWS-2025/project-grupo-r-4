@@ -25,7 +25,7 @@ public class Purchase {
     private double price;
 
     public Purchase() {
-
+        products = new ArrayList<>();
     }
 
     public Purchase(User userId, double price) {

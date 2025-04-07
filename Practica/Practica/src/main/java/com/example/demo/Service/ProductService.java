@@ -16,6 +16,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Page;
 import jakarta.persistence.Lob;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+
 
 import java.io.IOException;
 import java.sql.Blob;
@@ -38,18 +42,31 @@ public class ProductService {
 
     // Convertir de Product -> ProductDTO
     private ProductDTO convertToDTO(Product product) {
-        return new ProductDTO(
-                product.getId(),
-                product.getName(),
-                product.getPrice(),
-                product.getDescription(),
-                product.getProductType(),
-                product.getImageFile()
-        );
+        if(product.getReviews() != null){
+            List<Long> reviewIds = product.getReviews().stream().map(Review::getReviewId).toList();
+            return new ProductDTO(
+                    product.getId(),
+                    product.getName(),
+                    product.getPrice(),
+                    product.getDescription(),
+                    product.getProductType(),
+                    product.getImageFile(),
+                    reviewIds
+            );
+        }else{
+            return new ProductDTO(
+                    product.getId(),
+                    product.getName(),
+                    product.getPrice(),
+                    product.getDescription(),
+                    product.getProductType(),
+                    product.getImageFile()
+            );
+        }
     }
 
     // Convertir de ProductDTO -> Product
-    private Product convertToEntity(ProductDTO dto) {
+    public Product convertToEntity(ProductDTO dto) {
         Product product = new Product();
         product.setName(dto.getName());
         product.setDescription(dto.getDescription());
@@ -57,6 +74,17 @@ public class ProductService {
         product.setProductType(dto.getType());
         product.setImage(dto.getImage());
         product.setImageFile(dto.getImageFile());
+        return product;
+    }
+    public Product convertToEntity2(ProductDTO dto) {
+        Product product = new Product();
+        product.setName(dto.getName());
+        product.setDescription(dto.getDescription());
+        product.setPrice(dto.getPrice());
+        product.setProductType(dto.getType());
+        product.setImage(dto.getImage());
+        product.setImageFile(dto.getImageFile());
+        product.setId(dto.getId());
         return product;
     }
 
@@ -152,10 +180,9 @@ public class ProductService {
         newReview.setRating(rating);
 
         // Guardar la review
-        reviewRepository.save(newReview);
 
-        // (Opcional) Actualizar lista de reviews del producto, si las manejas en cascada
-        product.getReviews().add(newReview); // si tienes `@OneToMany(mappedBy = "product") List<Review> reviews` en `Product`
+        product.getReviews().add(newReview);
+        reviewRepository.save(newReview);
         productRepository.save(product);
 
         // Convertir el producto a DTO y devolver
@@ -195,7 +222,7 @@ public class ProductService {
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
     }
-
+    
 }
 
 

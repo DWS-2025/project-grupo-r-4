@@ -11,10 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -23,10 +20,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.IntStream;
+
+
 
 @Controller
 public class ProductController {
@@ -71,7 +71,13 @@ public class ProductController {
 
 
 
-    @GetMapping("/product/new")
+    @GetMapping("/products/loadMore")
+    @ResponseBody public List<ProductDTO> loadMoreProducts( @RequestParam(value = "page") int page, @RequestParam(value = "size", defaultValue = "10") int size) {
+        return productService.findPaginated(page, size);
+    }
+
+
+        @GetMapping("/product/new")
     public String newProductForm(Model model) {
         model.addAttribute("user", userService.findByUserName("user")); // Mejor pedirlo al userService
 
@@ -114,6 +120,22 @@ public class ProductController {
         ProductDTO product = productService.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
+        List<Long> reviewsId=product.getReviewsId();
+        List<ReviewDTO> reviewDTOS = new java.util.ArrayList<>(List.of());
+
+        if(reviewsId != null){
+            for(Long reviewId : reviewsId) {
+                reviewDTOS.add(reviewService.findById(reviewId));
+            }
+            List<UserDTO> users = new ArrayList<>();
+            for(ReviewDTO review : reviewDTOS) {
+                users.add(userService.findById(review.getUserId()).get());
+
+            }
+            model.addAttribute("users", users);
+            model.addAttribute("reviews", reviewDTOS);
+        }
+
         model.addAttribute("product", product);
 
         return "product";
@@ -148,10 +170,7 @@ public class ProductController {
 
         UserDTO userDto = userService.findByUserName("user");
 
-        reviewDto.setProductId(productDto.getId());
-        reviewDto.setUserId(userDto.getId());
-
-        reviewService.save(reviewDto);
+        productService.addReview(id, "user", review, rating);
 
         return "redirect:/product/" + id;
     }
@@ -187,16 +206,12 @@ public class ProductController {
     }
 
     @PostMapping("/product/{id}/purchase")
-    public String newPurchase(@PathVariable long id) {
-        try {
-            purchaseService.createPurchase(purchaseService.save(new PurchaseDTO()));
+    public String newPurchase(@PathVariable long id) throws IOException {
+            PurchaseDTO purchaseDTO = new PurchaseDTO();
+            ProductDTO productDTO = productService.findById(id).get();
+            purchaseService.createPurchase(purchaseDTO, productDTO);
             return "redirect:/product/" + id;
-        } catch (RuntimeException e) {
-            System.out.println("Error: " + e.getMessage());
-            return "404";
-        } catch (Exception e) {
-            System.out.println("Error inesperado: " + e.getMessage());
-            return "500";
-        }
+
     }
 }
+
