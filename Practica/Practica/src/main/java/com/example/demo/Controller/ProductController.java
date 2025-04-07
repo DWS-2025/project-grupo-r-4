@@ -58,8 +58,27 @@ public class ProductController {
         return "products";
     }
 
+    @GetMapping("/filter")
+    public String showFilterPage() {
+        return "filter";
+    }
+
+    @GetMapping("/products/filter")
+    @ResponseBody
+    public List<ProductDTO> filterProducts(
+            @RequestParam(required = false) String type,
+            @RequestParam(required = false) Float price) {
+
+        return productService.filterByTypeAndPrice(type, price);
+    }
+
+    // Endpoint para carga paginada AJAX
     @GetMapping("/products/loadMore")
-    @ResponseBody public List<ProductDTO> loadMoreProducts( @RequestParam(value = "page") int page, @RequestParam(value = "size", defaultValue = "10") int size) {
+    @ResponseBody
+    public List<ProductDTO> loadMoreProducts(
+            @RequestParam(value = "page") int page,
+            @RequestParam(value = "size", defaultValue = "2") int size) {
+
         return productService.findPaginated(page, size);
     }
 

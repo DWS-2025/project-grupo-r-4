@@ -190,31 +190,39 @@ public class ProductService {
     }
 
     public List<ProductDTO> filterByTypeAndPrice(String type, Float price) {
-        Product exampleProduct = new Product();  // <-- Usa Product, no ProductDTO
+        Product exampleProduct = new Product();
 
-        if (type != null) {
+        // Configuramos el matcher para búsqueda exacta
+        ExampleMatcher matcher = ExampleMatcher.matching()
+                .withIgnorePaths("id", "name", "description", "image")
+                .withIgnoreCase()
+                .withStringMatcher(ExampleMatcher.StringMatcher.EXACT);
+
+        if (type != null && !type.isEmpty()) {
             exampleProduct.setType(type);
+        } else {
+            matcher = matcher.withIgnorePaths("type");
         }
+
         if (price != null) {
             exampleProduct.setPrice(price);
+        } else {
+            matcher = matcher.withIgnorePaths("price");
         }
 
-        ExampleMatcher matcher = ExampleMatcher
-                .matching()
-                .withIgnorePaths("id", "name", "description", "image")
-                .withIgnoreNullValues();
-
         Example<Product> example = Example.of(exampleProduct, matcher);
-
         List<Product> products = productRepository.findAll(example);
 
-        // Convertir List<Product> -> List<ProductDTO>
-        List<ProductDTO> productDTOS = products.stream()
-                .map(product -> new ProductDTO(product.getId(), product.getName(), product.getPrice(), product.getDescription(), product.getType()))
+        return products.stream()
+                .map(product -> new ProductDTO(
+                        product.getId(),
+                        product.getName(),
+                        product.getPrice(),
+                        product.getDescription(),
+                        product.getType()))
                 .toList();
-
-        return productDTOS;
     }
+
     public List<ProductDTO> findPaginated(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
         Page<Product> productPage = productRepository.findAll(pageable);
@@ -222,7 +230,7 @@ public class ProductService {
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
     }
-    
+
 }
 
 
