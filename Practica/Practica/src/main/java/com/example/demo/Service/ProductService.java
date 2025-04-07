@@ -30,15 +30,15 @@ import java.util.stream.Collectors;
 @Service
 public class ProductService {
     @Autowired
-    private ReviewRepository reviewRepository;
-
-    @Autowired
     private ProductRepository productRepository;
 
     @Autowired
     private ImageService imageService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private ReviewService reviewService;
+
 
     // Convertir de Product -> ProductDTO
     private ProductDTO convertToDTO(Product product) {
@@ -160,33 +160,25 @@ public class ProductService {
         return convertToDTO(productOptional.get());
     }
 
-    public Optional<ProductDTO> addReview(Long productId, String username, String reviewText, int rating) {
-        // Buscar el producto
-        Optional<Product> optionalProduct = productRepository.findById(productId);
-        if (optionalProduct.isEmpty()) {
-            return Optional.empty();
-        }
-
-        Product product = optionalProduct.get();
+    public Optional<ProductDTO> addReview(ProductDTO productDTO, String username, String reviewText, int rating) {
 
         // Buscar el usuario
         UserDTO user = userService.findByUserName(username);
 
         // Crear la review
-        Review newReview = new Review();
-        newReview.setProduct(product);
-        newReview.setUser(userService.convertToEntity(user));
-        newReview.setComment(reviewText);
-        newReview.setRating(rating);
+        ReviewDTO newReviewDTO = new ReviewDTO();
+        newReviewDTO.setUserId(userService.convertToEntity(user).getId());
+        newReviewDTO.setReview(reviewText);
+        newReviewDTO.setRating(rating);
+        newReviewDTO.setProductId(productDTO.getId());
 
         // Guardar la review
+        ReviewDTO reviewDTO = reviewService.save(newReviewDTO);
+        productDTO.getReviewsId().add(reviewDTO.getReviewId());
 
-        product.getReviews().add(newReview);
-        reviewRepository.save(newReview);
-        productRepository.save(product);
 
         // Convertir el producto a DTO y devolver
-        return Optional.of(convertToDTO(product));  // Asumiendo que tienes un método `convertToDto()` en `Product`
+        return Optional.of(productDTO);  // Asumiendo que tienes un método `convertToDto()` en `Product`
     }
 
     public List<ProductDTO> filterByTypeAndPrice(String type, Float price) {

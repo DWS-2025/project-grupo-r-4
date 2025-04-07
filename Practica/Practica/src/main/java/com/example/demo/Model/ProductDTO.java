@@ -59,8 +59,9 @@ public class ProductDTO {
         this.description = description;
         this.type = productType;
         this.imageFile = imageFile;
-        this.reviewsId = reviewIds;
+        this.reviewsId = new ArrayList<>(reviewIds); // 👈 aquí
     }
+
 
     public List<Long> getUsers() {
         return users;
@@ -79,7 +80,7 @@ public class ProductDTO {
     }
 
     public List<Long> getReviewsId() {
-        return reviewsId;
+        return this.reviewsId;
     }
 
     public void setReviewsId(List<Long> reviewsId) {

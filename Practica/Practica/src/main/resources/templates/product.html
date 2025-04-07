@@ -40,9 +40,9 @@
             <div class="reviews">
                 <h3>Reseñas:</h3>
                 {{#reviews}}
-                {{#user}}
-                <p>{{user.name}}: {{rating}}/5 - {{review}}</p>
-                {{/user}}
+                {{#users}}
+                <p>{{name}}: {{rating}}/5 - {{review}}</p>
+                {{/users}}
                 {{/reviews}}
             </div>
 

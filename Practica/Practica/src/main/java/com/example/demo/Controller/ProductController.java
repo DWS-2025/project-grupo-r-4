@@ -176,7 +176,7 @@ public class ProductController {
 
         UserDTO userDto = userService.findByUserName("user");
 
-        productService.addReview(id, "user", review, rating);
+        productService.addReview(productDto, "user", review, rating);
 
         return "redirect:/product/" + id;
     }

@@ -16,10 +16,11 @@ public class ReviewDTO {
     }
 
     public ReviewDTO() {
+
     }
 
     public long getReviewId() {
-        return reviewId;
+        return this.reviewId;
     }
 
     public void setReviewId(long reviewId) {

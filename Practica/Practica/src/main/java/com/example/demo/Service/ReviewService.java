@@ -79,7 +79,7 @@ public class ReviewService {
         userRepository.save(user);
 
 
-        return ReviewDTO.fromEntity(review);
+        return convertToDTO(review);
     }
 
 
