@@ -126,6 +126,13 @@
             cursor: pointer;
             color: #666;
         }
+
+        .active-filters {
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+        }
     </style>
 </head>
 <body>
@@ -154,10 +161,10 @@
             <a href="/filter" class="btn-details">Filtros</a>
         </div>
 
-        <div id="active-filters" style="margin-bottom: 20px; display: none;">
+        <div id="active-filters" class="active-filters" style="display: none;">
             <strong>Filtros aplicados:</strong>
             <div id="filter-tags"></div>
-            <button id="clear-filters" class="btn-cancel" style="margin-left: 10px;">Limpiar filtros</button>
+            <button id="clear-filters" class="btn-cancel" style="margin-left: 10px; margin-top: 10px;">Limpiar filtros</button>
         </div>
 
         <div class="product-list" id="product-list">
@@ -210,68 +217,134 @@
 </footer>
 
 <script>
+    // Variables de estado
+    let currentLoad = 0;
+    const initialLoadSize = 10;
+    const loadMoreSize = 2;
+    let hasMoreProducts = true;
+    let isLoading = false;
+
     document.addEventListener("DOMContentLoaded", function() {
-        // Manejo de filtros aplicados
+        const loadMoreBtn = document.getElementById("load-more-btn");
+        const productList = document.getElementById("product-list");
+        const spinner = document.getElementById("spinner");
+        const noMoreProductsMsg = document.getElementById("no-more-products");
+        const errorMsg = document.getElementById("error-message");
+        const activeFilters = document.getElementById("active-filters");
+        const filterTags = document.getElementById("filter-tags");
+        const clearFiltersBtn = document.getElementById("clear-filters");
+        const noResultsMsg = document.getElementById("no-results");
+
+        // Manejar filtros activos
         const urlParams = new URLSearchParams(window.location.search);
         const typeFilter = urlParams.get('type');
         const priceFilter = urlParams.get('price');
 
         if (typeFilter || priceFilter) {
             showActiveFilters(typeFilter, priceFilter);
-        }
-
-        // Cargar productos filtrados si hay parámetros en la URL
-        if (typeFilter || priceFilter) {
-            applyFiltersFromURL(typeFilter, priceFilter);
+            loadMoreBtn.style.display = 'none'; // Ocultar para filtros
         } else {
             // Configurar paginación normal
-            setupPagination();
+            loadMoreBtn.addEventListener('click', loadMoreProducts);
+
+            // Verificar si ya mostramos todos los productos
+            if (document.querySelectorAll('.product-card').length < initialLoadSize) {
+                hasMoreProducts = false;
+                loadMoreBtn.style.display = 'none';
+                noMoreProductsMsg.style.display = 'block';
+            }
         }
 
-        // Botón para limpiar filtros
-        document.getElementById('clear-filters').addEventListener('click', function() {
-            window.location.href = '/products';
-        });
+        // Función para cargar más productos
+        async function loadMoreProducts() {
+            if (isLoading || !hasMoreProducts) return;
 
+            try {
+                isLoading = true;
+                spinner.style.display = "block";
+                loadMoreBtn.disabled = true;
+                errorMsg.style.display = "none";
+
+                const response = await fetch(`/products/loadMore?page=${currentLoad}&size=${loadMoreSize}`, {
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+
+                if (!response.ok) throw new Error(`Error HTTP: ${response.status}`);
+
+                const newProducts = await response.json();
+
+                if (newProducts.length > 0) {
+                    newProducts.forEach(product => {
+                        const productCard = `
+                            <div class="product-card">
+                                <img src="/product/${product.id}/image" alt="${product.name}" loading="lazy">
+                                <h3>${product.name}</h3>
+                                <p class="price">${product.price} €</p>
+                                <a href="/product/${product.id}" class="btn-details">Detalles</a>
+                            </div>
+                        `;
+                        productList.insertAdjacentHTML('beforeend', productCard);
+                    });
+
+                    currentLoad++;
+
+                    if (newProducts.length < loadMoreSize) {
+                        hasMoreProducts = false;
+                        loadMoreBtn.style.display = 'none';
+                        noMoreProductsMsg.style.display = 'block';
+                    }
+                } else {
+                    hasMoreProducts = false;
+                    loadMoreBtn.style.display = 'none';
+                    noMoreProductsMsg.style.display = 'block';
+                }
+            } catch (error) {
+                console.error('Error al cargar productos:', error);
+                errorMsg.style.display = 'block';
+            } finally {
+                isLoading = false;
+                spinner.style.display = 'none';
+                loadMoreBtn.disabled = false;
+            }
+        }
+
+        // Mostrar filtros activos
         function showActiveFilters(type, price) {
-            const filtersContainer = document.getElementById('active-filters');
-            const tagsContainer = document.getElementById('filter-tags');
-            tagsContainer.innerHTML = '';
+            activeFilters.style.display = 'block';
+            filterTags.innerHTML = '';
 
             if (type) {
                 const tag = document.createElement('span');
                 tag.className = 'filter-tag';
                 tag.innerHTML = `Tipo: ${type} <button onclick="removeFilter('type')">&times;</button>`;
-                tagsContainer.appendChild(tag);
+                filterTags.appendChild(tag);
             }
 
             if (price) {
                 const tag = document.createElement('span');
                 tag.className = 'filter-tag';
                 tag.innerHTML = `Precio: ${price}€ <button onclick="removeFilter('price')">&times;</button>`;
-                tagsContainer.appendChild(tag);
+                filterTags.appendChild(tag);
             }
-
-            filtersContainer.style.display = 'block';
         }
 
-        function applyFiltersFromURL(type, price) {
-            document.getElementById('load-more-btn').style.display = 'none';
-            document.getElementById('no-more-products').style.display = 'block';
+        // Limpiar filtros
+        clearFiltersBtn.addEventListener('click', function() {
+            window.location.href = '/products';
+        });
 
-            let url = '/products/filter?';
-            if (type) url += `type=${encodeURIComponent(type)}`;
-            if (price) url += `${type ? '&' : ''}price=${price}`;
-
-            fetch(url)
+        // Cargar productos filtrados si hay parámetros
+        if (typeFilter || priceFilter) {
+            fetch(`/products/filter?type=${typeFilter || ''}&price=${priceFilter || ''}`)
                 .then(response => response.json())
                 .then(products => {
-                    const productList = document.getElementById('product-list');
-                    productList.innerHTML = '';
-
                     if (products.length === 0) {
-                        document.getElementById('no-results').style.display = 'block';
+                        noResultsMsg.style.display = 'block';
+                        productList.style.display = 'none';
                     } else {
+                        productList.innerHTML = '';
                         products.forEach(product => {
                             const productCard = `
                                 <div class="product-card">
@@ -287,83 +360,8 @@
                 })
                 .catch(error => {
                     console.error('Error al cargar productos filtrados:', error);
-                    document.getElementById('error-message').style.display = 'block';
-                });
-        }
-
-        function setupPagination() {
-            let currentPage = 0;
-            const loadMoreBtn = document.getElementById("load-more-btn");
-            const productList = document.getElementById("product-list");
-            const spinner = document.getElementById("spinner");
-            const noMoreProductsMsg = document.getElementById("no-more-products");
-            const errorMsg = document.getElementById("error-message");
-            let isLoading = false;
-            let hasMoreProducts = true;
-
-            async function loadMoreProducts() {
-                if (isLoading || !hasMoreProducts) return;
-
-                try {
-                    isLoading = true;
-                    spinner.style.display = "block";
-                    loadMoreBtn.disabled = true;
-                    errorMsg.style.display = "none";
-
-                    const response = await fetch(`/products/loadMore?page=${currentPage + 1}&size=2`, {
-                        headers: {
-                            'Accept': 'application/json'
-                        }
-                    });
-
-                    if (!response.ok) {
-                        throw new Error(`Error HTTP: ${response.status}`);
-                    }
-
-                    const newProducts = await response.json();
-
-                    if (newProducts.length > 0) {
-                        newProducts.forEach(product => {
-                            const productCard = `
-                                <div class="product-card">
-                                    <img src="/product/${product.id}/image" alt="${product.name}" loading="lazy">
-                                    <h3>${product.name}</h3>
-                                    <p class="price">${product.price} €</p>
-                                    <a href="/product/${product.id}" class="btn-details">Detalles</a>
-                                </div>
-                            `;
-                            productList.insertAdjacentHTML('beforeend', productCard);
-                        });
-
-                        currentPage++;
-
-                        if (newProducts.length < 2) {
-                            hasMoreProducts = false;
-                            loadMoreBtn.style.display = 'none';
-                            noMoreProductsMsg.style.display = 'block';
-                        }
-                    } else {
-                        hasMoreProducts = false;
-                        loadMoreBtn.style.display = 'none';
-                        noMoreProductsMsg.style.display = 'block';
-                    }
-                } catch (error) {
-                    console.error('Error al cargar productos:', error);
                     errorMsg.style.display = 'block';
-                } finally {
-                    isLoading = false;
-                    spinner.style.display = 'none';
-                    loadMoreBtn.disabled = false;
-                }
-            }
-
-            loadMoreBtn.addEventListener('click', loadMoreProducts);
-
-            if (document.querySelectorAll('.product-card').length < 10) {
-                loadMoreBtn.style.display = 'none';
-                noMoreProductsMsg.style.display = 'block';
-                hasMoreProducts = false;
-            }
+                });
         }
     });
 

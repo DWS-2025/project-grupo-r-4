@@ -215,10 +215,10 @@ public class ProductService {
                 .toList();
     }
 
-    public List<ProductDTO> findPaginated(int page, int size) {
-        Pageable pageable = PageRequest.of(page, size);
-        Page<Product> productPage = productRepository.findAll(pageable);
-        return productPage.getContent().stream()
+    public List<ProductDTO> findPaginated(int offset, int size) {
+        // Usando JPA Repository con consulta nativa para offset
+        return productRepository.findPaginatedProducts(offset, size)
+                .stream()
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
     }

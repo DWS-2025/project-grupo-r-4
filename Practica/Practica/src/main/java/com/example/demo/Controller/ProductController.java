@@ -73,13 +73,17 @@ public class ProductController {
     }
 
     // Endpoint para carga paginada AJAX
+
     @GetMapping("/products/loadMore")
     @ResponseBody
     public List<ProductDTO> loadMoreProducts(
-            @RequestParam(value = "page") int page,
-            @RequestParam(value = "size", defaultValue = "2") int size) {
+            @RequestParam int page,
+            @RequestParam(defaultValue = "2") int size) {
 
-        return productService.findPaginated(page, size);
+        // Calculamos el offset correcto: 10 iniciales + (página * tamaño)
+        int offset = 10 + (page * size);
+
+        return productService.findPaginated(offset, size);
     }
 
 
