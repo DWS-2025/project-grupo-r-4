@@ -1,8 +1,11 @@
 package com.example.demo.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.persistence.Entity;
 import jakarta.persistence.*;
+
+import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,6 +43,9 @@ public class Product {
     @ManyToMany
     private List<Purchase> purchase;
 
+    @Lob
+    @JsonIgnore
+    private Blob imageFile;
 
     public Product() {
 
@@ -54,6 +60,14 @@ public class Product {
         this.users = new ArrayList<>();
         this.reviews= new ArrayList<>();
         this.purchase= new ArrayList<>();
+    }
+
+    public Blob getImageFile() {
+        return imageFile;
+    }
+
+    public void setImageFile(Blob imageFile) {
+        this.imageFile = imageFile;
     }
 
     public long getId() {

@@ -4,6 +4,7 @@ import com.example.demo.Model.*;
 import com.example.demo.Service.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -18,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -101,11 +103,11 @@ public class ProductController {
     }
 
     @GetMapping("/product/{id}/image")
-    public ResponseEntity<Resource> downloadImage(@PathVariable long id) {
+    public ResponseEntity<Resource> downloadImage(@PathVariable long id) throws SQLException {
         ProductDTO productDto = productService.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-        Resource image = imageService.getImage(productDto.getImage());
+        Resource image = new InputStreamResource(productDto.getImageFile().getBinaryStream());
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_TYPE, "image/jpeg")
                 .body(image);

@@ -67,7 +67,7 @@ public class ProductRestController {
 
     @JsonView(ProductPurch.class)
     @PostMapping("/product/{id}/purchase")
-    public ResponseEntity<ProductDTO> newPurchase(@PathVariable long id, @RequestParam double price,@RequestBody ProductDTO productDTO,MultipartFile imageField) {
+    public ResponseEntity<ProductDTO> newPurchase(@PathVariable long id, @RequestParam double price,@RequestBody ProductDTO productDTO,MultipartFile imageField) throws IOException {
         ProductDTO purchasedProduct = productService.save(productDTO,imageField);
         return ResponseEntity.ok(purchasedProduct);
     }

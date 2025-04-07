@@ -1,5 +1,10 @@
 package com.example.demo.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.Lob;
+
+import java.sql.Blob;
+
 public class ProductDTO {
     private Long id;
     private String name;
@@ -7,6 +12,10 @@ public class ProductDTO {
     private String description;
     private String type;
     private String image;
+
+    @Lob
+    @JsonIgnore
+    private Blob imageFile;
 
     public ProductDTO() {}
 
@@ -25,7 +34,22 @@ public class ProductDTO {
         this.type = type;
     }
 
+    public ProductDTO(long id, String name, double price, String description, String productType, Blob imageFile) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.description = description;
+        this.type = productType;
+        this.imageFile = imageFile;
+    }
 
+    public Blob getImageFile() {
+        return imageFile;
+    }
+
+    public void setImageFile(Blob imageFile) {
+        this.imageFile = imageFile;
+    }
     public Long getId() {
         return id;
     }

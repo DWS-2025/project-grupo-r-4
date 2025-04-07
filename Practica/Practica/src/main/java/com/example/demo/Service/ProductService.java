@@ -4,6 +4,7 @@ import com.example.demo.Model.*;
 import com.example.demo.Repository.ProductRepository;
 import com.example.demo.Repository.ReviewRepository;
 import jakarta.transaction.Transactional;
+import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -11,7 +12,10 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
+import jakarta.persistence.Lob;
 
+import java.io.IOException;
+import java.sql.Blob;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -36,7 +40,8 @@ public class ProductService {
                 product.getName(),
                 product.getPrice(),
                 product.getDescription(),
-                product.getProductType()
+                product.getProductType(),
+                product.getImageFile()
         );
     }
 
@@ -48,6 +53,7 @@ public class ProductService {
         product.setPrice(dto.getPrice());
         product.setProductType(dto.getType());
         product.setImage(dto.getImage());
+        product.setImageFile(dto.getImageFile());
         return product;
     }
 
@@ -70,12 +76,13 @@ public class ProductService {
                 .map(this::convertToDTO);
     }
 
-    public ProductDTO save(ProductDTO productDTO, MultipartFile imageField) {
+    public ProductDTO save(ProductDTO productDTO, MultipartFile imageField) throws IOException {
         Product product = convertToEntity(productDTO);
 
         if (imageField != null && !imageField.isEmpty()) {
             String path = imageService.createImage(imageField);
             product.setImage(path);
+            product.setImageFile(BlobProxy.generateProxy(imageField.getInputStream(), imageField.getSize()));
         }
 
         if (product.getImage() == null || product.getImage().isEmpty()) {
