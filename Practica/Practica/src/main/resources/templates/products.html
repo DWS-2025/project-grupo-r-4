@@ -5,72 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Productos - Juguetes Store</title>
     <link rel="stylesheet" href="/css/style.css">
-    <style>
-        .product-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            margin-top: 30px;
-        }
-
-        .product-card {
-            background-color: #fff;
-            border: 2px solid #e0e0e0;
-            border-radius: 15px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            padding: 20px;
-            transition: transform 0.2s;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            height: 100%;
-        }
-
-        .product-card:hover {
-            transform: scale(1.02);
-        }
-
-        .product-card img {
-            max-width: 100%;
-            height: 200px;
-            object-fit: contain;
-            margin-bottom: 15px;
-        }
-
-        .product-card h3 {
-            font-size: 20px;
-            margin: 10px 0;
-        }
-
-        .product-card .price {
-            font-weight: bold;
-            color: #2b8a3e;
-            font-size: 18px;
-            margin-bottom: 10px;
-        }
-
-        .btn-details {
-            background-color: #2b8a3e;
-            color: white;
-            padding: 10px 15px;
-            border: none;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: bold;
-            transition: background-color 0.3s ease;
-        }
-
-        .btn-details:hover {
-            background-color: #246e34;
-        }
-    </style>
 </head>
 <body>
 <header class="header">
+    <div class="top-bar"></div>
     <div class="container">
         <div class="logo">
-            <a href="/"><img src="/images/logo-tienda-juguetes.jpg" alt="Juguetes Store"></a>
+            <a href="/"><img src="/images/logo-tienda-juguetes.jpg" alt="Juguetes Store" width="500"></a>
         </div>
         <nav class="nav">
             <ul>
@@ -88,18 +29,12 @@
     <section class="products">
         <h2>Todos los Productos</h2>
 
+        <!-- Aquí los productos se cargarán dinámicamente -->
         <div class="product-list" id="product-list">
-            {{#products}}
-            <div class="product-card">
-                <img src="/product/{{id}}/image" alt="{{name}}">
-                <h3>{{name}}</h3>
-                <p class="price">{{price}} €</p>
-                <a href="/product/{{id}}" class="btn-details">Detalles</a>
-            </div>
-            {{/products}}
+            <!-- Los productos se insertarán aquí con JavaScript -->
         </div>
 
-        <!-- Spinner de carga -->
+        <!-- Spinner para carga -->
         <div id="spinner" class="spinner" style="display: none;">
             <img src="/images/spinner.gif" alt="Cargando...">
         </div>
@@ -108,15 +43,8 @@
         <div class="load-more">
             <button id="load-more-btn">Más resultados</button>
         </div>
-
-        <!-- Botón para añadir producto -->
-        <div class="add-product">
-            <button onclick="location.href='/newProduct'">Añadir Producto</button>
-        </div>
     </section>
 </main>
-</body>
-
 
 <footer class="footer">
     <div class="container">
@@ -141,30 +69,59 @@
     const productList = document.getElementById("product-list");
     const spinner = document.getElementById("spinner");
 
+    // Función para crear dinámicamente las tarjetas de producto
+    function createProductCard(product) {
+        const productCard = document.createElement("div");
+        productCard.className = "product-card";  // Estilo de la tarjeta
+
+        const img = document.createElement("img");
+        img.src = product.image ? product.image : "/images/default-product.png"; // Imagen por defecto si no hay ninguna
+        img.alt = product.name;
+        img.className = "product-img";  // Clase para la imagen
+
+        const productInfo = document.createElement("div");
+        productInfo.className = "product-info"; // Caja de información del producto
+
+        const h3 = document.createElement("h3");
+        h3.textContent = product.name;
+
+        const price = document.createElement("p");
+        price.className = "price";  // Clase para el precio
+        price.textContent = `${product.price} €`;
+
+        const detailsLink = document.createElement("a");
+        detailsLink.href = `/product/${product.id}`;
+        detailsLink.className = "btn-details";  // Clase para el botón de detalles
+        detailsLink.textContent = "Detalles";
+
+        productInfo.appendChild(h3);
+        productInfo.appendChild(price);
+        productInfo.appendChild(detailsLink);
+
+        productCard.appendChild(img);
+        productCard.appendChild(productInfo);
+
+        return productCard;
+    }
+
+    // Función para cargar productos usando AJAX
     function loadProducts() {
-        spinner.style.display = "block"; // Mostrar spinner mientras se cargan los productos
+        spinner.style.display = "block"; // Mostrar spinner mientras se cargan productos
         loadMoreBtn.style.display = "none"; // Ocultar botón temporalmente
 
-        fetch(`/api/products?page=${currentPage}`)
+        fetch(`/products/loadMore?page=${currentPage}&size=10`)
             .then(response => response.json())
             .then(products => {
-                spinner.style.display = "none"; // Ocultar spinner cuando termine la carga
+                spinner.style.display = "none"; // Ocultar spinner
 
                 if (products.length > 0) {
                     products.forEach(product => {
-                        const productHTML = `
-                            <div class="product">
-                                <h3><a href="/product/${product.id}">${product.name}</a></h3>
-                                <img src="/product/${product.id}/image" alt="${product.name}">
-                                <p class="price">${product.price}€</p>
-                                <a href="/product/${product.id}" class="details">Detalles</a>
-                            </div>
-                        `;
-                        productList.innerHTML += productHTML;
+                        const productCard = createProductCard(product);
+                        productList.appendChild(productCard); // Añadir tarjetas de producto al contenedor
                     });
 
-                    currentPage++; // Pasar a la siguiente página
-                    loadMoreBtn.style.display = "block"; // Volver a mostrar el botón si hay más productos
+                    currentPage++; // Incrementar página para próxima carga
+                    loadMoreBtn.style.display = "block"; // Mostrar el botón si hay más productos
                 } else {
                     loadMoreBtn.style.display = "none"; // Ocultar el botón si no hay más productos
                 }
@@ -176,10 +133,10 @@
             });
     }
 
-    // Cargar la primera tanda de productos cuando se carga la página
+    // Cargar la primera tanda de productos al cargar la página
     document.addEventListener("DOMContentLoaded", loadProducts);
 
-    // Cargar más productos cuando se pulsa el botón
+    // Cargar más productos al hacer clic en el botón
     loadMoreBtn.addEventListener("click", loadProducts);
 </script>
 
