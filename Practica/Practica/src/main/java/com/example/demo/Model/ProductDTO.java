@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Lob;
 
 import java.sql.Blob;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ProductDTO {
     private Long id;
@@ -12,12 +14,19 @@ public class ProductDTO {
     private String description;
     private String type;
     private String image;
-
+    private List<Long> users;
+    private List<Long> reviewsId;
+    private List<Long> purchasesId;
     @Lob
     @JsonIgnore
     private Blob imageFile;
 
-    public ProductDTO() {}
+
+    public ProductDTO() {
+        this.reviewsId = new ArrayList<>();
+        this.purchasesId = new ArrayList<>();
+        this.users = new ArrayList<>();
+    }
 
     public ProductDTO(String name, double price,String description, String type) {
         this.name = name;
@@ -41,6 +50,40 @@ public class ProductDTO {
         this.description = description;
         this.type = productType;
         this.imageFile = imageFile;
+    }
+
+    public ProductDTO(long id, String name, double price, String description, String productType, Blob imageFile, List<Long> reviewIds) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.description = description;
+        this.type = productType;
+        this.imageFile = imageFile;
+        this.reviewsId = reviewIds;
+    }
+
+    public List<Long> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<Long> users) {
+        this.users = users;
+    }
+
+    public List<Long> getPurchasesId() {
+        return purchasesId;
+    }
+
+    public void setPurchasesId(List<Long> purchasesId) {
+        this.purchasesId = purchasesId;
+    }
+
+    public List<Long> getReviewsId() {
+        return reviewsId;
+    }
+
+    public void setReviewsId(List<Long> reviewsId) {
+        this.reviewsId = reviewsId;
     }
 
     public Blob getImageFile() {

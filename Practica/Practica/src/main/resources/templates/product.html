@@ -39,9 +39,11 @@
 
             <div class="reviews">
                 <h3>Reseñas:</h3>
-                {{#product.reviews}}
+                {{#reviews}}
+                {{#user}}
                 <p>{{user.name}}: {{rating}}/5 - {{review}}</p>
-                {{/product.reviews}}
+                {{/user}}
+                {{/reviews}}
             </div>
 
             <div class="product-actions">

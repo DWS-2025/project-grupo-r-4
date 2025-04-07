@@ -1,5 +1,6 @@
 package com.example.demo.Model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -11,6 +12,7 @@ public class PurchaseDTO {
     private double price;
 
     public PurchaseDTO() {
+        this.productIds = new ArrayList<>();
     }
 
 
