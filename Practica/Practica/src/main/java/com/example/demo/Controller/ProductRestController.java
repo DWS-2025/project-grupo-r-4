@@ -1,96 +1,144 @@
 package com.example.demo.Controller;
 
-
 import com.example.demo.Model.*;
 import com.example.demo.Service.*;
 import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.server.ResponseStatusException;
 
 
 import java.io.IOException;
-import java.net.URI;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.IntStream;
 
-import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentRequest;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api")
 public class ProductRestController {
+
     @Autowired
     private ProductService productService;
+
     @Autowired
     private PurchaseService purchaseService;
-    @Autowired
-    private ImageService imageService;
+
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private ImageService imageService;
+
     @Autowired
     private ReviewService reviewService;
 
-    interface ProductPurch extends Product.Basic,Product.ProdUser,Product.ProdRev,Product.ProdPurch{}
-    interface ProductRev extends Product.Basic,Product.ProdUser,Product.ProdRev,Product.ProdPurch{}
-    interface Products extends Product.Basic{}
+    interface ProductView extends Product.Basic, Product.ProdUser, Product.ProdRev, Product.ProdPurch {}
 
-    @JsonView(Products.class)
-    @GetMapping("/products/")
-    public List<ProductDTO> getAllProducts() {
-        List<ProductDTO> productDTO = productService.findAll();
-        return productDTO.stream().toList();
 
+    @GetMapping("/products")
+    public List<ProductDTO> getAllProducts(@RequestParam(defaultValue = "0") int page,
+                                           @RequestParam(defaultValue = "10") int size) {
+        return productService.findPaginated(page, size);
     }
 
-    @JsonView(Products.class)
     @GetMapping("/product/{id}")
-    public ResponseEntity<ProductDTO> getProductById(@PathVariable Long id) {
-        Optional<ProductDTO> productDTO = productService.findById(id);
-        return productDTO.map(ResponseEntity::ok)
+    public ResponseEntity<ProductDTO> getProduct(@PathVariable long id) {
+        return productService.findById(id)
+                .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @JsonView(ProductRev.class)
-    @PostMapping("/product/")
-    public ResponseEntity<ProductDTO> newProduct(@ModelAttribute ProductDTO productDTO, @RequestParam(required = false) MultipartFile imageField) throws IOException {
-        ProductDTO savedProduct = productService.save(productDTO, imageField);
-        URI location = fromCurrentRequest().path("/{id}").buildAndExpand(savedProduct.getId()).toUri();
-        return ResponseEntity.created(location).body(savedProduct);
+    @PostMapping("/product")
+    public ResponseEntity<ProductDTO> createProduct(@RequestParam("name")String name,
+                                                    @RequestParam("price") double price,
+                                                    @RequestParam("description")String description,
+                                                    @RequestParam("type")String type,
+                                                    @RequestParam(value = "imageFile",required = false) MultipartFile imageField) throws IOException {
+        if (productService.existByName(name)) {
+            return ResponseEntity.badRequest().build();
+        }
+        ProductDTO productDto = new ProductDTO(name,price,description,type);
+        ProductDTO savedProduct = productService.save(productDto, imageField);
+        return ResponseEntity.ok(savedProduct);
     }
 
-    @JsonView(ProductRev.class)
-    @PutMapping("/product/{id}/modify")
-    public ResponseEntity<ProductDTO> modifyProduct(@RequestBody ProductDTO productDTO, @PathVariable Long id, MultipartFile imageField) throws IOException {
-        ProductDTO updatedProduct = productService.updateProduct(id, productDTO, imageField);
+    @PutMapping(value = "/product/{id}", consumes = "multipart/form-data")
+    public ResponseEntity<ProductDTO> updateProductMultipart(
+            @PathVariable long id,
+            @RequestParam("name") String name,
+            @RequestParam("description") String description,
+            @RequestParam("price") double price,
+            @RequestParam("type") String type,
+            @RequestParam(value = "imageFile", required = false) MultipartFile imageField) throws IOException {
+
+        ProductDTO productDto = new ProductDTO();
+        productDto.setName(name);
+        productDto.setDescription(description);
+        productDto.setPrice(price);
+        productDto.setType(type);
+
+        ProductDTO updatedProduct = productService.updateProduct(id, productDto, imageField);
         return ResponseEntity.ok(updatedProduct);
     }
 
-    @JsonView(ProductPurch.class)
-    @PostMapping("/product/{id}/purchase")
-    public ResponseEntity<ProductDTO> newPurchase(@PathVariable long id, @RequestParam double price,@RequestBody ProductDTO productDTO,MultipartFile imageField) throws IOException {
-        ProductDTO purchasedProduct = productService.save(productDTO,imageField);
-        return ResponseEntity.ok(purchasedProduct);
-    }
 
-   /* @JsonView(ProductRev.class)
-    @PostMapping("/product/{id}/review")
-    public ResponseEntity<ProductDTO> postReview(@PathVariable long id, @RequestParam String review, @RequestParam int rating) {
-        Optional<ProductDTO> reviewedProduct = productService.addReview(id, "user", review, rating);
-        return reviewedProduct.map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
-    }*/
-
-    @DeleteMapping("/product/{id}")//funciona
-    public ResponseEntity<String> deleteProduct(@PathVariable Long id) {
+    @DeleteMapping("/product/{id}")
+    public ResponseEntity<?> deleteProduct(@PathVariable long id) throws IOException {
         productService.deleteById(id);
-        return ResponseEntity.ok("producto eliminado");
+        imageService.deleteImage("products"); // Asegúrate que borre la correcta
+        return ResponseEntity.ok("Producto eliminado");
     }
-    /*
-    @JsonView(Products.class)
-    @GetMapping("/products")
-    public List<ProductDTO> getAllProductsPaged(@RequestParam(defaultValue = "0") int page) {
-        return productService.findAllPaged(page, 10);
-    }*/
+
+    @PostMapping("/product/{id}/review")
+    public ResponseEntity<ProductDTO> addReview(@PathVariable long id,
+                                                @RequestParam("review") String review,
+                                                @RequestParam("rating") int rating
+                                                ) {
+        Optional<ProductDTO> productOpt = productService.findById(id);
+        if (productOpt.isEmpty()) return ResponseEntity.notFound().build();
+
+        productService.addReview(productOpt.get(), "user", review, rating); // hardcoded "user"
+        return ResponseEntity.ok(productOpt.get());
+    }
+
+    @PostMapping("/product/{id}/purchase")
+    public ResponseEntity<ProductDTO> makePurchase(@PathVariable long id) throws IOException {
+        Optional<ProductDTO> productOpt = productService.findById(id);
+        if (productOpt.isEmpty()) return ResponseEntity.notFound().build();
+
+        PurchaseDTO purchaseDTO = new PurchaseDTO();
+        purchaseService.createPurchase(purchaseDTO, productOpt.get());
+
+        return ResponseEntity.ok(productOpt.get());
+    }
+
+    @GetMapping("/product/{id}/image")
+    public ResponseEntity<Resource> downloadImage(@PathVariable long id) throws SQLException {
+        ProductDTO productDto = productService.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        Resource image = new InputStreamResource(productDto.getImageFile().getBinaryStream());
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_TYPE, "image/jpeg")
+                .body(image);
+    }
+
+    @GetMapping("/products/filter")
+    public List<ProductDTO> filterProducts(@RequestParam(required = false) String type,
+                                           @RequestParam(required = false) Float price) {
+        return productService.filterByTypeAndPrice(type, price);
+    }
 }

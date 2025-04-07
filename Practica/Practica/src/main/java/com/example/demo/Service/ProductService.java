@@ -136,7 +136,7 @@ public class ProductService {
         productRepository.deleteById(id);
     }
 
-    public ProductDTO updateProduct(long id, ProductDTO productDetails, MultipartFile imageField) {
+    public ProductDTO updateProduct(long id, ProductDTO productDetails, MultipartFile imageField) throws IOException {
         Product existingProduct = productRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Producto no encontrado"));
 
@@ -148,6 +148,7 @@ public class ProductService {
         if (imageField != null && !imageField.isEmpty()) {
             String path = imageService.createImage(imageField);
             existingProduct.setImage(path);
+            existingProduct.setImageFile(BlobProxy.generateProxy(imageField.getInputStream(), imageField.getSize()));
         }
 
         Product updatedProduct = productRepository.save(existingProduct);
