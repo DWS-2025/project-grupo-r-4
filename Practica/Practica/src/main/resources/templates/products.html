@@ -6,9 +6,10 @@
     <title>Productos - Juguetes Store</title>
     <link rel="stylesheet" href="/css/style.css">
     <style>
+        /* Estilos específicos para la página de productos */
         .product-list {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
             gap: 30px;
             margin-top: 30px;
         }
@@ -59,10 +60,42 @@
             text-decoration: none;
             font-weight: bold;
             transition: background-color 0.3s ease;
+            display: inline-block;
+            margin-top: auto;
         }
 
         .btn-details:hover {
             background-color: #246e34;
+        }
+
+        .spinner {
+            text-align: center;
+            margin: 20px 0;
+            display: none;
+        }
+
+        .load-more {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .add-product {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .no-more-products {
+            text-align: center;
+            color: #666;
+            margin: 20px 0;
+            display: none;
+        }
+
+        .error-message {
+            color: #d32f2f;
+            text-align: center;
+            margin: 10px 0;
+            display: none;
         }
     </style>
 </head>
@@ -75,7 +108,7 @@
         <nav class="nav">
             <ul>
                 <li><a href="/">Inicio</a></li>
-                <li><a href="/products/">Productos</a></li>
+                <li><a href="/products">Productos</a></li>
                 <li><a href="/myAccount">Mi cuenta</a></li>
                 <li><a href="/register">Registro</a></li>
                 <li><a href="/contact">Contáctanos</a></li>
@@ -87,11 +120,10 @@
 <main class="container">
     <section class="products">
         <h2>Todos los Productos</h2>
-
         <div class="product-list" id="product-list">
             {{#products}}
             <div class="product-card">
-                <img src="/product/{{id}}/image" alt="{{name}}">
+                <img src="/product/{{id}}/image" alt="{{name}}" loading="lazy">
                 <h3>{{name}}</h3>
                 <p class="price">{{price}} €</p>
                 <a href="/product/{{id}}" class="btn-details">Detalles</a>
@@ -99,24 +131,21 @@
             {{/products}}
         </div>
 
-        <!-- Spinner de carga -->
-        <div id="spinner" class="spinner" style="display: none;">
-            <img src="/images/spinner.gif" alt="Cargando...">
+        <div id="spinner" class="spinner">
+            <img src="/images/spinner.gif" alt="Cargando..." width="50">
         </div>
 
-        <!-- Botón para cargar más productos -->
         <div class="load-more">
-            <button id="load-more-btn">Más resultados</button>
+            <button id="load-more-btn" class="btn-details">Cargar más productos</button>
+            <p id="no-more-products" class="no-more-products">No hay más productos para mostrar</p>
+            <p id="error-message" class="error-message">Error al cargar productos. Intenta nuevamente.</p>
         </div>
 
-        <!-- Botón para añadir producto -->
         <div class="add-product">
-            <button onclick="location.href='/newProduct'">Añadir Producto</button>
+            <a href="/newProduct" class="btn-details">Añadir Producto</a>
         </div>
     </section>
 </main>
-</body>
-
 
 <footer class="footer">
     <div class="container">
@@ -136,52 +165,75 @@
 </footer>
 
 <script>
-    let currentPage = 0;
-    const loadMoreBtn = document.getElementById("load-more-btn");
-    const productList = document.getElementById("product-list");
-    const spinner = document.getElementById("spinner");
+    document.addEventListener("DOMContentLoaded", function() {
+        let currentPage = 0;
+        const loadMoreBtn = document.getElementById("load-more-btn");
+        const productList = document.getElementById("product-list");
+        const spinner = document.getElementById("spinner");
+        const noMoreProductsMsg = document.getElementById("no-more-products");
+        const errorMsg = document.getElementById("error-message");
 
-    function loadProducts() {
-        spinner.style.display = "block"; // Mostrar spinner mientras se cargan los productos
-        loadMoreBtn.style.display = "none"; // Ocultar botón temporalmente
+        async function loadMoreProducts() {
+            try {
+                // Mostrar spinner y ocultar mensajes
+                spinner.style.display = "block";
+                loadMoreBtn.disabled = true;
+                noMoreProductsMsg.style.display = "none";
+                errorMsg.style.display = "none";
 
-        fetch(`/api/products?page=${currentPage}`)
-            .then(response => response.json())
-            .then(products => {
-                spinner.style.display = "none"; // Ocultar spinner cuando termine la carga
+                // Hacer la petición AJAX
+                const response = await fetch(`/products?page=${currentPage + 1}&size=10`, {
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                });
 
-                if (products.length > 0) {
-                    products.forEach(product => {
-                        const productHTML = `
-                            <div class="product">
-                                <h3><a href="/product/${product.id}">${product.name}</a></h3>
-                                <img src="/product/${product.id}/image" alt="${product.name}">
-                                <p class="price">${product.price}€</p>
-                                <a href="/product/${product.id}" class="details">Detalles</a>
-                            </div>
-                        `;
-                        productList.innerHTML += productHTML;
-                    });
-
-                    currentPage++; // Pasar a la siguiente página
-                    loadMoreBtn.style.display = "block"; // Volver a mostrar el botón si hay más productos
-                } else {
-                    loadMoreBtn.style.display = "none"; // Ocultar el botón si no hay más productos
+                if (!response.ok) {
+                    throw new Error(`Error HTTP: ${response.status}`);
                 }
-            })
-            .catch(error => {
-                console.error("Error cargando productos:", error);
-                spinner.style.display = "none";
-                loadMoreBtn.style.display = "block"; // Restaurar el botón en caso de error
-            });
-    }
 
-    // Cargar la primera tanda de productos cuando se carga la página
-    document.addEventListener("DOMContentLoaded", loadProducts);
+                const html = await response.text();
 
-    // Cargar más productos cuando se pulsa el botón
-    loadMoreBtn.addEventListener("click", loadProducts);
+                // Parsear el HTML recibido
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                const newProducts = doc.getElementById('product-list').innerHTML;
+
+                if (newProducts.trim() !== '') {
+                    // Añadir los nuevos productos
+                    productList.insertAdjacentHTML('beforeend', newProducts);
+                    currentPage++;
+
+                    // Verificar si hay menos productos de los solicitados (fin de paginación)
+                    const newProductCards = doc.querySelectorAll('.product-card');
+                    if (newProductCards.length < 10) {
+                        loadMoreBtn.style.display = 'none';
+                        noMoreProductsMsg.style.display = 'block';
+                    }
+                } else {
+                    // No hay más productos
+                    loadMoreBtn.style.display = 'none';
+                    noMoreProductsMsg.style.display = 'block';
+                }
+            } catch (error) {
+                console.error('Error al cargar productos:', error);
+                errorMsg.style.display = 'block';
+            } finally {
+                // Restaurar estado UI
+                spinner.style.display = 'none';
+                loadMoreBtn.disabled = false;
+            }
+        }
+
+        // Event listener para el botón
+        loadMoreBtn.addEventListener('click', loadMoreProducts);
+
+        // Ocultar botón si hay menos de 10 productos inicialmente
+        if (document.querySelectorAll('.product-card').length < 10) {
+            loadMoreBtn.style.display = 'none';
+            noMoreProductsMsg.style.display = 'block';
+        }
+    });
 </script>
-
 </body>
 </html>
