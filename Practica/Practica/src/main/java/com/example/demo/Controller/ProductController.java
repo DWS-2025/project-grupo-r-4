@@ -15,6 +15,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -56,6 +59,17 @@ public class ProductController {
         model.addAttribute("products", products);
         return "products";
     }
+    @GetMapping("/products/loadMore")
+    @ResponseBody
+    public List<ProductDTO> loadMoreProducts(
+            @RequestParam(value = "page") int page,
+            @RequestParam(value = "size", defaultValue = "10") int size) {
+        return productService.findPaginated(page, size);
+    }
+
+
+
+
 
     @GetMapping("/products/loadMore")
     @ResponseBody public List<ProductDTO> loadMoreProducts( @RequestParam(value = "page") int page, @RequestParam(value = "size", defaultValue = "10") int size) {

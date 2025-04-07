@@ -1,16 +1,93 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <!-- ... (el head se mantiene igual) ... -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Productos - Juguetes Store</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .product-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .product-card {
+            background-color: #fff;
+            border: 2px solid #e0e0e0;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            padding: 20px;
+            transition: transform 0.2s;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+        }
+
+        .product-card:hover {
+            transform: scale(1.02);
+        }
+
+        .product-card img {
+            max-width: 100%;
+            height: 200px;
+            object-fit: contain;
+            margin-bottom: 15px;
+        }
+
+        .product-card h3 {
+            font-size: 20px;
+            margin: 10px 0;
+        }
+
+        .product-card .price {
+            font-weight: bold;
+            color: #2b8a3e;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .btn-details {
+            background-color: #2b8a3e;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-details:hover {
+            background-color: #246e34;
+        }
+    </style>
 </head>
 <body>
 <header class="header">
-    <!-- ... (header se mantiene igual) ... -->
+    <div class="container">
+        <div class="logo">
+            <a href="/"><img src="/images/logo-tienda-juguetes.jpg" alt="Juguetes Store"></a>
+        </div>
+        <nav class="nav">
+            <ul>
+                <li><a href="/">Inicio</a></li>
+                <li><a href="/products/">Productos</a></li>
+                <li><a href="/myAccount">Mi cuenta</a></li>
+                <li><a href="/register">Registro</a></li>
+                <li><a href="/contact">Contáctanos</a></li>
+            </ul>
+        </nav>
+    </div>
 </header>
 
 <main class="container">
     <section class="products">
         <h2>Todos los Productos</h2>
+
         <div class="product-list" id="product-list">
             {{#products}}
             <div class="product-card">
@@ -23,88 +100,88 @@
         </div>
 
         <!-- Spinner de carga -->
-        <div id="spinner" class="spinner" style="display: none; text-align: center; margin: 20px 0;">
-            <img src="/images/spinner.gif" alt="Cargando..." width="50">
+        <div id="spinner" class="spinner" style="display: none;">
+            <img src="/images/spinner.gif" alt="Cargando...">
         </div>
 
         <!-- Botón para cargar más productos -->
-        <div class="load-more" style="text-align: center; margin: 20px 0;">
-            <button id="load-more-btn" class="btn-details" style="padding: 10px 20px;">Cargar más productos</button>
+        <div class="load-more">
+            <button id="load-more-btn">Más resultados</button>
         </div>
 
         <!-- Botón para añadir producto -->
-        <div class="add-product" style="text-align: center; margin: 20px 0;">
-            <a href="/newProduct" class="btn-details">Añadir Producto</a>
+        <div class="add-product">
+            <button onclick="location.href='/newProduct'">Añadir Producto</button>
         </div>
     </section>
 </main>
+</body>
+
 
 <footer class="footer">
-    <!-- ... (footer se mantiene igual) ... -->
+    <div class="container">
+        <div class="footer-left">
+            <img src="/images/logo-tienda-juguetes.jpg" alt="Juguetes Store" width="170">
+        </div>
+        <div class="footer-center">
+            <p>&copy; 2025 Juguetes Store. Todos los derechos reservados.</p>
+            <img src="/images/payment.gif" alt="Métodos de pago">
+        </div>
+        <div class="footer-right">
+            <a href="/">Inicio</a>
+            <a href="/ubication">Dónde encontrarnos</a>
+            <a href="/contact">Contacto</a>
+        </div>
+    </div>
 </footer>
 
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        let currentPage = 1; // Empezamos en 1 porque la página 0 ya se cargó inicialmente
-        const loadMoreBtn = document.getElementById("load-more-btn");
-        const productList = document.getElementById("product-list");
-        const spinner = document.getElementById("spinner");
+    let currentPage = 0;
+    const loadMoreBtn = document.getElementById("load-more-btn");
+    const productList = document.getElementById("product-list");
+    const spinner = document.getElementById("spinner");
 
-        // Función para cargar más productos
-        function loadMoreProducts() {
-            spinner.style.display = "block";
-            loadMoreBtn.style.display = "none";
+    function loadProducts() {
+        spinner.style.display = "block"; // Mostrar spinner mientras se cargan los productos
+        loadMoreBtn.style.display = "none"; // Ocultar botón temporalmente
 
-            fetch(`/products?page=${currentPage}&size=10`, {
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest' // Indicamos que es AJAX
+        fetch(`/api/products?page=${currentPage}`)
+            .then(response => response.json())
+            .then(products => {
+                spinner.style.display = "none"; // Ocultar spinner cuando termine la carga
+
+                if (products.length > 0) {
+                    products.forEach(product => {
+                        const productHTML = `
+                            <div class="product">
+                                <h3><a href="/product/${product.id}">${product.name}</a></h3>
+                                <img src="/product/${product.id}/image" alt="${product.name}">
+                                <p class="price">${product.price}€</p>
+                                <a href="/product/${product.id}" class="details">Detalles</a>
+                            </div>
+                        `;
+                        productList.innerHTML += productHTML;
+                    });
+
+                    currentPage++; // Pasar a la siguiente página
+                    loadMoreBtn.style.display = "block"; // Volver a mostrar el botón si hay más productos
+                } else {
+                    loadMoreBtn.style.display = "none"; // Ocultar el botón si no hay más productos
                 }
             })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.text();
-                })
-                .then(html => {
-                    // Parseamos el HTML y extraemos los productos
-                    const parser = new DOMParser();
-                    const doc = parser.parseFromString(html, 'text/html');
-                    const newProducts = doc.getElementById('product-list').innerHTML;
+            .catch(error => {
+                console.error("Error cargando productos:", error);
+                spinner.style.display = "none";
+                loadMoreBtn.style.display = "block"; // Restaurar el botón en caso de error
+            });
+    }
 
-                    if (newProducts.trim() !== '') {
-                        productList.innerHTML += newProducts;
-                        currentPage++;
-                        loadMoreBtn.style.display = "block";
-                    } else {
-                        // No hay más productos, ocultamos el botón
-                        loadMoreBtn.style.display = "none";
-                        // Opcional: mostrar mensaje de que no hay más productos
-                        const noMoreProducts = document.createElement('p');
-                        noMoreProducts.textContent = 'No hay más productos para mostrar';
-                        noMoreProducts.style.textAlign = 'center';
-                        noMoreProducts.style.margin = '20px 0';
-                        loadMoreBtn.parentNode.appendChild(noMoreProducts);
-                    }
-                })
-                .catch(error => {
-                    console.error('Error al cargar más productos:', error);
-                    loadMoreBtn.style.display = "block";
-                    // Opcional: mostrar mensaje de error al usuario
-                })
-                .finally(() => {
-                    spinner.style.display = "none";
-                });
-        }
+    // Cargar la primera tanda de productos cuando se carga la página
+    document.addEventListener("DOMContentLoaded", loadProducts);
 
-        // Event listener para el botón
-        loadMoreBtn.addEventListener('click', loadMoreProducts);
-
-        // Verificar si inicialmente hay menos productos de los que caben en una página
-        if (document.querySelectorAll('.product-card').length < 10) {
-            loadMoreBtn.style.display = "none";
-        }
-    });
+    // Cargar más productos cuando se pulsa el botón
+    loadMoreBtn.addEventListener("click", loadProducts);
 </script>
+
 </body>
 </html>
