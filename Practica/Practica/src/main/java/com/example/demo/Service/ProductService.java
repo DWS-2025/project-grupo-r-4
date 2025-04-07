@@ -177,10 +177,9 @@ public class ProductService {
         newReview.setRating(rating);
 
         // Guardar la review
-        reviewRepository.save(newReview);
 
-        // (Opcional) Actualizar lista de reviews del producto, si las manejas en cascada
-        product.getReviews().add(newReview); // si tienes `@OneToMany(mappedBy = "product") List<Review> reviews` en `Product`
+        product.getReviews().add(newReview);
+        reviewRepository.save(newReview);
         productRepository.save(product);
 
         // Convertir el producto a DTO y devolver
