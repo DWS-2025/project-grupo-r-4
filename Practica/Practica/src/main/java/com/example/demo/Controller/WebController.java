@@ -90,13 +90,13 @@ public class WebController {
         return "newProduct";
     }
 
-    @GetMapping("/products")
+    /*@GetMapping("/products")
     public String products(Model model) {
         List<ProductDTO> products = productService.findAll();
 
         model.addAttribute("products", products);
         return "products";
-    }
+    }*/
 
     @GetMapping("/register")
     public String register(Model model) {

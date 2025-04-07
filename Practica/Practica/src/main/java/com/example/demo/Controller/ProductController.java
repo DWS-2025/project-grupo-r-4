@@ -3,6 +3,7 @@ package com.example.demo.Controller;
 import com.example.demo.Model.*;
 import com.example.demo.Service.*;
 
+import jakarta.servlet.ServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
@@ -45,16 +46,15 @@ public class ProductController {
     @Autowired
     private ReviewService reviewService;
 
-    @GetMapping("/products/")
+    @GetMapping({"/products", "/products/"}) // Mapea ambas versiones
     public String showProducts(
             @RequestParam(value = "page", defaultValue = "0") int page,
             @RequestParam(value = "size", defaultValue = "10") int size,
             Model model) {
-        // Cargar los primeros 10 productos
+
         List<ProductDTO> products = productService.findPaginated(page, size);
         model.addAttribute("products", products);
-
-        return "products"; // Renderiza la página principal
+        return "products";
     }
 
     @GetMapping("/products/loadMore")
