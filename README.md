@@ -8,10 +8,10 @@
 
 ## Integrantes del equipo
 
-| Nombre           | Apellidos        | Correo oficial UGR                | GitHub                |
-|------------------|------------------|-----------------------------------|------------------------|
-| Jorge            | Punzón Chichón   | j.punzon.2022@alumnos.urjc.es     | [@usuario1](https://github.com/usuario1) |
-| Nombre2          | Apellido2        | aluXXXXXXX@correo.ugr.es          | [@usuario2](https://github.com/usuario2) |
+| Nombre           | Apellidos             | Correo oficial UGR                | GitHub                |
+|------------------|-----------------------|-----------------------------------|------------------------|
+| Jorge            | Punzón Chichón        | j.punzon.2022@alumnos.urjc.es     | [@usuario1](https://github.com/usuario1) |
+| Hugo             | Margalef Nieto        | h.margalef.2022@alumnos.urjc.es   | [@usuario2](https://github.com/usuario2) |
 
 
 
@@ -50,61 +50,108 @@
 
 ## Diagrama de Entidades
 
-Se incluirá un diagrama en la carpeta `docs/diagrama_entidades.png` que muestre:
-- Clases principales (`User`, `Product`, `Purchase`, `Review`)
-- Atributos y relaciones entre ellas (uno a muchos, muchos a muchos, etc.)
++-----------+            1        *            +---------+
+|  Product  | -------------------------------> | Review  |
++-----------+                                   +---------+
 
----
++-----------+            *        *            +---------+
+|  Product  | <--------------------------------> |  User   |
++-----------+                                   +---------+
 
++-----------+            *        *            +------------+
+|  Product  | <--------------------------------> | Purchase  |
++-----------+                                   +------------+
 
++---------+              *        1            +-----------+
+| Review  | ----------------------------------> | Product   |
++---------+                                    +-----------+
 
-## 🧰 Uso
++---------+              *        1            +---------+
+| Review  | ----------------------------------> |  User   |
++---------+                                    +---------+
 
-### Navegación y Compra
++---------+              1        *            +---------+
+|  User   | ----------------------------------> | Review  |
++---------+                                    +---------+
 
-- Visualiza el catálogo en `/products/`
-- Haz clic en un producto para ver sus detalles
-- Pulsa "Comprar" para añadirlo a tus compras
++---------+              1        *            +------------+
+|  User   | ----------------------------------> | Purchase  |
++---------+                                    +------------+
 
-### Reseñas
++---------+              *        *            +-----------+
+|  User   | <---------------------------------> | Product   |
++---------+                                    +-----------+
 
-- Accede al detalle de un producto
-- Pulsa "Escribir reseña"
-- Escribe tu comentario y selecciona una puntuación
++------------+           *        *            +-----------+
+| Purchase   | <--------------------------------> | Product  |
++------------+                                    +-----------+
+
++------------+           *        1            +---------+
+| Purchase   | --------------------------------> |  User   |
++------------+                                    +---------+
+
+(Se aprecia mejor en la preview)
+
+class User {
+  +long id
+  +String name
+  +String password
+  +String address
+  +String phone
+  +int numReviews
+}
+
+class Review {
+  +long reviewId
+  +int rating
+  +String review
+}
+
+class Purchase {
+  +long id
+  +double price
+}
+
+class Product {
+  +long id
+  +String name
+  +double price
+  +String image
+  +String description
+  +String type
+}
+
+User "1" -- "many" Review : writes
+User "1" -- "many" Purchase : makes
+User "many" -- "many" Product : favorites
+Review "many" -- "1" Product : about
+Review "many" -- "1" User : by
+Purchase "many" -- "many" Product : contains
+Purchase "many" -- "1" User : doneBy
 
 ---
 ## 📊 Desarrollo colaborativo
 
 ### Contribuciones personales
 
-#### Nombre1 Apellido1
-
-- Implementación de la lógica de compra (`PurchaseController`)
-- Integración de la vista de compra con Spring Boot
-- Validaciones de formulario y control de errores HTTP
+#### Hugo Margalef
 
 **Commits más relevantes**:
 
-1. [Crear controlador de compras](https://github.com/usuario1/project-toyverse/commit/abc123)
-2. [Redirigir correctamente tras compra](https://github.com/usuario1/project-toyverse/commit/def456)
-3. [Manejo de errores en PurchaseService](https://github.com/usuario1/project-toyverse/commit/ghi789)
-4. [Formulario HTML de compra](https://github.com/usuario1/project-toyverse/commit/jkl012)
-5. [Conversión de ProductDTO a Product](https://github.com/usuario1/project-toyverse/commit/mno345)
+1. [Creación de los RestController]
+   Se crearon los restController con las exigencias pedidas en la práctica.
+2. [Inicialización de la base de datos]
+   Se inició la base de datos y se consiguió insertar los productos e imágenes en esta.
+3. [Visualización de las imágenes]
+   Se pudo visualizar las imágenes en la página web.
+4. [Cambio de la estructura completa para Dtos]
+   Se crearon las entidades y se modificaron los services y controllers para que se usasen Dtos.
+5. [Filtrar una entidad por varias de sus variables]
+   Los productos se consiguió que se pudiesen filtrar por tipo y por precio.
 
-**Ficheros más editados**:
-
-- `PurchaseController.java` ([blame](https://github.com/usuario1/project-toyverse/blame/main/src/main/java/.../PurchaseController.java))
-- `purchase-form.html`
-- `PurchaseService.java`
-- `ProductDTO.java`
-- `purchase.js`
 
 - #### Nombre2 Apellido2
 
-- Implementación de la lógica de compra (`PurchaseController`)
-- Integración de la vista de compra con Spring Boot
-- Validaciones de formulario y control de errores HTTP
-
 **Commits más relevantes**:
 
 1. [Crear controlador de compras](https://github.com/usuario1/project-toyverse/commit/abc123)
@@ -113,23 +160,7 @@ Se incluirá un diagrama en la carpeta `docs/diagrama_entidades.png` que muestre
 4. [Formulario HTML de compra](https://github.com/usuario1/project-toyverse/commit/jkl012)
 5. [Conversión de ProductDTO a Product](https://github.com/usuario1/project-toyverse/commit/mno345)
 
-**Ficheros más editados**:
 
-- `PurchaseController.java` ([blame](https://github.com/usuario1/project-toyverse/blame/main/src/main/java/.../PurchaseController.java))
-- `purchase-form.html`
-- `PurchaseService.java`
-- `ProductDTO.java`
-- `purchase.js`
 
-> Este bloque debe repetirse para cada integrante del equipo.
-
----
-
-## ✅ Estado del proyecto
-
-- [x] Catálogo de productos
-- [x] Proceso de compra funcional
-- [x] Sistema de reseñas
-- [x] Manejo de imágenes
 
 
