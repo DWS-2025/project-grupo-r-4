@@ -23,6 +23,7 @@ import org.springframework.data.domain.PageRequest;
 
 import java.io.IOException;
 import java.sql.Blob;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -133,6 +134,17 @@ public class ProductService {
         if (!productRepository.existsById(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Producto no encontrado");
         }
+        Product product = productRepository.findById(id).get();
+
+
+        List<Review> reviews = product.getReviews();
+
+        for (Review r : reviews){
+            User user = r.getUser();
+            user.getReviews().remove(r);
+            r.setUser(null);
+        }
+
         productRepository.deleteById(id);
     }
 

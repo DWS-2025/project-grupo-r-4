@@ -27,9 +27,8 @@
 <main class="container">
     <section class="product-details">
         <div class="product-image">
-            {{#product.image}}
-            <img src="/product/{{product.id}}/image" alt="{{product.name}}">
-            {{/product.image}}
+            <!-- Verifica si existe una imagen para el producto -->
+            <img src="/product/{{product.id}}/image" alt="Imagen del producto" width="500">
         </div>
 
         <div class="product-info">
@@ -51,7 +50,7 @@
                 <button onclick="location.href='/product/{{product.id}}/purchase'">Comprar</button>
                 <button onclick="location.href='/products/'">Atrás</button>
                 <button onclick="location.href='/deleteProduct/{{product.id}}'">Borrar producto</button>
-                <button onclick="location.href='/product/{{id}}/modify'">Modificar</button>
+                <button onclick="location.href='/product/{{product.id}}/modify'">Modificar</button>
             </div>
         </div>
     </section>

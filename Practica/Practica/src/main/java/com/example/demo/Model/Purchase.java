@@ -54,7 +54,7 @@ public class Purchase {
     }
 
     public List<Product> getProducts() {
-        return products;
+        return this.products;
     }
 
     public void setProducts(List<Product> products) {

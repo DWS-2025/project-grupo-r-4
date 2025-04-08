@@ -33,14 +33,14 @@ public class Product {
     private String description;
     @JsonView(Basic.class)
     private String type;
-    @OneToMany
+    @OneToMany(mappedBy = "productId",cascade = CascadeType.ALL,orphanRemoval = true)
     @JsonView(ProdRev.class)
     private List<Review> reviews;
     @JsonView(ProdUser.class)
     @ManyToMany
     private List<User> users;
     @JsonView(ProdPurch.class)
-    @ManyToMany
+    @ManyToMany(mappedBy = "products",cascade = CascadeType.REMOVE)  // Aquí agregamos CascadeType.REMOVE
     private List<Purchase> purchase;
 
     @Lob
