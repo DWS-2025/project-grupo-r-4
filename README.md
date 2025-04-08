@@ -150,15 +150,20 @@ Purchase "many" -- "1" User : doneBy
    Los productos se consiguió que se pudiesen filtrar por tipo y por precio.
 
 
-- #### Nombre2 Apellido2
+- #### Jorge Punzón
 
 **Commits más relevantes**:
 
-1. [Crear controlador de compras](https://github.com/usuario1/project-toyverse/commit/abc123)
-2. [Redirigir correctamente tras compra](https://github.com/usuario1/project-toyverse/commit/def456)
-3. [Manejo de errores en PurchaseService](https://github.com/usuario1/project-toyverse/commit/ghi789)
-4. [Formulario HTML de compra](https://github.com/usuario1/project-toyverse/commit/jkl012)
-5. [Conversión de ProductDTO a Product](https://github.com/usuario1/project-toyverse/commit/mno345)
+1. [Actualización de los RestController]
+   Se actualizaron los restController para su correcto funcionamiento.
+2. [Paginación AJAX]
+   Creación de la paginación según el enunciado de la prácica.
+3. [Correccion de los html]
+   Corrección de los html tras los cambios de los Dtos y base de datos.
+4. [Visualización de las reseñas]
+   Correcto funcionamiento de la creacion y visualización de reseñas de cada producto.
+5. [Funcionamiento de borrado de producto]
+   Corrección de problemas específicos al borrar un producto.
 
 
 
