@@ -39,7 +39,7 @@ public class UserRestController {
     @GetMapping("/user/{id}/buys")
     public ResponseEntity<List<PurchaseDTO>> getUserPurchases(@PathVariable Long id) {
         Optional<UserDTO> user = userService.findById(id);
-        List<PurchaseDTO> purchases = purchaseService.findByUser(user.get()); //crear la funcion
+        List<PurchaseDTO> purchases = purchaseService.findByUser(user.get());
         return ResponseEntity.ok(purchases);
     }
 

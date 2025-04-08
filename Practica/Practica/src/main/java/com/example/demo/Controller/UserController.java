@@ -25,6 +25,6 @@ public class UserController {
     public String showUserReviews(@PathVariable Long id, Model model) {
         UserDTO userDTO = userService.findByUserName("user");
         model.addAttribute("user", userDTO);
-        return "myReview"; // Vista "myReview.html"
+        return "myReview";
     }
 }

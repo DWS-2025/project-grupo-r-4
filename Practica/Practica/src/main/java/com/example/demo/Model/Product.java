@@ -40,7 +40,7 @@ public class Product {
     @ManyToMany
     private List<User> users;
     @JsonView(ProdPurch.class)
-    @ManyToMany(mappedBy = "products",cascade = CascadeType.REMOVE)  // Aquí agregamos CascadeType.REMOVE
+    @ManyToMany(mappedBy = "products",cascade = CascadeType.REMOVE)
     private List<Purchase> purchase;
 
     @Lob

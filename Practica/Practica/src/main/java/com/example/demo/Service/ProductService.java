@@ -175,10 +175,8 @@ public class ProductService {
 
     public Optional<ProductDTO> addReview(ProductDTO productDTO, String username, String reviewText, int rating) {
 
-        // Buscar el usuario
         UserDTO user = userService.findByUserName(username);
 
-        // Crear la review
         ReviewDTO newReviewDTO = new ReviewDTO();
         newReviewDTO.setUserId(userService.convertToEntity(user).getId());
         newReviewDTO.setReview(reviewText);
@@ -190,8 +188,7 @@ public class ProductService {
         productDTO.getReviewsId().add(reviewDTO.getReviewId());
 
 
-        // Convertir el producto a DTO y devolver
-        return Optional.of(productDTO);  // Asumiendo que tienes un método `convertToDto()` en `Product`
+        return Optional.of(productDTO);
     }
 
     public List<ProductDTO> filterByTypeAndPrice(String type, Float price) {
@@ -229,7 +226,6 @@ public class ProductService {
     }
 
     public List<ProductDTO> findPaginated(int offset, int size) {
-        // Usando JPA Repository con consulta nativa para offset
         return productRepository.findPaginatedProducts(offset, size)
                 .stream()
                 .map(this::convertToDTO)

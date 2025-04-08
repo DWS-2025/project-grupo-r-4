@@ -72,7 +72,6 @@ public class ProductController {
         return productService.filterByTypeAndPrice(type, price);
     }
 
-    // Endpoint para carga paginada AJAX
 
     @GetMapping("/products/loadMore")
     @ResponseBody
@@ -80,7 +79,6 @@ public class ProductController {
             @RequestParam int page,
             @RequestParam(defaultValue = "2") int size) {
 
-        // Calculamos el offset correcto: 10 iniciales + (página * tamaño)
         int offset = 10 + (page * size);
 
         return productService.findPaginated(offset, size);
@@ -89,7 +87,7 @@ public class ProductController {
 
         @GetMapping("/product/new")
     public String newProductForm(Model model) {
-        model.addAttribute("user", userService.findByUserName("user")); // Mejor pedirlo al userService
+        model.addAttribute("user", userService.findByUserName("user"));
 
         return "newProduct";
     }

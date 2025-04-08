@@ -37,10 +37,8 @@ public class DataBaseInitializer {
     @PostConstruct
     public void init() {
         try {
-            // Inicializar el usuario primero
             initializeUser();
 
-            // Luego, inicializar productos
             initializeProducts();
         } catch (Exception e) {
             System.err.println("Error durante la inicialización de la base de datos: " + e.getMessage());
@@ -66,16 +64,14 @@ public class DataBaseInitializer {
         productDTOs.add(new ProductDTO("Trivial Pursuit", 30.0, "Juego de mesa Trivial Pursuit", "JuegoMesa"));
 
 
-        // Obtener el User
         User user = userService.findByNameDatabse("user");
 
-        // Procesar cada producto
+
         for (ProductDTO productDTO : productDTOs) {
-            // Crear la ruta de la imagen: nombre_imagen = nombre_producto_sin_espacios + ".jpg"
+
             String imageFileName = productDTO.getName().replaceAll("\\s+", "-") + ".jpg"; // Ej: Casa Moderna -> Casa-Moderna.jpg
             Path imagePath = IMAGES_FOLDER.resolve(imageFileName);
 
-            // Verificar si el archivo de imagen existe
             if (!Files.exists(imagePath)) {
                 System.err.println("Advertencia: El archivo de imagen no existe para el producto: " + productDTO.getName());
                 continue;
@@ -99,10 +95,9 @@ public class DataBaseInitializer {
     }
 
     public void initializeUser() {
-        // Verificar si el usuario ya existe para evitar duplicados
         UserDTO userDTO = new UserDTO();
         userDTO.setName("user");
-        userService.save(userDTO); // Guardar el nuevo usuario
+        userService.save(userDTO);
         System.out.println("Usuario 'user' creado exitosamente.");
     }
 }
