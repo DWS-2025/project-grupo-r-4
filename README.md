@@ -28,9 +28,29 @@
 
 ### Relaciones entre entidades
 
-- Un **usuario** puede tener **muchas compras**.
-- Un **producto** puede tener **muchas reseñas**.
-- Un **usuario** puede escribir **muchas reseñas**.
+1.User ↔ Review
+Un usuario puede escribir muchas reseñas.
+
+2.User ↔ Purchase
+Un usuario puede realizar muchas compras.
+
+3.User ↔ Product
+Un usuario puede estar asociado a muchos productos, y un producto puede estar asociado a muchos usuarios.
+
+4.Product ↔ Review
+Un producto puede tener muchas reseñas.
+
+5.Product ↔ Purchase
+Un producto puede estar en muchas compras, y una compra puede contener muchos productos.
+
+6.Purchase ↔ User
+Cada compra pertenece a un único usuario.
+
+7.Review ↔ User
+Cada reseña es escrita por un único usuario.
+
+8.Review ↔ Product
+Cada reseña pertenece a un único producto.
 
 ---
 
