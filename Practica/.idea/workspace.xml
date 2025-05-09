@@ -4,19 +4,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6388f339-f108-481a-ad8e-631f0422f92c" name="Changes" comment="correcion de relacion NM">
-      <change afterPath="$PROJECT_DIR$/../.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/demo/src/main/java/com/example/demo/Security/RepositoryUserDetailsService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/demo/src/main/java/com/example/demo/Security/WebSecurityConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/demo/src/main/resources/templates/login.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="6388f339-f108-481a-ad8e-631f0422f92c" name="Changes" comment="Creación de log in y usuarios cargados en la pagina">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/demo/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo/src/main/java/com/example/demo/Controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo/src/main/java/com/example/demo/Controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo/src/main/java/com/example/demo/Model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo/src/main/java/com/example/demo/Model/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo/src/main/java/com/example/demo/Service/DataBaseInitializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo/src/main/java/com/example/demo/Service/DataBaseInitializer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo/src/main/resources/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/demo/src/main/resources/templates/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/src/main/java/com/example/demo/Controller/ProductController.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo/src/main/java/com/example/demo/Controller/ProductController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/src/main/java/com/example/demo/Security/WebSecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo/src/main/java/com/example/demo/Security/WebSecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/src/main/resources/templates/buys.html" beforeDir="false" afterPath="$PROJECT_DIR$/demo/src/main/resources/templates/buys.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/src/main/resources/templates/contact.html" beforeDir="false" afterPath="$PROJECT_DIR$/demo/src/main/resources/templates/contact.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/src/main/resources/templates/deleteProduct.html" beforeDir="false" afterPath="$PROJECT_DIR$/demo/src/main/resources/templates/deleteProduct.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/src/main/resources/templates/modify.html" beforeDir="false" afterPath="$PROJECT_DIR$/demo/src/main/resources/templates/modify.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/src/main/resources/templates/myAccount.html" beforeDir="false" afterPath="$PROJECT_DIR$/demo/src/main/resources/templates/myAccount.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/src/main/resources/templates/myReview.html" beforeDir="false" afterPath="$PROJECT_DIR$/demo/src/main/resources/templates/myReview.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/src/main/resources/templates/newProduct.html" beforeDir="false" afterPath="$PROJECT_DIR$/demo/src/main/resources/templates/newProduct.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/src/main/resources/templates/newPurchase.html" beforeDir="false" afterPath="$PROJECT_DIR$/demo/src/main/resources/templates/newPurchase.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/src/main/resources/templates/product.html" beforeDir="false" afterPath="$PROJECT_DIR$/demo/src/main/resources/templates/product.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/src/main/resources/templates/register.html" beforeDir="false" afterPath="$PROJECT_DIR$/demo/src/main/resources/templates/register.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/src/main/resources/templates/reviews.html" beforeDir="false" afterPath="$PROJECT_DIR$/demo/src/main/resources/templates/reviews.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/src/main/resources/templates/ubication.html" beforeDir="false" afterPath="$PROJECT_DIR$/demo/src/main/resources/templates/ubication.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -97,7 +100,7 @@
       <option name="presentableId" value="Default" />
       <updated>1746805872544</updated>
       <workItem from="1746805873790" duration="6734000" />
-      <workItem from="1746817726813" duration="982000" />
+      <workItem from="1746817726813" duration="8929000" />
     </task>
     <task id="LOCAL-00001" summary="correcion de relacion NM">
       <option name="closed" value="true" />
@@ -107,7 +110,15 @@
       <option name="project" value="LOCAL" />
       <updated>1746811196239</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Creación de log in y usuarios cargados en la pagina">
+      <option name="closed" value="true" />
+      <created>1746818869633</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1746818869633</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -115,6 +126,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="correcion de relacion NM" />
-    <option name="LAST_COMMIT_MESSAGE" value="correcion de relacion NM" />
+    <MESSAGE value="Creación de log in y usuarios cargados en la pagina" />
+    <option name="LAST_COMMIT_MESSAGE" value="Creación de log in y usuarios cargados en la pagina" />
   </component>
 </project>

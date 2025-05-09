@@ -15,7 +15,7 @@
         <nav class="nav">
             <ul>
                 <li><a href="/">Inicio</a></li>
-                <li><a href="/products/">Productos</a></li>
+                <li><a href="/products">Productos</a></li>
                 <li><a href="/myAccount">Mi cuenta</a></li>
                 <li><a href="/register">Registro</a></li>
                 <li><a href="/contact">Contáctanos</a></li>
@@ -47,8 +47,8 @@
             <div class="product-actions">
                 <button onclick="location.href='/product/{{product.id}}/review'">Añadir reseña</button>
                 <button onclick="location.href='/product/{{product.id}}/purchase'">Comprar</button>
-                <button onclick="location.href='/products/'">Atrás</button>
-                <button onclick="location.href='/deleteProduct/{{product.id}}'">Borrar producto</button>
+                <button onclick="location.href='/products'">Atrás</button>
+                <button onclick="location.href='/showdeleteProduct/{{product.id}}'">Borrar producto</button>
                 <button onclick="location.href='/product/{{product.id}}/modify'">Modificar</button>
 
                 <!-- Formulario para añadir a la cesta -->

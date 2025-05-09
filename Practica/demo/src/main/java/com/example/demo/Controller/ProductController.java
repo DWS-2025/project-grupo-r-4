@@ -183,7 +183,7 @@ public class ProductController {
         return "redirect:/product/" + id;
     }
 
-    @GetMapping("/deleteProduct/{id}")
+    @GetMapping("/showdeleteProduct/{id}")
     public String deleteProductForm(Model model, @PathVariable long id) {
         ProductDTO productDto = productService.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
