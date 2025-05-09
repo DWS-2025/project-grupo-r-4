@@ -32,7 +32,7 @@ public class DataBaseInitializer {
     @Autowired
     private ImageService imageService;
 
-    private static final Path IMAGES_FOLDER = Paths.get(System.getProperty("user.dir"), "/Practica/Practica/images");
+    private static final Path IMAGES_FOLDER = Paths.get(System.getProperty("user.dir"), "/demo/images");
 
     @PostConstruct
     public void init() {
@@ -45,6 +45,7 @@ public class DataBaseInitializer {
             e.printStackTrace();
         }
     }
+
     public void initializeProducts() {
         List<ProductDTO> productDTOs = new ArrayList<ProductDTO>();
 
