@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Sesión - Juguetes Store</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<header class="header">
+    <div class="top-bar"></div>
+    <div class="container">
+        <div class="logo">
+            <a href="/"><img src="/images/logo-tienda-juguetes.jpg" alt="Juguetes Store" width="500"></a>
+        </div>
+        <nav class="nav">
+            <ul>
+                <li><a href="/">Inicio</a></li>
+                <li><a href="/products">Productos</a></li>
+                <li><a href="/myAccount">Mi cuenta</a></li>
+                <li><a href="/register">Registro</a></li>
+                <li><a href="/contact">Contáctanos</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<main class="container">
+    <section class="login-form">
+        <h2>Iniciar Sesión</h2>
+        <form action="/login" method="POST">
+            {{#error}}
+            <div class="alert alert-danger" role="alert">
+                {{error}}
+            </div>
+            {{/error}}
+
+            <div class="form-group">
+                <label for="username">Nombre de usuario:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Contraseña:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <p>
+                <input type="submit" value="Login" class="btn-save"/>
+                <input type="hidden" name="_csrf" value="{{token}}"/>
+            </p>
+        </form>
+    </section>
+</main>
+
+<footer class="footer">
+    <div class="container">
+        <div class="footer-left">
+            <img src="/images/logo-tienda-juguetes.jpg" alt="Juguetes Store" width="170">
+        </div>
+        <div class="footer-center">
+            <p>&copy; 2025 Juguetes Store. Todos los derechos reservados.</p>
+            <img src="/images/payment.gif" alt="Métodos de pago">
+        </div>
+        <div class="footer-right">
+            <a href="/">Inicio</a>
+            <a href="/ubication">Dónde encontrarnos</a>
+            <a href="/contact">Contacto</a>
+        </div>
+    </div>
+</footer>
+</body>
+</html>

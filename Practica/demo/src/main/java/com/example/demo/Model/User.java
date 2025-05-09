@@ -23,13 +23,17 @@ public class User {
     @JsonView(UserInfo.class)
     private String name;
     @JsonView(UserInfo.class)
-    private String password;
+    private String encodedPassword;
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<String> roles;
+
     @JsonView(UserInfo.class)
     private String address;
     @JsonView(UserInfo.class)
     private String phone;
     @JsonView(UserInfo.class)
     private int numReviews;
+
     @OneToMany
     @JsonView(RevInt.class)
     private List<Review> reviews;
@@ -39,6 +43,13 @@ public class User {
     @JsonView(PurchInt.class)
     @ManyToMany
     private List<Product> productList;
+
+    public User(String name, String encodedPassword, String... roles){
+        this.name = name;
+        this.encodedPassword = encodedPassword;
+        this.roles = List.of(roles);
+        this.reviews = new ArrayList<>();
+    }
 
     public User(String name) {
         this.name = name;
@@ -60,13 +71,22 @@ public class User {
         this.productList = productList;
     }
 
-    public String getPassword() {
-        return password;
+    public String getEncodedPassword() {
+        return encodedPassword;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setEncodedPassword(String encodedPassword) {
+        this.encodedPassword = encodedPassword;
     }
+    public List<String> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<String> roles) {
+        this.roles = roles;
+    }
+
+
 
     public String getAddress() {
         return address;
@@ -132,6 +152,7 @@ public class User {
     }
     @Override
     public String toString() {
-        return "Post [user=" + name + ", password=" + password + ", address=" + address + ", phone=" + phone + ", numReviews=" + numReviews + "]";
+        return "Post [user=" + name + ", password=" + encodedPassword + ", address=" + address + ", phone=" + phone + ", numReviews=" + numReviews + "]";
     }
 }
+

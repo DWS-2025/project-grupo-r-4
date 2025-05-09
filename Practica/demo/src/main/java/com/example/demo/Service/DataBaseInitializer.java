@@ -2,8 +2,10 @@ package com.example.demo.Service;
 
 import com.example.demo.Model.ProductDTO;
 import com.example.demo.Model.UserDTO;
+import com.example.demo.Security.*;
 import com.example.demo.Model.Product;
 import com.example.demo.Model.User;
+import com.example.demo.Repository.UserRepository;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import org.springframework.core.io.UrlResource;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -32,20 +35,23 @@ public class DataBaseInitializer {
     @Autowired
     private ImageService imageService;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private UserRepository userRepository;
+
     private static final Path IMAGES_FOLDER = Paths.get(System.getProperty("user.dir"), "/demo/images");
 
     @PostConstruct
     public void init() {
         try {
-            initializeUser();
-
             initializeProducts();
         } catch (Exception e) {
             System.err.println("Error durante la inicialización de la base de datos: " + e.getMessage());
             e.printStackTrace();
         }
     }
-
     public void initializeProducts() {
         List<ProductDTO> productDTOs = new ArrayList<ProductDTO>();
 
@@ -65,7 +71,9 @@ public class DataBaseInitializer {
         productDTOs.add(new ProductDTO("Trivial Pursuit", 30.0, "Juego de mesa Trivial Pursuit", "JuegoMesa"));
 
 
-        User user = userService.findByNameDatabse("user");
+        User user1 =userRepository.save(new User("user", passwordEncoder.encode("pass"), "USER"));
+        User user2 = userRepository.save(new User("admin", passwordEncoder.encode("adminpass"), "USER", "ADMIN"));
+        User user3 = userRepository.save(new User("random", passwordEncoder.encode("random"), "USER"));
 
 
         for (ProductDTO productDTO : productDTOs) {
@@ -95,10 +103,4 @@ public class DataBaseInitializer {
         }
     }
 
-    public void initializeUser() {
-        UserDTO userDTO = new UserDTO();
-        userDTO.setName("user");
-        userService.save(userDTO);
-        System.out.println("Usuario 'user' creado exitosamente.");
-    }
 }

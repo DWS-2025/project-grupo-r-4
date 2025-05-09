@@ -4,10 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6388f339-f108-481a-ad8e-631f0422f92c" name="Changes" comment="correcion direcciones para las imagenes">
+    <list default="true" id="6388f339-f108-481a-ad8e-631f0422f92c" name="Changes" comment="correcion de relacion NM">
+      <change afterPath="$PROJECT_DIR$/../.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/demo/src/main/java/com/example/demo/Security/RepositoryUserDetailsService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/demo/src/main/java/com/example/demo/Security/WebSecurityConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/demo/src/main/resources/templates/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo/src/main/java/com/example/demo/Controller/ProductController.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo/src/main/java/com/example/demo/Controller/ProductController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo/src/main/java/com/example/demo/Service/ImageService.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo/src/main/java/com/example/demo/Service/ImageService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/demo/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/src/main/java/com/example/demo/Controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo/src/main/java/com/example/demo/Controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/src/main/java/com/example/demo/Model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo/src/main/java/com/example/demo/Model/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/src/main/java/com/example/demo/Service/DataBaseInitializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo/src/main/java/com/example/demo/Service/DataBaseInitializer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/src/main/resources/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/demo/src/main/resources/templates/index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,9 +33,9 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 1
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 1
+}</component>
   <component name="ProjectId" id="2wri0qsy7jzmgaD0KOzig2zHRB2" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -39,12 +48,15 @@
     "RequestMappingsPanelOrder1": "1",
     "RequestMappingsPanelWidth0": "75",
     "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "Spring Boot.DemoApplication.executor": "Run",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/hugom/OneDrive/Documentos/GitHub/project-grupo-r-4/Practica",
+    "last_opened_file_path": "C:/Users/jorge/OneDrive/Documentos/GitHub/project-grupo-r-4/Practica",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -53,6 +65,12 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\jorge\OneDrive\Documentos\GitHub\project-grupo-r-4\Practica\demo\src\main\java\com\example\demo\Security" />
+      <recent name="C:\Users\jorge\OneDrive\Documentos\GitHub\project-grupo-r-4\Practica\demo\src\main\resources\templates" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration name="DemoApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <module name="demo" />
@@ -78,7 +96,8 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1746805872544</updated>
-      <workItem from="1746805873790" duration="8214000" />
+      <workItem from="1746805873790" duration="6734000" />
+      <workItem from="1746817726813" duration="982000" />
     </task>
     <task id="LOCAL-00001" summary="correcion de relacion NM">
       <option name="closed" value="true" />
@@ -88,15 +107,7 @@
       <option name="project" value="LOCAL" />
       <updated>1746811196239</updated>
     </task>
-    <task id="LOCAL-00002" summary="correcion direcciones para las imagenes">
-      <option name="closed" value="true" />
-      <created>1746813126321</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1746813126321</updated>
-    </task>
-    <option name="localTasksCounter" value="3" />
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -104,7 +115,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="correcion de relacion NM" />
-    <MESSAGE value="correcion direcciones para las imagenes" />
-    <option name="LAST_COMMIT_MESSAGE" value="correcion direcciones para las imagenes" />
+    <option name="LAST_COMMIT_MESSAGE" value="correcion de relacion NM" />
   </component>
 </project>
