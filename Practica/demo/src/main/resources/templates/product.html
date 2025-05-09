@@ -27,7 +27,6 @@
 <main class="container">
     <section class="product-details">
         <div class="product-image">
-            <!-- Verifica si existe una imagen para el producto -->
             <img src="/product/{{product.id}}/image" alt="Imagen del producto" width="500">
         </div>
 
@@ -51,6 +50,12 @@
                 <button onclick="location.href='/products/'">Atrás</button>
                 <button onclick="location.href='/deleteProduct/{{product.id}}'">Borrar producto</button>
                 <button onclick="location.href='/product/{{product.id}}/modify'">Modificar</button>
+
+                <!-- Formulario para añadir a la cesta -->
+                <form action="/cart/add" method="post" style="margin-top: 10px;">
+                    <input type="hidden" name="productId" value="{{product.id}}">
+                    <button type="submit" class="purchase-button">Añadir a la cesta 🛒</button>
+                </form>
             </div>
         </div>
     </section>

@@ -16,7 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
-
+import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -221,5 +221,72 @@ public class ProductController {
             return "redirect:/product/" + id;
 
     }
+
+    @PostMapping("/cart/add/{id}")
+    public String addToCart(@PathVariable Long id, HttpSession session) {
+        List<Long> cart = (List<Long>) session.getAttribute("cart");
+        if (cart == null) {
+            cart = new ArrayList<>();
+        }
+
+        if (!cart.contains(id)) {
+            cart.add(id);
+        }
+
+        session.setAttribute("cart", cart);
+        return "redirect:/products"; // O donde quieras redirigir
+    }
+
+
+    @GetMapping("/cart")
+    public String viewCart(HttpSession session, Model model) {
+        List<Long> cart = (List<Long>) session.getAttribute("cart");
+        List<ProductDTO> productsInCart = new ArrayList<>();
+
+        if (cart != null) {
+            for (Long id : cart) {
+                productService.findById(id).ifPresent(productsInCart::add);
+            }
+        }
+
+        model.addAttribute("products", productsInCart);
+        model.addAttribute("total", productsInCart.stream().mapToDouble(ProductDTO::getPrice).sum());
+
+        return "cart"; // Necesitaremos crear cart.html
+    }
+
+    @PostMapping("/cart/checkout")
+    public String checkout(HttpSession session) {
+        List<Long> cart = (List<Long>) session.getAttribute("cart");
+
+        if (cart == null || cart.isEmpty()) {
+            return "redirect:/cart"; // Nada que comprar
+        }
+
+        PurchaseDTO purchaseDTO = new PurchaseDTO();
+
+        for (Long id : cart) {
+            purchaseDTO.getProductIds().add(id);
+            ProductDTO productDTO = productService.findById(id).get();
+            productDTO.getPurchasesId().add(purchaseDTO.getId());
+        }
+
+        return "redirect:/products"; // O a una página de confirmación
+    }
+
+    @PostMapping("/cart/remove")
+    public String removeFromCart(@RequestParam("productId") Long productId, HttpSession session) {
+        List<ProductDTO> cart = (List<ProductDTO>) session.getAttribute("cart");
+        if (cart != null) {
+            cart.removeIf(product -> product.getId().equals(productId));
+            session.setAttribute("cart", cart);
+        }
+        return "redirect:/cart";
+    }
+
+
 }
+
+
+
 
