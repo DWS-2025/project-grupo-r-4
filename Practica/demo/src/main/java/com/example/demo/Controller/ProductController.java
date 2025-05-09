@@ -234,7 +234,7 @@ public class ProductController {
         }
 
         session.setAttribute("cart", cart);
-        return "redirect:/products"; // O donde quieras redirigir
+        return "redirect:/products";
     }
 
 
@@ -252,7 +252,7 @@ public class ProductController {
         model.addAttribute("products", productsInCart);
         model.addAttribute("total", productsInCart.stream().mapToDouble(ProductDTO::getPrice).sum());
 
-        return "cart"; // Necesitaremos crear cart.html
+        return "cart";
     }
 
     @PostMapping("/cart/checkout")
@@ -260,7 +260,7 @@ public class ProductController {
         List<Long> cart = (List<Long>) session.getAttribute("cart");
 
         if (cart == null || cart.isEmpty()) {
-            return "redirect:/cart"; // Nada que comprar
+            return "redirect:/cart";
         }
 
         PurchaseDTO purchaseDTO = new PurchaseDTO();
@@ -271,7 +271,7 @@ public class ProductController {
             productDTO.getPurchasesId().add(purchaseDTO.getId());
         }
 
-        return "redirect:/products"; // O a una página de confirmación
+        return "redirect:/products";
     }
 
     @PostMapping("/cart/remove")
@@ -283,7 +283,6 @@ public class ProductController {
         }
         return "redirect:/cart";
     }
-
 
 }
 

@@ -20,7 +20,7 @@ import java.util.UUID;
 
 @Service
 public class ImageService {
-    private static final Path IMAGES_FOLDER = Paths.get(System.getProperty("user.dir"),"Practica\\Practica\\images");
+    private static final Path IMAGES_FOLDER = Paths.get(System.getProperty("user.dir"),"demo\\images");
 
     public String createImage(MultipartFile multiPartFile) {
         String originalName = multiPartFile.getOriginalFilename();
