@@ -47,49 +47,43 @@ public class WebSecurityConfig {
         http
                 .authorizeHttpRequests(authorize -> authorize
                         // PUBLIC PAGES
-                        .requestMatchers("/").permitAll()
-                        .requestMatchers("/signup").permitAll()
-                        .requestMatchers("/products").permitAll()
-                        .requestMatchers("/myAccount").permitAll()
-                        .requestMatchers("/register").permitAll()
-                        .requestMatchers("/contact").permitAll()
-                        .requestMatchers("/searchmatches").permitAll()
-                        .requestMatchers("/searchTeam").permitAll()
                         .requestMatchers("/css/*").permitAll()
                         .requestMatchers("/images/*").permitAll()
-                        .requestMatchers("/js/main.js").permitAll()
-                        .requestMatchers("/teams/*/image").permitAll()
-                        .requestMatchers("/error").permitAll()
+                        .requestMatchers("/").permitAll()
+                        .requestMatchers("/register").permitAll()
+                        .requestMatchers("/products").permitAll()
+                        .requestMatchers("product/*").permitAll()
+                        .requestMatchers("/filter").permitAll()
+                        .requestMatchers("/products/filter").permitAll()
+                        .requestMatchers("/products/loadMore").permitAll()
+                        .requestMatchers("/product/*/image").permitAll()
+                        .requestMatchers("/ubication").permitAll()
+                        .requestMatchers("/loginerror").permitAll()
 
 
                         // PRIVATE PAGES
-                        .requestMatchers("/newcompetition").hasAnyRole("ADMIN")
-                        .requestMatchers("/newteam").hasAnyRole("ADMIN")
-                        .requestMatchers("/teams/*/file").hasAnyRole("USER")
-                        .requestMatchers("/teams/{id}/delete").hasAnyRole("ADMIN")
-                        .requestMatchers("/removedTeam").hasAnyRole("ADMIN")
-                        .requestMatchers("/players/*/edit").hasAnyRole("ADMIN")
-                        .requestMatchers("/players/*/delete").hasAnyRole("ADMIN")
-                        .requestMatchers("/removedPlayer").hasAnyRole("ADMIN")
-                        .requestMatchers("/players/*/favorite").hasAnyRole("USER")
-                        .requestMatchers("/players/*/unfavorite").hasAnyRole("USER")
-                        .requestMatchers("/players/*/update").hasAnyRole("ADMIN")
-                        .requestMatchers("/favoritesPlayers").hasAnyRole("USER")
-                        .requestMatchers("/newplayer").hasAnyRole("USER")
-                        .requestMatchers("/matches/*/comments").hasAnyRole("USER")
-                        .requestMatchers("/matches/*").hasAnyRole("USER")
-                        .requestMatchers("/matches/*/delete").hasAnyRole("ADMIN")
-                        .requestMatchers("/removedMatch").hasAnyRole("ADMIN")
-                        .requestMatchers("/matches/*/comments/*/delete").hasAnyRole("USER")
-                        .requestMatchers("/matches/*/events").hasAnyRole("ADMIN")
-                        .requestMatchers("/matches/*/events/new").hasAnyRole("ADMIN")
-                        .requestMatchers("/newmatch").hasAnyRole("ADMIN")
-                        .requestMatchers("/user/").hasAnyRole("USER")
-                        .requestMatchers("/edituser").hasAnyRole("USER")
-                        .requestMatchers("/deleteuser").hasAnyRole("USER")
-                        .requestMatchers("/removedUser").hasAnyRole("USER")
-                        .requestMatchers("/users").hasAnyRole("ADMIN")
-                        .requestMatchers("/deleteuser/**").hasAnyRole("ADMIN")
+                        .requestMatchers("/myAccount").hasAnyRole("USER")
+                        .requestMatchers("/contact").hasAnyRole("USER")
+                        .requestMatchers("/user/*/buys").hasAnyRole("USER")
+                        .requestMatchers("/user/*/reviews").hasAnyRole("USER")
+                        .requestMatchers("/product/{id}/purchase").hasAnyRole("USER")
+                        .requestMatchers("/cart/add/{id}").hasAnyRole("USER")///////
+                        .requestMatchers("/cart/add").hasAnyRole("USER")///////
+                        .requestMatchers("/cart").hasAnyRole("USER")
+                        .requestMatchers("/cart/checkout").hasAnyRole("USER")////////////
+                        .requestMatchers("/cart/remove").hasAnyRole("USER")//////////////
+                        .requestMatchers("/product/{id}/review").hasAnyRole("USER")
+                        .requestMatchers("/product/new").hasAnyRole("ADMIN")
+                        .requestMatchers("/newProduct").hasAnyRole("ADMIN")
+                        .requestMatchers("/product/{id}/modify").hasAnyRole("ADMIN")
+                        .requestMatchers("/deleteProduct/{id}").hasAnyRole("ADMIN")
+                        .requestMatchers("/showdeleteProduct/{id}").hasAnyRole("ADMIN")
+
+
+
+
+
+
                 )
                 .formLogin(formLogin -> formLogin
                         .loginPage("/login")
