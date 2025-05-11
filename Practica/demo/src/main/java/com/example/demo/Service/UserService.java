@@ -8,6 +8,7 @@ import com.example.demo.Repository.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -23,7 +24,12 @@ import java.util.stream.Collectors;
 public class UserService {
     @Autowired
     private UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     private UserDTO convertToDTO(User user) {
         UserDTO userDTO = new UserDTO();
@@ -90,5 +96,19 @@ public class UserService {
 
     public User findByNameDatabse(String name){
         return userRepository.findByName(name).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado"));
+    }
+
+    public User registerNewUser(User user) {
+        if (userRepository.findByName(user.getName()).isPresent()) {
+            throw new RuntimeException("El nombre de usuario ya existe");
+        }
+
+        // Codificar la contraseña antes de guardarla
+        user.setEncodedPassword(passwordEncoder.encode(user.getEncodedPassword()));
+
+        // Asignar rol por defecto
+        user.setRoles(List.of("USER"));
+
+        return userRepository.save(user);
     }
 }
