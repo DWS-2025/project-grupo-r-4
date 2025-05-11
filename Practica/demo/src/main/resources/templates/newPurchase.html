@@ -28,6 +28,7 @@
     <section class="purchase-form">
         <h2>Compra del Producto</h2>
         <form action="/product/{{product.id}}/purchase" method="POST" enctype="multipart/form-data">
+            <input type="hidden" name="_csrf" value="{{token}}">
             <div class="form-group">
                 <label>Producto:</label>
                 <div class="formlabel-text">{{product.name}}</div>

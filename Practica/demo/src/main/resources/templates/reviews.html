@@ -28,6 +28,7 @@
     <section class="review-form">
         <h2>Nueva Reseña para el Producto: {{product.name}}</h2>
         <form action="/product/{{product.id}}/review" method="POST" enctype="multipart/form-data">
+            <input type="hidden" name="_csrf" value="{{token}}">
 
             <div class="form-group">
                 <label for="review">Comentario:</label>

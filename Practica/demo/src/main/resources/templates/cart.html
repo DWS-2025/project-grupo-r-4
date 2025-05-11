@@ -30,6 +30,7 @@
         <td>
           <form th:action="@{/cart/remove}" method="post">
             <input type="hidden" name="productId" th:value="${product.id}">
+            <input type="hidden" name="_csrf" value="{{token}}">
             <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
           </form>
         </td>
@@ -40,6 +41,7 @@
     <h4>Total: <span th:text="${total}">0.0</span> €</h4>
 
     <form th:action="@{/cart/checkout}" method="post">
+      <input type="hidden" name="_csrf" value="{{token}}">
       <button type="submit" class="btn btn-success">Finalizar compra</button>
     </form>
   </div>

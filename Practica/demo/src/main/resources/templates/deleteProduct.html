@@ -28,6 +28,7 @@
     <section class="delete-product">
         <h2>Eliminar Producto</h2>
         <form action="/deleteProduct/{{product.id}}" method="post" class="delete-form">
+            <input type="hidden" name="_csrf" value="{{token}}">
             <div class="product-details">
                 <p><strong>Nombre:</strong> {{product.name}}</p>
                 <p><strong>Descripción:</strong> {{product.description}}</p>

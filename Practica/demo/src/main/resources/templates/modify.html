@@ -28,6 +28,9 @@
     <section class="product-form">
         <h2>Modificar Producto</h2>
         <form action="/product/{{product.id}}/modify" method="post" enctype="multipart/form-data">
+            <!-- Campo CSRF agregado -->
+            <input type="hidden" name="_csrf" value="{{token}}">
+
             <div class="form-group">
                 <label for="name">Nombre del producto:</label>
                 <input class="forminput-imput" type="text" id="name" name="name" placeholder="Nombre del producto" value="{{product.name}}" required>
