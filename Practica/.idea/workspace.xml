@@ -4,8 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6388f339-f108-481a-ad8e-631f0422f92c" name="Changes" comment="creacion del authResponse">
-      <change beforePath="$PROJECT_DIR$/demo/src/main/java/com/example/demo/Security/jwt/JwtCookieManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo/src/main/java/com/example/demo/Security/jwt/JwtCookieManager.java" afterDir="false" />
+    <list default="true" id="6388f339-f108-481a-ad8e-631f0422f92c" name="Changes" comment="CSRF configuration e interceptor realizados">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/src/main/java/com/example/demo/Security/jwt/UserLoginService.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo/src/main/java/com/example/demo/Security/jwt/UserLoginService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/demo/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,6 +18,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="HTML File" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -104,7 +107,47 @@
       <option name="project" value="LOCAL" />
       <updated>1746971365789</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="JwtCookieManager y SecurityCypher realizados">
+      <option name="closed" value="true" />
+      <created>1746981450437</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1746981450437</updated>
+    </task>
+    <task id="LOCAL-00004" summary="JwtRequestFilter y JwtToquenProvider realizados">
+      <option name="closed" value="true" />
+      <created>1746981965042</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1746981965042</updated>
+    </task>
+    <task id="LOCAL-00005" summary="LoginRequest y Token realizados">
+      <option name="closed" value="true" />
+      <created>1746982164240</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1746982164240</updated>
+    </task>
+    <task id="LOCAL-00006" summary="UnauthorizedHandlerJwt y UserLoginService realizados">
+      <option name="closed" value="true" />
+      <created>1746982542072</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1746982542072</updated>
+    </task>
+    <task id="LOCAL-00007" summary="CSRF configuration e interceptor realizados">
+      <option name="closed" value="true" />
+      <created>1746983685917</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1746983685917</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -114,6 +157,11 @@
     <MESSAGE value="correcion de relacion NM" />
     <MESSAGE value="creacion de nuevas clases para la seguridad de la pagina" />
     <MESSAGE value="creacion del authResponse" />
-    <option name="LAST_COMMIT_MESSAGE" value="creacion del authResponse" />
+    <MESSAGE value="JwtCookieManager y SecurityCypher realizados" />
+    <MESSAGE value="JwtRequestFilter y JwtToquenProvider realizados" />
+    <MESSAGE value="LoginRequest y Token realizados" />
+    <MESSAGE value="UnauthorizedHandlerJwt y UserLoginService realizados" />
+    <MESSAGE value="CSRF configuration e interceptor realizados" />
+    <option name="LAST_COMMIT_MESSAGE" value="CSRF configuration e interceptor realizados" />
   </component>
 </project>
