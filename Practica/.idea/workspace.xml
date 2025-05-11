@@ -4,10 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6388f339-f108-481a-ad8e-631f0422f92c" name="Changes" comment="CSRF configuration e interceptor realizados">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="6388f339-f108-481a-ad8e-631f0422f92c" name="Changes" comment="arreglo de fallos">
+      <change beforePath="$PROJECT_DIR$/demo/src/main/java/com/example/demo/Security/WebSecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo/src/main/java/com/example/demo/Security/WebSecurityConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/demo/src/main/java/com/example/demo/Security/jwt/UserLoginService.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo/src/main/java/com/example/demo/Security/jwt/UserLoginService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/demo/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -147,7 +146,15 @@
       <option name="project" value="LOCAL" />
       <updated>1746983685917</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="arreglo de fallos">
+      <option name="closed" value="true" />
+      <created>1746985072760</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1746985072760</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -162,6 +169,7 @@
     <MESSAGE value="LoginRequest y Token realizados" />
     <MESSAGE value="UnauthorizedHandlerJwt y UserLoginService realizados" />
     <MESSAGE value="CSRF configuration e interceptor realizados" />
-    <option name="LAST_COMMIT_MESSAGE" value="CSRF configuration e interceptor realizados" />
+    <MESSAGE value="arreglo de fallos" />
+    <option name="LAST_COMMIT_MESSAGE" value="arreglo de fallos" />
   </component>
 </project>

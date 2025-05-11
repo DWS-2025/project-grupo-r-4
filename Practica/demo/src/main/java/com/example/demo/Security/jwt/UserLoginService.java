@@ -1,12 +1,7 @@
 package com.example.demo.Security.jwt;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,35 +16,27 @@ import jakarta.servlet.http.HttpSession;
 @Service
 public class UserLoginService {
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
+    private final UserDetailsService userDetailsService;
+    private final JwtTokenProvider jwtTokenProvider;
+    private final JwtCookieManager cookieUtil;
 
-    @Autowired
-    private UserDetailsService userDetailsService;
-
-    @Autowired
-    private JwtTokenProvider jwtTokenProvider;
-
-    @Autowired
-    private JwtCookieManager cookieUtil;
-
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
-        return authenticationConfiguration.getAuthenticationManager();
+    public UserLoginService(UserDetailsService userDetailsService,
+                            JwtTokenProvider jwtTokenProvider,
+                            JwtCookieManager cookieUtil) {
+        this.userDetailsService = userDetailsService;
+        this.jwtTokenProvider = jwtTokenProvider;
+        this.cookieUtil = cookieUtil;
     }
 
-    public ResponseEntity<AuthResponse> login(LoginRequest loginRequest, String encryptedAccessToken, String
-            encryptedRefreshToken) {
-
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
-
+    public ResponseEntity<AuthResponse> handleSuccessfulAuthentication(Authentication authentication,
+                                                                       String encryptedAccessToken,
+                                                                       String encryptedRefreshToken) {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         String accessToken = SecurityCipher.decrypt(encryptedAccessToken);
         String refreshToken = SecurityCipher.decrypt(encryptedRefreshToken);
 
-        String username = loginRequest.getUsername();
+        String username = authentication.getName();
         UserDetails user = userDetailsService.loadUserByUsername(username);
 
         Boolean accessTokenValid = jwtTokenProvider.validateToken(accessToken);
@@ -58,19 +45,16 @@ public class UserLoginService {
         HttpHeaders responseHeaders = new HttpHeaders();
         Token newAccessToken;
         Token newRefreshToken;
+
         if (!accessTokenValid && !refreshTokenValid) {
             newAccessToken = jwtTokenProvider.generateToken(user);
             newRefreshToken = jwtTokenProvider.generateRefreshToken(user);
             addAccessTokenCookie(responseHeaders, newAccessToken);
             addRefreshTokenCookie(responseHeaders, newRefreshToken);
-        }
-
-        if (!accessTokenValid && refreshTokenValid) {
+        } else if (!accessTokenValid && refreshTokenValid) {
             newAccessToken = jwtTokenProvider.generateToken(user);
             addAccessTokenCookie(responseHeaders, newAccessToken);
-        }
-
-        if (accessTokenValid && refreshTokenValid) {
+        } else if (accessTokenValid && refreshTokenValid) {
             newAccessToken = jwtTokenProvider.generateToken(user);
             newRefreshToken = jwtTokenProvider.generateRefreshToken(user);
             addAccessTokenCookie(responseHeaders, newAccessToken);
@@ -83,15 +67,11 @@ public class UserLoginService {
     }
 
     public ResponseEntity<AuthResponse> refresh(String encryptedRefreshToken) {
-
         String refreshToken = SecurityCipher.decrypt(encryptedRefreshToken);
 
-        Boolean refreshTokenValid = jwtTokenProvider.validateToken(refreshToken);
-
-        if (!refreshTokenValid) {
-            AuthResponse loginResponse = new AuthResponse(AuthResponse.Status.FAILURE,
-                    "Invalid refresh token !");
-            return ResponseEntity.ok().body(loginResponse);
+        if (!jwtTokenProvider.validateToken(refreshToken)) {
+            return ResponseEntity.ok()
+                    .body(new AuthResponse(AuthResponse.Status.FAILURE, "Invalid refresh token!"));
         }
 
         String username = jwtTokenProvider.getUsername(refreshToken);
@@ -99,26 +79,25 @@ public class UserLoginService {
 
         Token newAccessToken = jwtTokenProvider.generateToken(user);
         HttpHeaders responseHeaders = new HttpHeaders();
-        responseHeaders.add(HttpHeaders.SET_COOKIE, cookieUtil
-                .createAccessTokenCookie(newAccessToken.getTokenValue(), newAccessToken.getDuration()).toString());
+        responseHeaders.add(HttpHeaders.SET_COOKIE,
+                cookieUtil.createAccessTokenCookie(newAccessToken.getTokenValue(),
+                        newAccessToken.getDuration()).toString());
 
-        AuthResponse loginResponse = new AuthResponse(AuthResponse.Status.SUCCESS,
-                "Auth successful. Tokens are created in cookie.");
-        return ResponseEntity.ok().headers(responseHeaders).body(loginResponse);
+        return ResponseEntity.ok()
+                .headers(responseHeaders)
+                .body(new AuthResponse(AuthResponse.Status.SUCCESS,
+                        "Auth successful. Tokens are created in cookie."));
     }
 
     public String getUserName() {
-
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
         return authentication.getName();
     }
 
     public String logout(HttpServletRequest request, HttpServletResponse response) {
-
         HttpSession session = request.getSession(false);
         SecurityContextHolder.clearContext();
-        session = request.getSession(false);
+
         if (session != null) {
             session.invalidate();
         }
