@@ -52,6 +52,7 @@ public class WebSecurityConfig {
                                 "/images/*",
                                 "/",
                                 "/register",
+                                "/register/**",
                                 "/products",
                                 "/product/*",
                                 "/filter",

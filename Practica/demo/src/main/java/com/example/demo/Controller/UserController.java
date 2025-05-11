@@ -6,6 +6,9 @@ import com.example.demo.Service.PurchaseService;
 import com.example.demo.Service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -63,18 +66,26 @@ public class UserController {
     @GetMapping("/register")
     public String showRegistrationForm(Model model) {
         model.addAttribute("user", new User());
-        return "registration";
+        return "register";
     }
 
     @PostMapping("/register")
-    public String registerUser(@ModelAttribute User user, Model model) {
+    public String registerUser(User user, Model model) {
         try {
-            userService.registerNewUser(user);
-            return "redirect:/login?registered";
+            User registeredUser = userService.registerNewUser(user);
+
+            // Autenticar automáticamente al usuario después del registro
+            Authentication authentication = new UsernamePasswordAuthenticationToken(
+                    registeredUser.getName(),
+                    user.getEncodedPassword()
+            );
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+
+            return "redirect:/";
+
         } catch (RuntimeException e) {
             model.addAttribute("error", e.getMessage());
-            model.addAttribute("user", user);
-            return "registration";
+            return "register";
         }
     }
 }
