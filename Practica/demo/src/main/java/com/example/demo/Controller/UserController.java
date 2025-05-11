@@ -72,20 +72,24 @@ public class UserController {
     @PostMapping("/register")
     public String registerUser(User user, Model model) {
         try {
+            // Registrar el nuevo usuario
             User registeredUser = userService.registerNewUser(user);
 
             // Autenticar automáticamente al usuario después del registro
             Authentication authentication = new UsernamePasswordAuthenticationToken(
                     registeredUser.getName(),
-                    user.getEncodedPassword()
+                    user.getEncodedPassword() // Usamos la contraseña original para autenticar al usuario
             );
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
+            // Redirigir a la página principal o al dashboard del usuario
             return "redirect:/";
 
         } catch (RuntimeException e) {
-            model.addAttribute("error", e.getMessage());
-            return "register";
+            // Mostrar el error si algo falla durante el registro
+            model.addAttribute("error", "Error al registrar el usuario: " + e.getMessage());
+            e.printStackTrace(); // Esto es útil para depurar el error
+            return "register";  // Redirigir a la página de registro
         }
     }
 }

@@ -1,290 +1,296 @@
-package com.example.demo.Controller;
+    package com.example.demo.Controller;
 
-import com.example.demo.Model.*;
-import com.example.demo.Service.*;
-
-
-import jakarta.servlet.ServletRequest;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.InputStreamResource;
-import org.springframework.core.io.Resource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.server.ResponseStatusException;
-import jakarta.servlet.http.HttpSession;
-import java.io.IOException;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.IntStream;
+    import com.example.demo.Model.*;
+    import com.example.demo.Service.*;
 
 
-
-@Controller
-public class ProductController {
-
-    private static final String PRODUCTS_FOLDER = "products";
-
-    @Autowired
-    private ProductService productService;
-
-    @Autowired
-    private PurchaseService purchaseService;
-
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    private ImageService imageService;
-
-    @Autowired
-    private ReviewService reviewService;
-
-    @GetMapping({"/products", "/products/"}) // Mapea ambas versiones
-    public String showProducts(
-            @RequestParam(value = "page", defaultValue = "0") int page,
-            @RequestParam(value = "size", defaultValue = "10") int size,
-            Model model) {
-
-        List<ProductDTO> products = productService.findPaginated(page, size);
-        model.addAttribute("products", products);
-        return "products";
-    }
-
-    @GetMapping("/filter")
-    public String showFilterPage() {
-        return "filter";
-    }
-
-    @GetMapping("/products/filter")
-    @ResponseBody
-    public List<ProductDTO> filterProducts(
-            @RequestParam(required = false) String type,
-            @RequestParam(required = false) Float price) {
-
-        return productService.filterByTypeAndPrice(type, price);
-    }
+    import jakarta.servlet.ServletRequest;
+    import org.springframework.beans.factory.annotation.Autowired;
+    import org.springframework.core.io.InputStreamResource;
+    import org.springframework.core.io.Resource;
+    import org.springframework.http.HttpHeaders;
+    import org.springframework.http.HttpStatus;
+    import org.springframework.http.ResponseEntity;
+    import org.springframework.stereotype.Controller;
+    import org.springframework.ui.Model;
+    import org.springframework.web.bind.annotation.*;
+    import org.springframework.web.multipart.MultipartFile;
+    import org.springframework.web.server.ResponseStatusException;
+    import jakarta.servlet.http.HttpSession;
+    import java.io.IOException;
+    import java.sql.SQLException;
+    import java.util.ArrayList;
+    import java.util.Collection;
+    import java.util.List;
+    import java.util.Optional;
+    import java.util.stream.IntStream;
+    import jakarta.servlet.http.HttpServletRequest;
 
 
-    @GetMapping("/products/loadMore")
-    @ResponseBody
-    public List<ProductDTO> loadMoreProducts(
-            @RequestParam int page,
-            @RequestParam(defaultValue = "2") int size) {
 
-        int offset = 10 + (page * size);
+    @Controller
+    public class ProductController {
 
-        return productService.findPaginated(offset, size);
-    }
+        private static final String PRODUCTS_FOLDER = "products";
 
+        @Autowired
+        private ProductService productService;
 
-        @GetMapping("/product/new")
-    public String newProductForm(Model model) {
-        model.addAttribute("user", userService.findByUserName("user"));
+        @Autowired
+        private PurchaseService purchaseService;
 
-        return "newProduct";
-    }
+        @Autowired
+        private UserService userService;
 
-    @PostMapping("/product/new")
-    public String newProduct(Model model,ProductDTO productDto, MultipartFile imageField) throws IOException {
-        if(productService.existByName(productDto.getName())) {
-            return "404";
-        }
-        ProductDTO newProduct = productService.save(productDto, imageField);
-        model.addAttribute("product", newProduct.getId());
-        return "redirect:/product/" + newProduct.getId();
-    }
+        @Autowired
+        private ImageService imageService;
 
-    @GetMapping("/product/{id}/modify")
-    public String modifyProductForm(Model model, @PathVariable long id) {
-        ProductDTO product = productService.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        @Autowired
+        private ReviewService reviewService;
 
-        model.addAttribute("user", userService.findByUserName("user"));
-        model.addAttribute("product", product);
+        @GetMapping({"/products", "/products/"}) // Mapea ambas versiones
+        public String showProducts(
+                @RequestParam(value = "page", defaultValue = "0") int page,
+                @RequestParam(value = "size", defaultValue = "10") int size,
+                Model model) {
 
-        return "modify";
-    }
-
-    @PostMapping("/product/{id}/modify")
-    public String modifyProduct(Model model,ProductDTO productDto, @PathVariable long id, MultipartFile imageField) throws IOException {
-        ProductDTO existingProduct = productService.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        productService.updateProduct(id, productDto, imageField);
-        model.addAttribute("product", existingProduct);
-
-        return "redirect:/product/" + id;
-    }
-
-    @GetMapping("/product/{id}")
-    public String showProduct(Model model, @PathVariable long id) {
-        ProductDTO product = productService.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-
-        List<Long> reviewsId=product.getReviewsId();
-        List<ReviewDTO> reviewDTOS = new java.util.ArrayList<>(List.of());
-
-        if(reviewsId != null){
-            for(Long reviewId : reviewsId) {
-                reviewDTOS.add(reviewService.findById(reviewId));
-            }
-            List<UserDTO> users = new ArrayList<>();
-            for(ReviewDTO review : reviewDTOS) {
-                users.add(userService.findById(review.getUserId()).get());
-
-            }
-            model.addAttribute("users", users);
-            model.addAttribute("reviews", reviewDTOS);
+            List<ProductDTO> products = productService.findPaginated(page, size);
+            model.addAttribute("products", products);
+            return "products";
         }
 
-        model.addAttribute("product", product);
+        @GetMapping("/filter")
+        public String showFilterPage() {
+            return "filter";
+        }
 
-        return "product";
-    }
+        @GetMapping("/products/filter")
+        @ResponseBody
+        public List<ProductDTO> filterProducts(
+                @RequestParam(required = false) String type,
+                @RequestParam(required = false) Float price) {
 
-    @GetMapping("/product/{id}/image")
-    public ResponseEntity<Resource> downloadImage(@PathVariable long id) throws SQLException {
-        ProductDTO productDto = productService.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+            return productService.filterByTypeAndPrice(type, price);
+        }
 
-        Resource image = new InputStreamResource(productDto.getImageFile().getBinaryStream());
-        return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_TYPE, "image/jpeg")
-                .body(image);
-    }
 
-    @GetMapping("/product/{id}/review")
-    public String newReview(Model model, @PathVariable long id) {
-        ProductDTO productDto = productService.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        @GetMapping("/products/loadMore")
+        @ResponseBody
+        public List<ProductDTO> loadMoreProducts(
+                @RequestParam int page,
+                @RequestParam(defaultValue = "2") int size) {
 
-        model.addAttribute("user", userService.findByUserName("user"));
-        model.addAttribute("product", productDto);
+            int offset = 10 + (page * size);
 
-        return "reviews";
-    }
+            return productService.findPaginated(offset, size);
+        }
 
-    @PostMapping("/product/{id}/review")
-    public String postReview(@PathVariable long id, @RequestParam String review, @RequestParam int rating, ReviewDTO reviewDto) {
-        ProductDTO productDto = productService.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-        UserDTO userDto = userService.findByUserName("user");
+            @GetMapping("/product/new")
+        public String newProductForm(Model model) {
+            model.addAttribute("user", userService.findByUserName("user"));
 
-        productService.addReview(productDto, "user", review, rating);
+            return "newProduct";
+        }
 
-        return "redirect:/product/" + id;
-    }
+        @PostMapping("/product/new")
+        public String newProduct(Model model,ProductDTO productDto, MultipartFile imageField) throws IOException {
+            if(productService.existByName(productDto.getName())) {
+                return "404";
+            }
+            ProductDTO newProduct = productService.save(productDto, imageField);
+            model.addAttribute("product", newProduct.getId());
+            return "redirect:/product/" + newProduct.getId();
+        }
 
-    @GetMapping("/showdeleteProduct/{id}")
-    public String deleteProductForm(Model model, @PathVariable long id) {
-        ProductDTO productDto = productService.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        @GetMapping("/product/{id}/modify")
+        public String modifyProductForm(Model model, @PathVariable long id) {
+            ProductDTO product = productService.findById(id)
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-        model.addAttribute("product", productDto);
+            model.addAttribute("user", userService.findByUserName("user"));
+            model.addAttribute("product", product);
 
-        return "deleteProduct";
-    }
+            return "modify";
+        }
 
-    @PostMapping("/deleteProduct/{id}")
-    public String deleteConfirmedProduct(@PathVariable long id) throws IOException {
-        productService.deleteById(id);
-        imageService.deleteImage(PRODUCTS_FOLDER);
+        @PostMapping("/product/{id}/modify")
+        public String modifyProduct(Model model,ProductDTO productDto, @PathVariable long id, MultipartFile imageField) throws IOException {
+            ProductDTO existingProduct = productService.findById(id)
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+            productService.updateProduct(id, productDto, imageField);
+            model.addAttribute("product", existingProduct);
 
-        return "redirect:/products/";
-    }
-
-    @GetMapping("/product/{id}/purchase")
-    public String newPurchaseForm(Model model, @PathVariable long id) {
-        ProductDTO productDto = productService.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-
-        model.addAttribute("precio", productDto.getPrice());
-        model.addAttribute("product", productDto);
-        model.addAttribute("purchase", new PurchaseDTO());
-
-        return "newPurchase";
-    }
-
-    @PostMapping("/product/{id}/purchase")
-    public String newPurchase(@PathVariable long id) throws IOException {
-            PurchaseDTO purchaseDTO = new PurchaseDTO();
-            ProductDTO productDTO = productService.findById(id).get();
-            purchaseService.createPurchase(purchaseDTO, productDTO);
             return "redirect:/product/" + id;
-
-    }
-
-    @PostMapping("/cart/add/{id}")
-    public String addToCart(@PathVariable Long id, HttpSession session) {
-        List<Long> cart = (List<Long>) session.getAttribute("cart");
-        if (cart == null) {
-            cart = new ArrayList<>();
         }
 
-        if (!cart.contains(id)) {
-            cart.add(id);
-        }
+        @GetMapping("/product/{id}")
+        public String showProduct(Model model, @PathVariable long id) {
+            ProductDTO product = productService.findById(id)
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-        session.setAttribute("cart", cart);
-        return "redirect:/products";
-    }
+            List<Long> reviewsId=product.getReviewsId();
+            List<ReviewDTO> reviewDTOS = new java.util.ArrayList<>(List.of());
 
+            if(reviewsId != null){
+                for(Long reviewId : reviewsId) {
+                    reviewDTOS.add(reviewService.findById(reviewId));
+                }
+                List<UserDTO> users = new ArrayList<>();
+                for(ReviewDTO review : reviewDTOS) {
+                    users.add(userService.findById(review.getUserId()).get());
 
-    @GetMapping("/cart")
-    public String viewCart(HttpSession session, Model model) {
-        List<Long> cart = (List<Long>) session.getAttribute("cart");
-        List<ProductDTO> productsInCart = new ArrayList<>();
-
-        if (cart != null) {
-            for (Long id : cart) {
-                productService.findById(id).ifPresent(productsInCart::add);
+                }
+                model.addAttribute("users", users);
+                model.addAttribute("reviews", reviewDTOS);
             }
+
+            model.addAttribute("product", product);
+
+            return "product";
         }
 
-        model.addAttribute("products", productsInCart);
-        model.addAttribute("total", productsInCart.stream().mapToDouble(ProductDTO::getPrice).sum());
+        @GetMapping("/product/{id}/image")
+        public ResponseEntity<Resource> downloadImage(@PathVariable long id) throws SQLException {
+            ProductDTO productDto = productService.findById(id)
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-        return "cart";
-    }
+            Resource image = new InputStreamResource(productDto.getImageFile().getBinaryStream());
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.CONTENT_TYPE, "image/jpeg")
+                    .body(image);
+        }
 
-    @PostMapping("/cart/checkout")
-    public String checkout(HttpSession session) {
-        List<Long> cart = (List<Long>) session.getAttribute("cart");
+        @GetMapping("/product/{id}/review")
+        public String newReview(Model model, @PathVariable long id) {
+            ProductDTO productDto = productService.findById(id)
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-        if (cart == null || cart.isEmpty()) {
+            model.addAttribute("user", userService.findByUserName("user"));
+            model.addAttribute("product", productDto);
+
+            return "reviews";
+        }
+
+        @PostMapping("/product/{id}/review")
+        public String postReview(@PathVariable long id, @RequestParam String review, @RequestParam int rating, ReviewDTO reviewDto) {
+            ProductDTO productDto = productService.findById(id)
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+            UserDTO userDto = userService.findByUserName("user");
+
+            productService.addReview(productDto, "user", review, rating);
+
+            return "redirect:/product/" + id;
+        }
+
+        @GetMapping("/showdeleteProduct/{id}")
+        public String deleteProductForm(Model model, @PathVariable long id,HttpServletRequest request) {
+            ProductDTO productDto = productService.findById(id)
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+            model.addAttribute("admin", request.isUserInRole("ADMIN"));
+            model.addAttribute("product", productDto);
+
+            return "deleteProduct";
+        }
+
+        @PostMapping("/deleteProduct/{id}")
+        public String deleteConfirmedProduct(@PathVariable long id) throws IOException {
+            productService.deleteById(id);
+            imageService.deleteImage(PRODUCTS_FOLDER);
+
+            return "redirect:/products/";
+        }
+
+        @GetMapping("/product/{id}/purchase")
+        public String newPurchaseForm(Model model, @PathVariable long id) {
+            ProductDTO productDto = productService.findById(id)
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+            model.addAttribute("precio", productDto.getPrice());
+            model.addAttribute("product", productDto);
+            model.addAttribute("purchase", new PurchaseDTO());
+
+            return "newPurchase";
+        }
+
+        @PostMapping("/product/{id}/purchase")
+        public String newPurchase(@PathVariable long id) throws IOException {
+                PurchaseDTO purchaseDTO = new PurchaseDTO();
+                ProductDTO productDTO = productService.findById(id).get();
+                purchaseService.createPurchase(purchaseDTO, productDTO);
+                return "redirect:/product/" + id;
+
+        }
+
+        @PostMapping("/cart/add")
+        public String addToCart(@RequestParam("productId") Long productId, HttpSession session) {
+            List<Long> cart = (List<Long>) session.getAttribute("cart");
+            if (cart == null) {
+                cart = new ArrayList<>();
+            }
+            if (!cart.contains(productId)) {
+                cart.add(productId);
+            }
+            session.setAttribute("cart", cart);
+            return "redirect:/products";
+        }
+
+
+
+
+        @GetMapping("/cart")
+        public String viewCart(HttpSession session, Model model) {
+            List<Long> cart = (List<Long>) session.getAttribute("cart");
+            List<ProductDTO> productsInCart = new ArrayList<>();
+
+            if (cart != null) {
+                for (Long id : cart) {
+                    productService.findById(id).ifPresent(productsInCart::add);
+                }
+            }
+
+            model.addAttribute("cartProducts", productsInCart); // <- usa este nombre
+
+            model.addAttribute("total", productsInCart.stream().mapToDouble(ProductDTO::getPrice).sum());
+
+            return "cart";
+        }
+
+        @PostMapping("/cart/checkout")
+        public String checkout(HttpSession session) {
+            List<Long> cart = (List<Long>) session.getAttribute("cart");
+
+            if (cart == null || cart.isEmpty()) {
+                return "redirect:/cart";
+            }
+
+            PurchaseDTO purchaseDTO = new PurchaseDTO();
+
+            for (Long id : cart) {
+                purchaseDTO.getProductIds().add(id);
+                ProductDTO productDTO = productService.findById(id).get();
+                productDTO.getPurchasesId().add(purchaseDTO.getId());
+            }
+
+            return "redirect:/products";
+        }
+
+        @PostMapping("/cart/remove")
+        public String removeFromCart(@RequestParam("productId") Long productId, HttpSession session) {
+            List<Long> cart = (List<Long>) session.getAttribute("cart");
+
+            if (cart != null) {
+                cart.removeIf(id -> id.equals(productId));
+                session.setAttribute("cart", cart);
+            }
+
             return "redirect:/cart";
         }
 
-        PurchaseDTO purchaseDTO = new PurchaseDTO();
 
-        for (Long id : cart) {
-            purchaseDTO.getProductIds().add(id);
-            ProductDTO productDTO = productService.findById(id).get();
-            productDTO.getPurchasesId().add(purchaseDTO.getId());
-        }
-
-        return "redirect:/products";
     }
-
-    @PostMapping("/cart/remove")
-    public String removeFromCart(@RequestParam("productId") Long productId, HttpSession session) {
-        List<ProductDTO> cart = (List<ProductDTO>) session.getAttribute("cart");
-        if (cart != null) {
-            cart.removeIf(product -> product.getId().equals(productId));
-            session.setAttribute("cart", cart);
-        }
-        return "redirect:/cart";
-    }
-
-}
 
 
 

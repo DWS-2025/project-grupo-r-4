@@ -40,6 +40,7 @@
         <h2>Regístrate</h2>
         <form action="/register" method="post" >
 
+            <input type="hidden" name="_csrf" value="{{token}}">
             <div class="field">
                 <label for="user">Usuario:</label>
                 <input type="text" id="user" name="user" required>
@@ -54,7 +55,6 @@
 
             <div class="account-buttons">
                 <button type="submit" value="Signup" >Registrarse</button>
-                <input type="hidden" name="_csrf" value="{{token}}">
                 <button type="button" onclick="location.href='/'">Cancelar</button>
             </div>
         </form>

@@ -52,11 +52,12 @@
                 <button onclick="location.href='/product/{{product.id}}/modify'">Modificar</button>
 
                 <!-- Formulario para añadir a la cesta -->
-                <form action="/cart/add" method="post" style="margin-top: 10px;">
+                <form action="/cart/add" method="post">
                     <input type="hidden" name="productId" value="{{product.id}}">
                     <input type="hidden" name="_csrf" value="{{token}}">
                     <button type="submit" class="purchase-button">Añadir a la cesta 🛒</button>
                 </form>
+
             </div>
         </div>
     </section>

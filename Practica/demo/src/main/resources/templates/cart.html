@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html>
 <head>
   <meta charset="UTF-8">
   <title>Tu cesta</title>
@@ -10,41 +10,43 @@
 <div class="container mt-4">
   <h2 class="mb-4">Tu cesta de productos</h2>
 
-  <div th:if="${cartProducts.isEmpty()}">
-    <p>No hay productos en la cesta.</p>
-  </div>
+  {{#cartProducts}}
+  <table class="table table-bordered">
+    <thead>
+    <tr>
+      <th>Producto</th>
+      <th>Precio</th>
+      <th>Acciones</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{#cartProducts}}
+    <tr>
+      <td>{{name}}</td>
+      <td>{{price}} €</td>
+      <td>
+        <form action="/cart/remove" method="post">
+          <input type="hidden" name="productId" value="{{id}}">
+          <input type="hidden" name="_csrf" value="{{token}}">
+          <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+        </form>
+      </td>
+    </tr>
+    {{/cartProducts}}
+    </tbody>
+  </table>
 
-  <div th:if="${!cartProducts.isEmpty()}">
-    <table class="table table-bordered">
-      <thead>
-      <tr>
-        <th>Producto</th>
-        <th>Precio</th>
-        <th>Acciones</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr th:each="product : ${cartProducts}">
-        <td th:text="${product.name}">Nombre producto</td>
-        <td th:text="${product.price} + ' €'">0.0 €</td>
-        <td>
-          <form th:action="@{/cart/remove}" method="post">
-            <input type="hidden" name="productId" th:value="${product.id}">
-            <input type="hidden" name="_csrf" value="{{token}}">
-            <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
-          </form>
-        </td>
-      </tr>
-      </tbody>
-    </table>
+  <h4>Total: <span>{{total}} €</span></h4>
 
-    <h4>Total: <span th:text="${total}">0.0</span> €</h4>
+  <form action="/cart/checkout" method="post">
+    <input type="hidden" name="_csrf" value="{{token}}">
+    <button type="submit" class="btn btn-success">Finalizar compra</button>
+  </form>
+  {{/cartProducts}}
 
-    <form th:action="@{/cart/checkout}" method="post">
-      <input type="hidden" name="_csrf" value="{{token}}">
-      <button type="submit" class="btn btn-success">Finalizar compra</button>
-    </form>
-  </div>
+  {{^cartProducts}}
+  <p>No hay productos en la cesta.</p>
+  {{/cartProducts}}
 
   <a href="/products" class="btn btn-link mt-3">Seguir comprando</a>
 </div>
