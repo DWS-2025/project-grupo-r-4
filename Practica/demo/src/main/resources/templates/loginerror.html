@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Error de Login</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<div class="container">
+  <h2>Error al iniciar sesión</h2>
+  <div th:if="${param.error}">
+    <div class="alert alert-danger">
+      Usuario o contraseña incorrectos
+    </div>
+  </div>
+  <a href="/login">Volver a intentar</a>
+</div>
+</body>
+</html>

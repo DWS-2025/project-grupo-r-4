@@ -98,7 +98,7 @@ public class WebController {
         return "products";
     }*/
 
-    @GetMapping("/register")
+    @GetMapping("/web/register")
     public String register(Model model) {
         return "register";
     }

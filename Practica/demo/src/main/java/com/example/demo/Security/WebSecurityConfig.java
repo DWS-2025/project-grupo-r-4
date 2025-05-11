@@ -59,7 +59,9 @@ public class WebSecurityConfig {
                                 "/products/loadMore",
                                 "/product/*/image",
                                 "/ubication",
-                                "/loginerror"
+                                "/loginerror",
+                                "/web/register"
+
                         ).permitAll()
 
                         // PRIVATE PAGES - USER

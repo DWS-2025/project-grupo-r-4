@@ -8,10 +8,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.security.web.csrf.CsrfToken;
 
 
@@ -61,6 +58,24 @@ public class UserController {
     @RequestMapping("/loginerror")
     public String loginerror() {
         return "loginerror";
+    }
+
+    @GetMapping("/register")
+    public String showRegistrationForm(Model model) {
+        model.addAttribute("user", new User());
+        return "registration";
+    }
+
+    @PostMapping("/register")
+    public String registerUser(@ModelAttribute User user, Model model) {
+        try {
+            userService.registerNewUser(user);
+            return "redirect:/login?registered";
+        } catch (RuntimeException e) {
+            model.addAttribute("error", e.getMessage());
+            model.addAttribute("user", user);
+            return "registration";
+        }
     }
 }
 
