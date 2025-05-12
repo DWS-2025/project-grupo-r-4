@@ -53,6 +53,9 @@
             <button onclick="location.href='/user/{{user.id}}/reviews'">Mis reseñas</button>
             <button onclick="location.href='/cart'">Mi carrito</button>
         </div>
+        {{#isAdmin}}
+        <a href="/admin/users" class="btn btn-primary">Consultar usuarios</a>
+        {{/isAdmin}}
     </section>
 </main>
 

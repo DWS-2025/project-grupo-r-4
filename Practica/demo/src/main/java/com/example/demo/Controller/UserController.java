@@ -136,5 +136,54 @@ public class UserController {
         }
     }
 
+    @GetMapping("/admin/users")
+    public String listUsers(Model model, Principal principal) {
+        // Obtener el usuario actual por su nombre de usuario
+        User currentUser = userService.findByNameDatabse(principal.getName());
+
+        // Verificar que el usuario exista y que tenga el rol "ADMIN"
+        if (currentUser == null || !currentUser.getRoles().contains("ADMIN")) {
+            return "access-denied"; // O puedes redirigir a otra página si prefieres
+        }
+
+        // Obtener la lista de usuarios para mostrar
+        List<UserDTO> users = userService.findAll();  // Obtén todos los usuarios desde el servicio
+        model.addAttribute("users", users);  // Agregar los usuarios a la vista
+        return "redirect:/userList"; // Redirige a la vista que contiene la lista de usuarios
+    }
+
+    @PostMapping("/admin/users/delete/{id}")
+    public String deleteUser(@PathVariable Long id, Principal principal) {
+        // Obtener el usuario actual por su nombre de usuario
+        User currentUser = userService.findByNameDatabse(principal.getName());
+
+        // Verificar que el usuario exista y que tenga el rol "ADMIN"
+        if (currentUser == null || !currentUser.getRoles().contains("ADMIN")) {
+            return "access-denied"; // O puedes redirigir a otra página si prefieres
+        }
+
+        // Llamar al servicio para eliminar el usuario
+        userService.deleteById(id);
+
+        // Redirigir a la lista de usuarios después de la eliminación
+        return "redirect:/admin/users";
+    }
+
+    @GetMapping("/myAccount")
+    public String showMyAccount(Model model, Principal principal) {
+        // Obtener el usuario actual por su nombre de usuario
+        User currentUser = userService.findByNameDatabse(principal.getName());
+
+        // Verificar si el usuario es admin
+        boolean isAdmin = currentUser != null && currentUser.getRoles().contains("ADMIN");
+
+        // Agregar los datos al modelo
+        model.addAttribute("user", currentUser);  // Agregar usuario a la vista
+        model.addAttribute("isAdmin", isAdmin);  // Agregar variable isAdmin a la vista
+
+        return "myAccount"; // Devolver la vista 'myAccount.mustache'
+    }
+
+
 }
 

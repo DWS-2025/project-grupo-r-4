@@ -71,7 +71,7 @@ public class WebController {
         return "details";
     }
 
-    @GetMapping("/myAccount")
+    @GetMapping("/web/myAccount")
     public String myAccount(Model model) {
         UserDTO userDTO = userService.findByUserName("user");
         model.addAttribute("user", userDTO);

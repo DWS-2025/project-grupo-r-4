@@ -144,7 +144,9 @@ public class WebSecurityConfig {
                                 "/newProduct",
                                 "/product/{id}/modify",
                                 "/deleteProduct/{id}",
-                                "/showdeleteProduct/{id}"
+                                "/showdeleteProduct/{id}",
+                                "/userList",
+                                "/admin/**"
                         ).hasAnyRole("ADMIN")
                 )
                 .formLogin(formLogin -> formLogin
