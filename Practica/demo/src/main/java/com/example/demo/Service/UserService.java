@@ -5,6 +5,8 @@ import com.example.demo.Repository.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -121,6 +123,13 @@ public class UserService {
         return userRepository.findByName(name).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado"));
     }
 
+    public User getCurrentUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName(); // Obtiene el nombre de usuario
+        // Aquí debes cargar el usuario a partir del nombre de usuario
+        return findByNameDatabse(username); // Asumiendo que tienes un método que busca al usuario por su nombre
+    }
+
     public User registerNewUser(User user) {
         if (userRepository.findByName(user.getName()).isPresent()) {
             throw new RuntimeException("El nombre de usuario ya existe");
@@ -141,5 +150,20 @@ public class UserService {
 
     public void delete(Long id) {
         userRepository.deleteById(id);  // Eliminar usuario por id
+    }
+
+    public void updateUser(Long userId, String username, String password) throws Exception {
+        // Buscar al usuario por su ID
+        Optional<User> optionalUser = userRepository.findById(userId);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            user.setName(username); // Actualizar el nombre de usuario
+            user.setEncodedPassword(password); // Actualizar la contraseña (cuidado con la encriptación de contraseñas)
+
+            // Guardar los cambios en la base de datos
+            userRepository.save(user);
+        } else {
+            throw new Exception("Usuario no encontrado");
+        }
     }
 }

@@ -184,6 +184,27 @@ public class UserController {
         return "myAccount"; // Devolver la vista 'myAccount.mustache'
     }
 
+    @GetMapping("/updateAccount")
+    public String showUpdateForm(Model model) {
+        User user = userService.getCurrentUser(); // Obtener el usuario actual desde algún servicio
+        model.addAttribute("user", user); // Pasa el objeto user a la plantilla
+        return "updateAccount"; // Nombre del archivo Mustache (updateAccount.mustache)
+    }
+
+    @PostMapping("/updateAccount")
+    public String updateAccount(@RequestParam("name") String name,
+                                @RequestParam("encodedPassword") String encodedPassword,
+                                @RequestParam("id") Long userId,
+                                Model model) {
+        // Aquí puedes obtener el usuario actual desde el servicio sin necesitar el username explícito
+        User user = userService.getCurrentUser(); // Obtener usuario actual
+        user.setName(name);  // Actualizar el nombre con el valor recibido
+        user.setEncodedPassword(encodedPassword); // Actualizar la contraseña codificada
+
+        userService.update(user);  // Llamar a un método para guardar la actualización
+
+        return "redirect:/myAccount"; // Redirige a la página de perfil
+    }
 
 }
 
