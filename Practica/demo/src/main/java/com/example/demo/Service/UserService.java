@@ -56,6 +56,7 @@ public class UserService {
             dto.setReview(review.getReview());
             dto.setProductId(review.getProduct() != null ? review.getProduct().getId() : -1);
             dto.setProductName(review.getProduct() != null ? review.getProduct().getName() : "Producto eliminado"); // ✅ nueva línea
+            dto.setUserName(user.getName());
             return dto;
         }).collect(Collectors.toList());
 

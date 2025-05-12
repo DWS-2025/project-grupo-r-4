@@ -131,26 +131,26 @@
             ProductDTO product = productService.findById(id)
                     .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-            List<Long> reviewsId=product.getReviewsId();
-            List<ReviewDTO> reviewDTOS = new java.util.ArrayList<>(List.of());
+            List<Long> reviewsId = product.getReviewsId();
+            List<ReviewDTO> reviewDTOS = new ArrayList<>();
 
-            if(reviewsId != null){
-                for(Long reviewId : reviewsId) {
-                    reviewDTOS.add(reviewService.findById(reviewId));
+            if (reviewsId != null) {
+                for (Long reviewId : reviewsId) {
+                    ReviewDTO review = reviewService.findById(reviewId);
+                    // Obtener el nombre del usuario y añadirlo al DTO
+                    userService.findById(review.getUserId()).ifPresent(user -> {
+                        review.setUserName(user.getName());  // 👈 Asegura que esto está en ReviewDTO
+                    });
+                    reviewDTOS.add(review);
                 }
-                List<UserDTO> users = new ArrayList<>();
-                for(ReviewDTO review : reviewDTOS) {
-                    users.add(userService.findById(review.getUserId()).get());
-
-                }
-                model.addAttribute("users", users);
-                model.addAttribute("reviews", reviewDTOS);
             }
 
             model.addAttribute("product", product);
+            model.addAttribute("reviews", reviewDTOS);
 
             return "product";
         }
+
 
         @GetMapping("/product/{id}/image")
         public ResponseEntity<Resource> downloadImage(@PathVariable long id) throws SQLException {

@@ -36,7 +36,14 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
 
         try {
-            String token = getJwtToken(request, true);
+            // 1. Primero intenta por Authorization header
+            String token = getJwtFromRequest(request);
+
+// 2. Si no hay token en header, intenta por cookie
+            if (!StringUtils.hasText(token)) {
+                token = getJwtFromCookie(request);
+            }
+
 
             if (StringUtils.hasText(token) && jwtTokenProvider.validateToken(token)) {
 

@@ -9,6 +9,7 @@ public class ReviewDTO {
     private String review;
 
     private String productName;
+    private String userName;
 
     public ReviewDTO(long userId, long productId, int rating, String review) {
         this.userId = userId;
@@ -66,7 +67,14 @@ public class ReviewDTO {
         return productName;
     }
 
+
     public void setProductName(String productName) {
+        this.productName = productName;
+    }
+    public String getUserName() {
+        return productName;
+    }
+    public void setUserName(String productName) {
         this.productName = productName;
     }
 
@@ -79,6 +87,7 @@ public class ReviewDTO {
         reviewDTO.setRating(review.getRating());
         reviewDTO.setReview(review.getReview());
         reviewDTO.setProductName(review.getProduct().getName());
+        reviewDTO.setUserName(review.getUser().getName());
         return reviewDTO;
     }
 
