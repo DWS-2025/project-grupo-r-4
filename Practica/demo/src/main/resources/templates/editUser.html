@@ -30,6 +30,7 @@
 
     <!-- Formulario para editar -->
     <form action="/updateAccount" method="post">
+      <input type="hidden" name="_csrf" value="{{token}}" />
       <input type="hidden" name="id" value="{{user.id}}" />
       <input type="hidden" name="_csrf" value="{{token}}" />
 

@@ -18,6 +18,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.security.web.csrf.CsrfToken;
+import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 import java.security.Principal;
@@ -149,7 +151,7 @@ public class UserController {
         // Obtener la lista de usuarios para mostrar
         List<UserDTO> users = userService.findAll();  // Obtén todos los usuarios desde el servicio
         model.addAttribute("users", users);  // Agregar los usuarios a la vista
-        return "redirect:/userList"; // Redirige a la vista que contiene la lista de usuarios
+        return "userList"; // Redirige a la vista que contiene la lista de usuarios
     }
 
     @PostMapping("/admin/users/delete/{id}")
@@ -172,17 +174,23 @@ public class UserController {
     @GetMapping("/myAccount")
     public String showMyAccount(Model model, Principal principal) {
         // Obtener el usuario actual por su nombre de usuario
-        User currentUser = userService.findByNameDatabse(principal.getName());
+        User currentUser = userService.getCurrentUser();
+
+        if (currentUser == null) {
+            // Handle the case where the user does not exist
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado");
+        }
 
         // Verificar si el usuario es admin
-        boolean isAdmin = currentUser != null && currentUser.getRoles().contains("ADMIN");
+        boolean isAdmin = currentUser.getRoles().contains("ADMIN");
 
         // Agregar los datos al modelo
-        model.addAttribute("user", currentUser);  // Agregar usuario a la vista
-        model.addAttribute("isAdmin", isAdmin);  // Agregar variable isAdmin a la vista
+        model.addAttribute("user", currentUser);
+        model.addAttribute("isAdmin", isAdmin);
 
         return "myAccount"; // Devolver la vista 'myAccount.mustache'
     }
+
 
     @GetMapping("/updateAccount")
     public String showUpdateForm(Model model) {
@@ -195,16 +203,48 @@ public class UserController {
     public String updateAccount(@RequestParam("name") String name,
                                 @RequestParam("encodedPassword") String encodedPassword,
                                 @RequestParam("id") Long userId,
-                                Model model) {
-        // Aquí puedes obtener el usuario actual desde el servicio sin necesitar el username explícito
-        User user = userService.getCurrentUser(); // Obtener usuario actual
-        user.setName(name);  // Actualizar el nombre con el valor recibido
-        user.setEncodedPassword(encodedPassword); // Actualizar la contraseña codificada
+                                RedirectAttributes redirectAttributes,
+                                Principal principal) {
 
-        userService.update(user);  // Llamar a un método para guardar la actualización
+        // 1. Get current user
+        User user = userService.getCurrentUser();
 
-        return "redirect:/myAccount"; // Redirige a la página de perfil
+        // 2. Update user fields
+        user.setName(name);
+        user.setEncodedPassword(encodedPassword);
+
+        // 3. Save changes (void method)
+        userService.update(user);
+
+        // 4. Get fresh user data for the redirect
+        User updatedUser = userService.findByNameDatabse(principal.getName());
+
+        // 5. Add to flash attributes
+        redirectAttributes.addFlashAttribute("user", updatedUser);
+        redirectAttributes.addFlashAttribute("isAdmin", updatedUser.getRoles().contains("ADMIN"));
+        redirectAttributes.addFlashAttribute("success", "Account updated successfully!");
+
+        return "redirect:/myAccount";
     }
+
+    @PostMapping("/deleteAccount")
+    public String deleteAccount(Principal principal) {
+        // Obtener el usuario actual por su nombre de usuario
+        User currentUser = userService.findByNameDatabse(principal.getName());
+
+        if (currentUser == null) {
+            // Si no se encuentra el usuario, retornar un mensaje de error
+            return "Usuario no encontrado";
+        }
+
+        // Eliminar la cuenta del usuario
+        userService.deleteById(currentUser.getId());
+
+        // Retornar un mensaje de éxito o redirigir según sea necesario
+        return "redirect:/";
+    }
+
+
 
 }
 

@@ -88,8 +88,8 @@ public class UserService {
     }
 
 
-    public UserDTO findByUserName(String username) {
-        User user = userRepository.findByName(username).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado"));
+    public UserDTO findByUserName(String name) {
+        User user = userRepository.findByName(name).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado"));
         return convertToDTO(user);
     }
 
@@ -125,10 +125,15 @@ public class UserService {
 
     public User getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName(); // Obtiene el nombre de usuario
-        // Aquí debes cargar el usuario a partir del nombre de usuario
-        return findByNameDatabse(username); // Asumiendo que tienes un método que busca al usuario por su nombre
+        String username = authentication.getName();
+
+        // Find the user by username and throw an exception if not found
+        return userRepository.findByName(username)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado"));
     }
+
+
+
 
     public User registerNewUser(User user) {
         if (userRepository.findByName(user.getName()).isPresent()) {

@@ -34,6 +34,28 @@ public class ReviewService {
         return reviewDTO;
     }
 
+    public Review convertToEntity(ReviewDTO reviewDTO) {
+        // Buscar usuario y producto por sus IDs
+        User user = userRepository.findById(reviewDTO.getUserId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado"));
+
+        Product product = productRepository.findById(reviewDTO.getProductId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Producto no encontrado"));
+
+        // Crear la entidad Review
+        Review review = new Review();
+        review.setReviewId(reviewDTO.getReviewId());
+        review.setUser(user);
+        review.setProduct(product);
+        review.setRating(reviewDTO.getRating());
+        review.setReview(reviewDTO.getReview());
+
+        return review;
+    }
+
+
+
+
     public List<ReviewDTO> findReviewsByProductId(long productId) {
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Producto no encontrado"));

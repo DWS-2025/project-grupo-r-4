@@ -146,6 +146,8 @@ public class WebSecurityConfig {
                                 "/deleteProduct/{id}",
                                 "/showdeleteProduct/{id}",
                                 "/userList",
+                                "/admin/users",
+                                "/admin/users/delete/*",
                                 "/admin/**"
                         ).hasAnyRole("ADMIN")
                 )

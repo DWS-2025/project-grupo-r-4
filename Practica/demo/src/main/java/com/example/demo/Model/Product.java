@@ -36,6 +36,8 @@ public class Product {
     @OneToMany(mappedBy = "productId",cascade = CascadeType.ALL,orphanRemoval = true)
     @JsonView(ProdRev.class)
     private List<Review> reviews;
+
+
     @JsonView(ProdUser.class)
     @ManyToMany
     private List<User> users;
