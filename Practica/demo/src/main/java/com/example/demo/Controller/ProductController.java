@@ -238,8 +238,6 @@
         }
 
 
-
-
         @GetMapping("/cart")
         public String viewCart(HttpSession session, Model model) {
             List<Long> cart = (List<Long>) session.getAttribute("cart");
@@ -251,12 +249,13 @@
                 }
             }
 
-            model.addAttribute("cartProducts", productsInCart); // <- usa este nombre
+            model.addAttribute("cartProducts", productsInCart); // Lista de productos en el carrito
+            model.addAttribute("total", productsInCart.stream().mapToDouble(ProductDTO::getPrice).sum()); // Total calculado correctamente
 
-            model.addAttribute("total", productsInCart.stream().mapToDouble(ProductDTO::getPrice).sum());
-
-            return "cart";
+            return "cart"; // Página de la cesta
         }
+
+
 
         @PostMapping("/cart/checkout")
         public String checkout(HttpSession session) throws IOException {

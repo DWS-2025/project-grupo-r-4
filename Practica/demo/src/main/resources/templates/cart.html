@@ -20,7 +20,6 @@
     </tr>
     </thead>
     <tbody>
-    {{#cartProducts}}
     <tr>
       <td>{{name}}</td>
       <td>{{price}} €</td>
@@ -32,24 +31,25 @@
         </form>
       </td>
     </tr>
-    {{/cartProducts}}
     </tbody>
   </table>
+  {{/cartProducts}}
 
   <h4>Total: <span>{{total}} €</span></h4>
 
+  <!-- Solo un formulario de "Finalizar compra" -->
   <form action="/cart/checkout" method="post">
     <input type="hidden" name="_csrf" value="{{token}}">
     <button type="submit" class="btn btn-success">Finalizar compra</button>
   </form>
-  {{/cartProducts}}
 
-  {{^cartProducts}}
+  {{^cartProducts}} <!-- Mensaje si el carrito está vacío -->
   <p>No hay productos en la cesta.</p>
   {{/cartProducts}}
 
   <a href="/products" class="btn btn-link mt-3">Seguir comprando</a>
 </div>
+
 
 </body>
 </html>

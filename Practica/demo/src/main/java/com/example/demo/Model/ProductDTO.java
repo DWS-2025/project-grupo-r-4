@@ -17,6 +17,7 @@
         private List<Long> users = new ArrayList<>();;
         private List<Long> reviewsId = new ArrayList<>();
         private List<Long> purchasesId = new ArrayList<>();
+
         @Lob
         @JsonIgnore
         private Blob imageFile;
