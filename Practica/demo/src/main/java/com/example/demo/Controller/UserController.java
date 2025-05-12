@@ -3,10 +3,13 @@ package com.example.demo.Controller;
 import com.example.demo.Model.ReviewDTO;
 import com.example.demo.Model.User;
 import com.example.demo.Model.UserDTO;
+import com.example.demo.Repository.UserRepository;
 import com.example.demo.Service.PurchaseService;
 import com.example.demo.Service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -19,11 +22,15 @@ import org.springframework.security.web.csrf.CsrfToken;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class UserController {
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @GetMapping("/user/{id}/buys")
     public String showUserPurchase(@PathVariable Long id, Model model){

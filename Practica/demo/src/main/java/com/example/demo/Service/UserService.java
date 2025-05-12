@@ -127,4 +127,12 @@ public class UserService {
 
         return userRepository.save(user);
     }
+
+    public void update(User user) {
+        userRepository.save(user);  // Guardar usuario actualizado
+    }
+
+    public void delete(Long id) {
+        userRepository.deleteById(id);  // Eliminar usuario por id
+    }
 }
