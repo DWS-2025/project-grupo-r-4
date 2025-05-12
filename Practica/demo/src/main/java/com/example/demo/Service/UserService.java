@@ -1,9 +1,6 @@
 package com.example.demo.Service;
 
-import com.example.demo.Model.Purchase;
-import com.example.demo.Model.Review;
-import com.example.demo.Model.User;
-import com.example.demo.Model.UserDTO;
+import com.example.demo.Model.*;
 import com.example.demo.Repository.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,10 +35,29 @@ public class UserService {
         userDTO.setAddress(user.getAddress());
         userDTO.setPhone(user.getPhone());
         userDTO.setNumReviews(user.getNumReviews());
-        userDTO.setReviewIds(user.getReviews().stream().map(Review::getReviewId).collect(Collectors.toList()));  // Convertir las Reviews a sus IDs
-        userDTO.setProductIds(user.getProducts().stream().map(Purchase::getId).collect(Collectors.toList()));  // Convertir los productos a sus IDs
+        userDTO.setReviewIds(user.getReviews().stream()
+                .map(Review::getReviewId)
+                .collect(Collectors.toList()));
+        userDTO.setProductIds(user.getProducts().stream()
+                .map(Purchase::getId)
+                .collect(Collectors.toList()));
+
+        // Nueva parte: añadir lista de ReviewDTOs completas
+        List<ReviewDTO> reviewDTOs = user.getReviews().stream().map(review -> {
+            ReviewDTO dto = new ReviewDTO();
+            dto.setReviewId(review.getReviewId());
+            dto.setRating(review.getRating());
+            dto.setReview(review.getReview()); // ahora que lo has renombrado
+            dto.setProductId(review.getProduct() != null ? review.getProduct().getId() : -1);
+
+            return dto;
+        }).collect(Collectors.toList());
+
+        userDTO.setReviews(reviewDTOs);
+
         return userDTO;
     }
+
 
 
     User convertToEntity(UserDTO userDTO) {

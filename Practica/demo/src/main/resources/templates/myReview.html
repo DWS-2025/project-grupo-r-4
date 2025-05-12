@@ -26,20 +26,24 @@
 
 <main class="container">
     <section class="reviews">
-        <h2>Mis Reseñas (Número de reseñas: {{user.numReviews}})</h2>
+        <h2>Mis Reseñas (Número de reseñas: {{numReviews}})</h2>
 
         <div class="user-info">
-            <p><strong>Usuario:</strong> {{user.name}}</p>
+            <p><strong>Usuario:</strong> {{name}}</p>
         </div>
 
-        <div class="review-list">
-            {{#user.reviews}}
-            <div class="review-item">
-                <p><strong>Valoración:</strong> {{rating}}/5</p>
-                <p><strong>Reseña:</strong> {{review}}</p>
-            </div>
-            {{/user.reviews}}
+        {{#reviews}}
+        <div class="review-item">
+            <p><strong>Producto:</strong> {{productId}}</p>
+            <p><strong>Valoración:</strong> {{rating}} / 5</p>
+            <p><strong>Comentario:</strong> {{review}}</p>
         </div>
+        {{/reviews}}
+
+        {{^reviews}}
+        <p>No has publicado ninguna reseña todavía.</p>
+        {{/reviews}}
+
     </section>
 </main>
 

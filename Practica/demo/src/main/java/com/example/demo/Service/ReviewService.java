@@ -10,9 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 
 @Service
@@ -33,7 +30,7 @@ public class ReviewService {
         reviewDTO.setUserId(review.getUser().getId());
         reviewDTO.setProductId(review.getProduct().getId());
         reviewDTO.setRating(review.getRating());
-        reviewDTO.setReview(review.getComment());
+        reviewDTO.setReview(review.getReview());
         return reviewDTO;
     }
 

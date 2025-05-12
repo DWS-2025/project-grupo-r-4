@@ -1,5 +1,6 @@
 package com.example.demo.Controller;
 
+import com.example.demo.Model.ReviewDTO;
 import com.example.demo.Model.User;
 import com.example.demo.Model.UserDTO;
 import com.example.demo.Service.PurchaseService;
@@ -8,6 +9,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +18,7 @@ import org.springframework.security.web.csrf.CsrfToken;
 
 
 import java.security.Principal;
+import java.util.List;
 
 @Controller
 public class UserController {
@@ -29,11 +32,32 @@ public class UserController {
         return "buys";
     }
     @GetMapping("/user/{id}/reviews")
-    public String showUserReviews(@PathVariable Long id, Model model) {
-        UserDTO userDTO = userService.findByUserName("user");
+    public String showLoggedInUserReviews(Model model, @AuthenticationPrincipal org.springframework.security.core.userdetails.User userDetails) {
+        if (userDetails == null) {
+            return "redirect:/login";
+        }
+
+        // Obtenemos el UserDTO por nombre del usuario logueado
+        UserDTO userDTO = userService.findByUserName(userDetails.getUsername());
+
+        // Agregamos al modelo el usuario completo
         model.addAttribute("user", userDTO);
+
+        // Extraemos las reseñas
+        List<ReviewDTO> reviews = userDTO.getReviews(); // Asegúrate de tener este método
+
+        // Añadimos las reseñas al modelo (para que {{#reviews}} funcione)
+        model.addAttribute("reviews", reviews);
+
+        // Añadimos el número de reseñas
+        model.addAttribute("numReviews", reviews != null ? reviews.size() : 0);
+
+        // Puedes también pasar el nombre de usuario directamente si quieres usar {{name}}
+        model.addAttribute("name", userDTO.getName());
+
         return "myReview";
     }
+
 
     @ModelAttribute
     public void addAttributes(Model model, HttpServletRequest request) {

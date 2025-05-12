@@ -68,11 +68,11 @@ public class Review {
         this.rating = rating;
     }
 
-    public String getComment() {
+    public String getReview() {
         return review;
     }
 
-    public void setComment(String comment) {
+    public void setReview(String comment) {
         this.review = comment;
     }
 

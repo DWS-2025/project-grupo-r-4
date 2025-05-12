@@ -1,6 +1,7 @@
 package com.example.demo.Model;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class UserDTO {
 
@@ -11,10 +12,19 @@ public class UserDTO {
     private int numReviews;
     private List<Long> reviewIds;
     private List<Long> productIds;
+    private List<ReviewDTO> reviews;
 
     // Getters y Setters
     public long getId() {
         return id;
+    }
+
+    public List<ReviewDTO> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(List<ReviewDTO> reviews) {
+        this.reviews = reviews;
     }
 
     public void setId(long id) {
