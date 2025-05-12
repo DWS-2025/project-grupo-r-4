@@ -4,11 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6388f339-f108-481a-ad8e-631f0422f92c" name="Changes" comment="arreglo en el carrito">
+    <list default="true" id="6388f339-f108-481a-ad8e-631f0422f92c" name="Changes" comment="arreglo en el carrito nuevo">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo/src/main/java/com/example/demo/Controller/ProductController.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo/src/main/java/com/example/demo/Controller/ProductController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo/src/main/java/com/example/demo/Model/ProductDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo/src/main/java/com/example/demo/Model/ProductDTO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/demo/src/main/resources/templates/cart.html" beforeDir="false" afterPath="$PROJECT_DIR$/demo/src/main/resources/templates/cart.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/src/main/resources/templates/register.html" beforeDir="false" afterPath="$PROJECT_DIR$/demo/src/main/resources/templates/register.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -91,7 +90,7 @@
       <updated>1746805872544</updated>
       <workItem from="1746805873790" duration="6734000" />
       <workItem from="1746817726813" duration="982000" />
-      <workItem from="1747036994969" duration="4539000" />
+      <workItem from="1747036994969" duration="6047000" />
     </task>
     <task id="LOCAL-00001" summary="correcion de relacion NM">
       <option name="closed" value="true" />
@@ -189,7 +188,15 @@
       <option name="project" value="LOCAL" />
       <updated>1747039214477</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="arreglo en el carrito nuevo">
+      <option name="closed" value="true" />
+      <created>1747042107659</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1747042107659</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -209,6 +216,7 @@
     <MESSAGE value="inicio de registro de usuarios" />
     <MESSAGE value="arreglo de errores de registro de usuarios" />
     <MESSAGE value="arreglo en el carrito" />
-    <option name="LAST_COMMIT_MESSAGE" value="arreglo en el carrito" />
+    <MESSAGE value="arreglo en el carrito nuevo" />
+    <option name="LAST_COMMIT_MESSAGE" value="arreglo en el carrito nuevo" />
   </component>
 </project>
