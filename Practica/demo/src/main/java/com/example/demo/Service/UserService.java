@@ -28,7 +28,13 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    private UserDTO convertToDTO(User user) {
+
+
+    public UserDTO convertToDTO(User user) {
+        if (user == null) {
+            throw new IllegalArgumentException("El usuario no puede ser null");
+        }
+
         UserDTO userDTO = new UserDTO();
         userDTO.setId(user.getId());
         userDTO.setName(user.getName());

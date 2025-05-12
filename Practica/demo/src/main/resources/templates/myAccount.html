@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -35,19 +35,16 @@
         </ul>
     </aside>
 
-    <!-- ... el resto del HTML se mantiene igual ... -->
-
     <section class="account">
         <h2>Mi Cuenta</h2>
 
         <!-- Mostrar los datos actuales del usuario -->
         <div class="account-info">
             <h3>Detalles de mi cuenta</h3>
-            <p><strong>Nombre:</strong> <span th:text="${user.name}"></span></p>
+            <p><strong>Nombre:</strong> {{user.name}}</p>
 
-
-            <button th:onclick="'location.href=\'/editUser/' + ${user.id} + '\'"'>Consultar</button>
-
+            <!-- Botón para consultar (redirige a /editUser) -->
+            <button onclick="location.href='/editUser/{{user.id}}'">Consultar</button>
         </div>
 
         <!-- Botones adicionales -->
@@ -57,9 +54,6 @@
             <button onclick="location.href='/cart'">Mi carrito</button>
         </div>
     </section>
-
-    <!-- ... el resto del HTML se mantiene igual ... -->
-
 </main>
 
 <footer class="footer">

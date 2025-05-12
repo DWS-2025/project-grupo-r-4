@@ -123,5 +123,18 @@ public class UserController {
             return "register";  // Redirigir a la página de registro
         }
     }
+
+    @GetMapping("/editUser/{id}")
+    public String editUser(@PathVariable Long id, Model model) {
+
+        Optional<UserDTO> optionalUser = userService.findById(id);
+        if (optionalUser.isPresent()) {
+            model.addAttribute("user", optionalUser.get());
+            return "editUser";
+        } else {
+            return "redirect:/myAccount";
+        }
+    }
+
 }
 

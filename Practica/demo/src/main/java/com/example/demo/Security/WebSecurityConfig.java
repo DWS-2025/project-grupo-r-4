@@ -77,6 +77,9 @@ public class WebSecurityConfig {
                                 "/cart",
                                 "/cart/checkout",
                                 "/cart/remove",
+                                "/editUser/*",
+                                "/updateAccount",
+                                "/deleteAccount",
                                 "/product/{id}/review"
                         ).hasAnyRole("USER")
 
