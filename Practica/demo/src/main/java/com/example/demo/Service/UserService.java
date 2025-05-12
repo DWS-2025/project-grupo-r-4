@@ -47,9 +47,9 @@ public class UserService {
             ReviewDTO dto = new ReviewDTO();
             dto.setReviewId(review.getReviewId());
             dto.setRating(review.getRating());
-            dto.setReview(review.getReview()); // ahora que lo has renombrado
+            dto.setReview(review.getReview());
             dto.setProductId(review.getProduct() != null ? review.getProduct().getId() : -1);
-
+            dto.setProductName(review.getProduct() != null ? review.getProduct().getName() : "Producto eliminado"); // ✅ nueva línea
             return dto;
         }).collect(Collectors.toList());
 
