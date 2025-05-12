@@ -1,10 +1,7 @@
 package com.example.demo.Service;
 
-import com.example.demo.Model.ProductDTO;
-import com.example.demo.Model.UserDTO;
+import com.example.demo.Model.*;
 import com.example.demo.Security.*;
-import com.example.demo.Model.Product;
-import com.example.demo.Model.User;
 import com.example.demo.Repository.UserRepository;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.Resource;
@@ -41,17 +38,33 @@ public class DataBaseInitializer {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private ReviewService reviewService;
+
     private static final Path IMAGES_FOLDER = Paths.get(System.getProperty("user.dir"), "/demo/images");
 
     @PostConstruct
     public void init() {
         try {
             initializeProducts();
+            initializeReviews();
         } catch (Exception e) {
             System.err.println("Error durante la inicialización de la base de datos: " + e.getMessage());
             e.printStackTrace();
         }
     }
+
+    public void initializeReviews() {
+        try {
+            ReviewDTO review = new ReviewDTO(1, 1, 3, "ni tan mal");
+            reviewService.save(review); // <-- ESTA LÍNEA ES CLAVE
+            System.out.println("Reseña inicializada correctamente.");
+        } catch (Exception e) {
+            System.err.println("Error al inicializar reseña: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
     public void initializeProducts() {
         List<ProductDTO> productDTOs = new ArrayList<ProductDTO>();
 
@@ -75,6 +88,8 @@ public class DataBaseInitializer {
         User user2 = userRepository.save(new User("admin", passwordEncoder.encode("adminpass"), "USER", "ADMIN"));
         User user3 = userRepository.save(new User("random", passwordEncoder.encode("random"), "USER"));
 
+
+        ReviewDTO review = new ReviewDTO(1,1,3,"robo");
 
         for (ProductDTO productDTO : productDTOs) {
 

@@ -232,6 +232,16 @@ public class ProductService {
                 .collect(Collectors.toList());
     }
 
+    public ProductDTO findByName(String name) {
+        return productRepository.findByNameContainingIgnoreCase(name)
+                .stream()
+                .findFirst()
+                .map(this::convertToDTO) // Convierte el producto a ProductDTO si se encuentra
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Producto no encontrado")); // Lanza excepción si no se encuentra
+    }
+
+
+
 }
 
 
