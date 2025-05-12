@@ -11,6 +11,7 @@
     import org.springframework.http.HttpHeaders;
     import org.springframework.http.HttpStatus;
     import org.springframework.http.ResponseEntity;
+    import org.springframework.security.core.context.SecurityContextHolder;
     import org.springframework.stereotype.Controller;
     import org.springframework.ui.Model;
     import org.springframework.web.bind.annotation.*;
@@ -25,6 +26,7 @@
     import java.util.Optional;
     import java.util.stream.IntStream;
     import jakarta.servlet.http.HttpServletRequest;
+    import org.springframework.security.core.Authentication;
 
 
 
@@ -161,39 +163,37 @@
                     .body(image);
         }
 
+
+
         @GetMapping("/product/{id}/review")
         public String newReview(Model model, @PathVariable long id) {
             ProductDTO productDto = productService.findById(id)
                     .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-            model.addAttribute("user", userService.findByUserName("user"));
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            String username = auth.getName();
+            UserDTO userDto = userService.findByUserName(username);
+
+            model.addAttribute("user", userDto);
             model.addAttribute("product", productDto);
 
             return "reviews";
         }
 
         @PostMapping("/product/{id}/review")
-        public String postReview(@PathVariable long id, @RequestParam String review, @RequestParam int rating, ReviewDTO reviewDto) {
+        public String postReview(@PathVariable long id, @RequestParam String review, @RequestParam int rating) {
             ProductDTO productDto = productService.findById(id)
                     .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-            UserDTO userDto = userService.findByUserName("user");
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            String username = auth.getName();
+            UserDTO userDto = userService.findByUserName(username);
 
-            productService.addReview(productDto, "user", review, rating);
+            productService.addReview(productDto, username, review, rating);
 
             return "redirect:/product/" + id;
         }
 
-        @GetMapping("/showdeleteProduct/{id}")
-        public String deleteProductForm(Model model, @PathVariable long id,HttpServletRequest request) {
-            ProductDTO productDto = productService.findById(id)
-                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-
-            model.addAttribute("admin", request.isUserInRole("ADMIN"));
-            model.addAttribute("product", productDto);
-
-            return "deleteProduct";
-        }
 
         @PostMapping("/deleteProduct/{id}")
         public String deleteConfirmedProduct(@PathVariable long id) throws IOException {

@@ -8,6 +8,8 @@ public class ReviewDTO {
     private int rating;
     private String review;
 
+    private String productName;
+
     public ReviewDTO(long userId, long productId, int rating, String review) {
         this.userId = userId;
         this.productId = productId;
@@ -59,14 +61,26 @@ public class ReviewDTO {
         this.review = review;
     }
 
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+
     public static ReviewDTO fromEntity(Review review) {
         ReviewDTO reviewDTO = new ReviewDTO();
         reviewDTO.setReviewId(review.getReviewId());
         reviewDTO.setUserId(review.getUser().getId());
         reviewDTO.setProductId(review.getProduct().getId());
         reviewDTO.setRating(review.getRating());
-        reviewDTO.setReview(reviewDTO.getReview());
+        reviewDTO.setReview(review.getReview());
+        reviewDTO.setProductName(review.getProduct().getName());
         return reviewDTO;
     }
+
 }
 
