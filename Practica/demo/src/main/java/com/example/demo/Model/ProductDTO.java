@@ -14,9 +14,9 @@
         private String description;
         private String type;
         private String image;
-        private List<Long> users;
-        private List<Long> reviewsId;
-        private List<Long> purchasesId;
+        private List<Long> users = new ArrayList<>();;
+        private List<Long> reviewsId = new ArrayList<>();
+        private List<Long> purchasesId = new ArrayList<>();
         @Lob
         @JsonIgnore
         private Blob imageFile;
@@ -59,8 +59,10 @@
             this.description = description;
             this.type = productType;
             this.imageFile = imageFile;
-            this.reviewsId = new ArrayList<>(reviewIds); // 👈 aquí
+            this.reviewsId = new ArrayList<>(reviewIds);
         }
+
+
 
 
         public List<Long> getUsers() {

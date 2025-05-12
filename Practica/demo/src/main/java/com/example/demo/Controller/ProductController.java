@@ -259,7 +259,7 @@
         }
 
         @PostMapping("/cart/checkout")
-        public String checkout(HttpSession session) {
+        public String checkout(HttpSession session) throws IOException {
             List<Long> cart = (List<Long>) session.getAttribute("cart");
 
             if (cart == null || cart.isEmpty()) {
@@ -267,15 +267,33 @@
             }
 
             PurchaseDTO purchaseDTO = new PurchaseDTO();
+            purchaseDTO.setProductIds(new ArrayList<>(cart));
+
+            PurchaseDTO savedPurchase = purchaseService.save(purchaseDTO);
 
             for (Long id : cart) {
-                purchaseDTO.getProductIds().add(id);
-                ProductDTO productDTO = productService.findById(id).get();
-                productDTO.getPurchasesId().add(purchaseDTO.getId());
+                ProductDTO productDTO = productService.findById(id).orElseThrow(
+                        () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Producto no encontrado")
+                );
+
+                // Verificar e inicializar purchasesId si es null
+                if (productDTO.getPurchasesId() == null) {
+                    productDTO.setPurchasesId(new ArrayList<>());
+                }
+
+                // Evitar duplicados
+                if (!productDTO.getPurchasesId().contains(savedPurchase.getId())) {
+                    productDTO.getPurchasesId().add(savedPurchase.getId());
+                }
+
+                productService.updateProduct(id, productDTO, null);
             }
 
+            session.removeAttribute("cart");
             return "redirect:/products";
         }
+
+
 
         @PostMapping("/cart/remove")
         public String removeFromCart(@RequestParam("productId") Long productId, HttpSession session) {
