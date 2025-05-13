@@ -1,10 +1,8 @@
 package com.example.demo.Controller;
 
-import com.example.demo.Model.ProductDTO;
-import com.example.demo.Model.UserDTO;
+import com.example.demo.Model.*;
+import com.example.demo.Service.PurchaseService;
 import org.springframework.ui.Model;
-import com.example.demo.Model.Product;
-import com.example.demo.Model.User;
 import com.example.demo.Service.ProductService;
 import com.example.demo.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,6 +21,9 @@ public class WebController {
     private UserService userService;
     @Autowired
     private ProductService productService;
+
+    @Autowired
+    private PurchaseService purchaseService;
 
     @GetMapping("/")
     public String index(Model model) {
@@ -47,9 +49,19 @@ public class WebController {
     }
 
     @GetMapping("/buys")
-    public String buys(Model model) {
+    public String showPurchases(Model model, Principal principal) {
+        if (principal == null) return "redirect:/login";
+
+        User user = userService.findByNameDatabse(principal.getName());
+        List<PurchaseDTO> purchases = purchaseService.getPurchasesByUser(principal.getName());
+
+        model.addAttribute("user", user);          // Para mostrar el nombre
+        model.addAttribute("purchases", purchases); // Lista de PurchaseDTO con productos
+
         return "buys";
     }
+
+
 
     @GetMapping("/contact")
     public String contact(Model model) {

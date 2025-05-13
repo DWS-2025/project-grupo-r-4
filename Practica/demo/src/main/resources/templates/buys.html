@@ -33,17 +33,27 @@
     <section class="purchase-info">
         <div class="purchase-box">
             <h1>Mis Compras</h1>
-            <p><strong>Usuario:</strong> {{#user}}{{name}}{{/user}}</p>
 
-            {{#user.products}}
-            {{#products}}
+            <p><strong>Usuario:</strong> {{user.name}}</p>
+
+            {{#purchases}}
             <div class="purchase-item">
-                <p><strong>Producto:</strong> {{name}}</p>
-                <p><strong>Precio:</strong> {{price}}€</p>
-                <br>
+                <p><strong>Compra #{{id}}</strong></p>
+                <p><strong>Total:</strong> {{price}}€</p>
+
+                {{#products}}
+                <div class="product-item">
+                    <p><strong>Producto:</strong> {{name}}</p>
+                    <p><strong>Precio:</strong> {{price}}€</p>
+                    <br>
+                </div>
+                {{/products}}
             </div>
-            {{/products}}
-            {{/user.products}}
+            {{/purchases}}
+
+            {{^purchases}}
+            <p>No has realizado ninguna compra todavía.</p>
+            {{/purchases}}
         </div>
     </section>
 </main>

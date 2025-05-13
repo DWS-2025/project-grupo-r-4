@@ -12,6 +12,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class PurchaseService {
@@ -32,15 +33,24 @@ public class PurchaseService {
     private ProductService productService;
 
 
+
     private PurchaseDTO convertToDTO(Purchase purchase) {
-        PurchaseDTO purchaseDTO = new PurchaseDTO();
-        purchaseDTO.setId(purchase.getId());
-        purchaseDTO.setPrice(purchase.getPrice());
+        PurchaseDTO dto = new PurchaseDTO();
+        dto.setId(purchase.getId());
+        dto.setPrice(purchase.getPrice());
+        dto.setUserId(purchase.getUser().getId());
 
-        purchaseDTO.setUserId(1L);
+        // Setear productIds
+        dto.setProductIds(purchase.getProducts().stream()
+                .map(Product::getId)
+                .collect(Collectors.toList()));
 
-        purchaseDTO.setProductIds(purchase.getProducts().stream().map(Product::getId).toList());
-        return purchaseDTO;
+        // NUEVO: Setear lista de productos completa
+        dto.setProducts(purchase.getProducts().stream()
+                .map(productService::convertToDTO)
+                .collect(Collectors.toList()));
+
+        return dto;
     }
 
 
@@ -79,6 +89,16 @@ public class PurchaseService {
         return convertToDTO(purchase);
     }
 
+    public List<PurchaseDTO> getPurchasesByUser(String username) {
+        // Obtener el usuario de la base de datos a través del nombre de usuario
+        User user = userService.findByNameDatabse(username);
+
+        // Obtener todas las compras del usuario y convertirlas a DTO
+        return purchaseRepository.findByUser(user).stream()
+                .map(this::convertToDTO) // Usar el método convertToDTO que ya tienes
+                .collect(Collectors.toList());
+    }
+
 
     public void deleteById(long id) {
         if (!purchaseRepository.existsById(id)) {
@@ -89,14 +109,15 @@ public class PurchaseService {
 
 
     public void createPurchase(PurchaseDTO purchaseDTO, ProductDTO productDTO) throws IOException {
+        // Inicializa listas si son null
         if (purchaseDTO.getProductIds() == null) {
             purchaseDTO.setProductIds(new ArrayList<>());
         }
-        if (productDTO.getPurchasesId() == null) {
-            productDTO.setPurchasesId(new ArrayList<>());
-        }
+
+        // Añade el ID del producto a la compra
         purchaseDTO.getProductIds().add(productDTO.getId());
-        productDTO.getPurchasesId().add(purchaseDTO.getId());
+
+        // Guarda la compra (ya enlazada con el producto)
         save(purchaseDTO);
     }
 

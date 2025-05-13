@@ -29,6 +29,8 @@
         <h2>Compra del Producto</h2>
         <form action="/product/{{product.id}}/purchase" method="POST" enctype="multipart/form-data">
             <input type="hidden" name="_csrf" value="{{token}}">
+            <input type="hidden" name="productId" value="{{product.id}}">
+
             <div class="form-group">
                 <label>Producto:</label>
                 <div class="formlabel-text">{{product.name}}</div>
@@ -36,7 +38,7 @@
 
             <div class="form-group">
                 <label>Usuario:</label>
-                <div class="formlabel-text">Usuario: user</div>
+                <div class="formlabel-text">Usuario: {{user.name}}</div>
             </div>
 
             <div class="form-group">

@@ -217,25 +217,52 @@
             return "redirect:/products/";
         }
 
+        @GetMapping("/user/{id}/buys")
+        public String showUserPurchase(@PathVariable Long id, Model model) {
+            UserDTO user = userService.findById(id)
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+            List<PurchaseDTO> purchases = purchaseService.findById(id); // <- ¿este método existe?
+
+            model.addAttribute("user", user);
+            model.addAttribute("purchases", purchases);
+
+            return "userBuys"; // nombre de la vista (HTML)
+        }
+
+
         @GetMapping("/product/{id}/purchase")
-        public String newPurchaseForm(Model model, @PathVariable long id) {
+        public String newPurchaseForm(Model model, @PathVariable long id, Principal principal) {
             ProductDTO productDto = productService.findById(id)
                     .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+            UserDTO userDto = userService.findByUserName(principal.getName());
 
             model.addAttribute("precio", productDto.getPrice());
             model.addAttribute("product", productDto);
             model.addAttribute("purchase", new PurchaseDTO());
+            model.addAttribute("user", userDto);
 
             return "newPurchase";
         }
 
-        @PostMapping("/product/{id}/purchase")
-        public String newPurchase(@PathVariable long id) throws IOException {
-                PurchaseDTO purchaseDTO = new PurchaseDTO();
-                ProductDTO productDTO = productService.findById(id).get();
-                purchaseService.createPurchase(purchaseDTO, productDTO);
-                return "redirect:/product/" + id;
 
+
+        @PostMapping("/product/{id}/purchase")
+        public String newPurchase(@PathVariable long id, Principal principal) throws IOException {
+            if (principal == null) {
+                return "redirect:/login"; // Redirigir si no está logueado
+            }
+
+            User user = userService.findByNameDatabse(principal.getName());
+            ProductDTO productDTO = productService.findById(id).orElseThrow(() -> new RuntimeException("Producto no encontrado"));
+
+            PurchaseDTO purchaseDTO = new PurchaseDTO();
+            purchaseDTO.setUserId(user.getId());  // Asigna el usuario a la compra
+
+            purchaseService.createPurchase(purchaseDTO, productDTO);
+
+            return "redirect:/product/" + id;
         }
 
         @PostMapping("/cart/add")
