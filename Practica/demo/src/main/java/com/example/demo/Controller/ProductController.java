@@ -1,6 +1,9 @@
     package com.example.demo.Controller;
 
     import com.example.demo.Model.*;
+    import com.example.demo.Repository.CartRepository;
+    import com.example.demo.Repository.ProductRepository;
+    import com.example.demo.Repository.UserRepository;
     import com.example.demo.Service.*;
 
 
@@ -19,11 +22,13 @@
     import org.springframework.web.server.ResponseStatusException;
     import jakarta.servlet.http.HttpSession;
     import java.io.IOException;
+    import java.security.Principal;
     import java.sql.SQLException;
     import java.util.ArrayList;
     import java.util.Collection;
     import java.util.List;
     import java.util.Optional;
+    import java.util.stream.Collectors;
     import java.util.stream.IntStream;
     import jakarta.servlet.http.HttpServletRequest;
     import org.springframework.security.core.Authentication;
@@ -37,6 +42,15 @@
 
         @Autowired
         private ProductService productService;
+
+        @Autowired
+        private ProductRepository productRepository;
+
+        @Autowired
+        private UserRepository userRepository;
+
+        @Autowired
+        private CartRepository cartRepository;
 
         @Autowired
         private PurchaseService purchaseService;
@@ -225,87 +239,128 @@
         }
 
         @PostMapping("/cart/add")
-        public String addToCart(@RequestParam("productId") Long productId, HttpSession session) {
-            List<Long> cart = (List<Long>) session.getAttribute("cart");
-            if (cart == null) {
-                cart = new ArrayList<>();
+        public String addToCart(@RequestParam("productId") Long productId, Principal principal) {
+            // Obtener el usuario autenticado
+            String username = principal.getName();
+            User user = userRepository.findByName(username)
+                    .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+            // Buscar el carrito del usuario o crearlo si no existe
+            Cart cart = cartRepository.findByUser(user).orElseGet(() -> {
+                Cart newCart = new Cart();
+                newCart.setUser(user);
+                newCart.setProducts(new ArrayList<>());
+                return cartRepository.save(newCart);
+            });
+
+            // Buscar el producto
+            Product product = productRepository.findById(productId)
+                    .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
+
+            // Añadir el producto al carrito si no está ya
+            if (!cart.getProducts().contains(product)) {
+                cart.getProducts().add(product);
+                cartRepository.save(cart);
             }
-            if (!cart.contains(productId)) {
-                cart.add(productId);
-            }
-            session.setAttribute("cart", cart);
+
             return "redirect:/products";
         }
 
 
+
         @GetMapping("/cart")
-        public String viewCart(HttpSession session, Model model) {
-            List<Long> cart = (List<Long>) session.getAttribute("cart");
-            List<ProductDTO> productsInCart = new ArrayList<>();
+        public String viewCart(Model model, Principal principal) {
+            String username = principal.getName();
+            User user = userRepository.findByName(username)
+                    .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
-            if (cart != null) {
-                for (Long id : cart) {
-                    productService.findById(id).ifPresent(productsInCart::add);
-                }
-            }
+            // Buscar carrito o crear uno nuevo si no existe
+            Cart cart = cartRepository.findByUser(user)
+                    .orElseGet(() -> {
+                        Cart newCart = new Cart();
+                        newCart.setUser(user);
+                        newCart.setProducts(new ArrayList<>());
+                        return cartRepository.save(newCart);
+                    });
 
-            model.addAttribute("cartProducts", productsInCart); // Lista de productos en el carrito
-            model.addAttribute("total", productsInCart.stream().mapToDouble(ProductDTO::getPrice).sum()); // Total calculado correctamente
+            List<ProductDTO> productsInCart = cart.getProducts().stream()
+                    .map(productService::convertToDTO)
+                    .collect(Collectors.toList());
 
-            return "cart"; // Página de la cesta
+            model.addAttribute("cartProducts", productsInCart);
+            model.addAttribute("total", productsInCart.stream()
+                    .mapToDouble(ProductDTO::getPrice)
+                    .sum());
+
+            return "cart";
         }
-
 
 
         @PostMapping("/cart/checkout")
         public String checkout(HttpSession session) throws IOException {
+            @SuppressWarnings("unchecked")
             List<Long> cart = (List<Long>) session.getAttribute("cart");
 
             if (cart == null || cart.isEmpty()) {
                 return "redirect:/cart";
             }
 
+            // Crear la compra
             PurchaseDTO purchaseDTO = new PurchaseDTO();
             purchaseDTO.setProductIds(new ArrayList<>(cart));
 
             PurchaseDTO savedPurchase = purchaseService.save(purchaseDTO);
 
-            for (Long id : cart) {
-                ProductDTO productDTO = productService.findById(id).orElseThrow(
-                        () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Producto no encontrado")
-                );
+            // Procesar cada producto del carrito
+            for (Long productId : cart) {
+                ProductDTO productDTO = productService.findById(productId)
+                        .orElseThrow(() -> new ResponseStatusException(
+                                HttpStatus.NOT_FOUND, "Producto con ID " + productId + " no encontrado"));
 
-                // Verificar e inicializar purchasesId si es null
-                if (productDTO.getPurchasesId() == null) {
-                    productDTO.setPurchasesId(new ArrayList<>());
-                }
+                // Verificar si la lista de compras está vacía y, si es así, inicializarla
+                List<Long> purchases = Optional.ofNullable(productDTO.getPurchasesId())
+                        .orElseGet(ArrayList::new);
 
                 // Evitar duplicados
-                if (!productDTO.getPurchasesId().contains(savedPurchase.getId())) {
-                    productDTO.getPurchasesId().add(savedPurchase.getId());
+                if (!purchases.contains(savedPurchase.getId())) {
+                    purchases.add(savedPurchase.getId());
                 }
 
-                productService.updateProduct(id, productDTO, null);
+                // Asignar la lista de compras al DTO
+                productDTO.setPurchasesId(purchases);
+
+                // Llamar al servicio de actualización de productos. Pasamos 'null' para la imagen si no es necesaria.
+                productService.updateProduct(productId, productDTO, null);
             }
 
+            // Limpiar el carrito
             session.removeAttribute("cart");
+
+            // Redirigir a los productos
             return "redirect:/products";
         }
 
 
 
         @PostMapping("/cart/remove")
-        public String removeFromCart(@RequestParam("productId") Long productId, HttpSession session) {
-            List<Long> cart = (List<Long>) session.getAttribute("cart");
+        public String removeFromCart(@RequestParam("productId") Long productId, Principal principal) {
+            // Obtener el usuario autenticado
+            String username = principal.getName();
+            User user = userRepository.findByName(username)
+                    .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
-            if (cart != null) {
-                cart.removeIf(id -> id.equals(productId));
-                session.setAttribute("cart", cart);
-            }
+            // Obtener el carrito del usuario
+            Cart cart = cartRepository.findByUser(user)
+                    .orElseThrow(() -> new RuntimeException("Carrito no encontrado"));
+
+            // Buscar el producto y eliminarlo del carrito si existe
+            productRepository.findById(productId).ifPresent(product -> {
+                cart.getProducts().remove(product);
+                cartRepository.save(cart);
+            });
 
             return "redirect:/cart";
         }
-
 
     }
 

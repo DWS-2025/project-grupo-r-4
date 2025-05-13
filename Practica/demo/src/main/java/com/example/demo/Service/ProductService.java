@@ -19,6 +19,7 @@ import jakarta.persistence.Lob;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.web.util.HtmlUtils;
 
 
 import java.io.IOException;
@@ -42,7 +43,7 @@ public class ProductService {
 
 
     // Convertir de Product -> ProductDTO
-    private ProductDTO convertToDTO(Product product) {
+    public ProductDTO convertToDTO(Product product) {
         if(product.getReviews() != null){
             List<Long> reviewIds = product.getReviews().stream().map(Review::getReviewId).toList();
             return new ProductDTO(
@@ -173,13 +174,18 @@ public class ProductService {
         return convertToDTO(productOptional.get());
     }
 
+    public String sanitizeReview(String commentText) {
+        return HtmlUtils.htmlEscape(commentText);
+    }
+
     public Optional<ProductDTO> addReview(ProductDTO productDTO, String username, String reviewText, int rating) {
 
         UserDTO user = userService.findByUserName(username);
+        String s_review = sanitizeReview(reviewText);
 
         ReviewDTO newReviewDTO = new ReviewDTO();
         newReviewDTO.setUserId(userService.convertToEntity(user).getId());
-        newReviewDTO.setReview(reviewText);
+        newReviewDTO.setReview(s_review);
         newReviewDTO.setRating(rating);
         newReviewDTO.setProductId(productDTO.getId());
 
