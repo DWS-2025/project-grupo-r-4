@@ -6,7 +6,9 @@ import com.example.demo.Model.UserDTO;
 import com.example.demo.Repository.UserRepository;
 import com.example.demo.Service.PurchaseService;
 import com.example.demo.Service.UserService;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +26,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Controller
@@ -155,21 +158,33 @@ public class UserController {
     }
 
     @PostMapping("/admin/users/delete/{id}")
-    public String deleteUser(@PathVariable Long id, Principal principal) {
-        // Obtener el usuario actual por su nombre de usuario
+    public String deleteUser(@PathVariable Long id, Principal principal, HttpServletRequest request) {
+        // Obtener el usuario actual
         User currentUser = userService.findByNameDatabse(principal.getName());
 
-        // Verificar que el usuario exista y que tenga el rol "ADMIN"
+        // Verificar que el usuario existe y tiene rol ADMIN
         if (currentUser == null || !currentUser.getRoles().contains("ADMIN")) {
-            return "access-denied"; // O puedes redirigir a otra página si prefieres
+            return "access-denied";
         }
 
-        // Llamar al servicio para eliminar el usuario
-        userService.deleteById(id);
+        // Si el admin se está eliminando a sí mismo
+        if (Objects.equals(currentUser.getId(), id))  {
+            userService.deleteById(id);
 
-        // Redirigir a la lista de usuarios después de la eliminación
-        return "redirect:/admin/users";
+            try {
+                request.logout(); // Invalida la sesión actual
+            } catch (ServletException e) {
+                e.printStackTrace();
+            }
+
+            return "redirect:/login?accountDeleted"; // Redirige a login
+        }
+
+        // Eliminar a otro usuario
+        userService.deleteById(id);
+        return "redirect:/admin/users?userDeleted";
     }
+
 
     @GetMapping("/myAccount")
     public String showMyAccount(Model model, Principal principal) {
@@ -228,23 +243,34 @@ public class UserController {
     }
 
     @PostMapping("/deleteAccount")
-    public String deleteAccount(Principal principal) {
-        // Obtener el usuario actual por su nombre de usuario
-        User currentUser = userService.findByNameDatabse(principal.getName());
+    @Transactional
+    public String deleteAccount(HttpServletRequest request) {
+        Principal principal = request.getUserPrincipal();
 
-        if (currentUser == null) {
-            // Si no se encuentra el usuario, retornar un mensaje de error
-            return "Usuario no encontrado";
+        if (principal == null) {
+            return "redirect:/login?error=noPrincipal";
         }
 
-        // Eliminar la cuenta del usuario
-        userService.deleteById(currentUser.getId());
+        String username = principal.getName();
+        UserDTO userDTO = userService.findByUserName(username);
 
-        // Retornar un mensaje de éxito o redirigir según sea necesario
-        return "redirect:/";
+        if (userDTO == null) {
+            return "redirect:/login?error=userNotFound";
+        }
+
+        // Eliminar datos relacionados y la cuenta
+        userService.deleteById(userDTO.getId());
+
+        // Invalidar sesión completamente
+        try {
+            request.logout(); // Cierra la sesión a nivel de seguridad
+            request.getSession().invalidate(); // Invalida la sesión HTTP
+        } catch (ServletException e) {
+            e.printStackTrace();
+        }
+
+        // Redirigir a login con mensaje
+        return "redirect:/login?accountDeleted";
     }
-
-
-
 }
 
