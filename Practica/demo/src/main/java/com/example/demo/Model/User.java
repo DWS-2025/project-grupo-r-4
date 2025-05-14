@@ -38,7 +38,7 @@ public class User {
     @JsonView(RevInt.class)
     private List<Review> reviews;
     @JsonView(PurchInt.class)
-    @OneToMany
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Purchase> products;
     @JsonView(PurchInt.class)
     @ManyToMany

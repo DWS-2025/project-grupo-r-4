@@ -11,8 +11,10 @@
     import org.springframework.beans.factory.annotation.Autowired;
     import org.springframework.core.io.InputStreamResource;
     import org.springframework.core.io.Resource;
+    import org.springframework.core.io.UrlResource;
     import org.springframework.http.HttpHeaders;
     import org.springframework.http.HttpStatus;
+    import org.springframework.http.MediaType;
     import org.springframework.http.ResponseEntity;
     import org.springframework.security.core.context.SecurityContextHolder;
     import org.springframework.stereotype.Controller;
@@ -21,13 +23,15 @@
     import org.springframework.web.multipart.MultipartFile;
     import org.springframework.web.server.ResponseStatusException;
     import jakarta.servlet.http.HttpSession;
+
+    import java.io.File;
     import java.io.IOException;
+    import java.net.MalformedURLException;
+    import java.nio.file.Path;
+    import java.nio.file.Paths;
     import java.security.Principal;
     import java.sql.SQLException;
-    import java.util.ArrayList;
-    import java.util.Collection;
-    import java.util.List;
-    import java.util.Optional;
+    import java.util.*;
     import java.util.stream.Collectors;
     import java.util.stream.IntStream;
     import jakarta.servlet.http.HttpServletRequest;
@@ -139,6 +143,48 @@
 
             return "redirect:/product/" + id;
         }
+/*
+        @PostMapping("/products/{id}/upload")
+        public ResponseEntity<String> uploadImage(@PathVariable Long id, @RequestParam("file") MultipartFile file) {
+            try {
+                Optional<Product> optionalProduct = productRepository.findById(id);
+                if (optionalProduct.isEmpty()) {
+                    return ResponseEntity.notFound().build();
+                }
+
+                Product product = optionalProduct.get();
+                String fileName = UUID.randomUUID() + "_" + file.getOriginalFilename();
+                String uploadDir = "uploads/";
+
+                File uploadPath = new File(uploadDir);
+                if (!uploadPath.exists()) {
+                    uploadPath.mkdirs();
+                }
+
+                File dest = new File(uploadDir + fileName);
+                file.transferTo(dest);
+
+                product.setImagePath(fileName);
+                productRepository.save(product);
+
+                return ResponseEntity.ok("Imagen subida correctamente.");
+            } catch (IOException e) {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al subir el archivo.");
+            }
+        }
+
+        @GetMapping("/images/{fileName}")
+        public ResponseEntity<Resource> getImage(@PathVariable String fileName) throws MalformedURLException {
+            Path path = Paths.get("uploads/").resolve(fileName).normalize();
+            Resource resource = new UrlResource(path.toUri());
+            if (!resource.exists()) {
+                return ResponseEntity.notFound().build();
+            }
+            return ResponseEntity.ok()
+                    .contentType(MediaType.IMAGE_JPEG) // cambia según tipo
+                    .body(resource);
+        }
+*/
 
         @GetMapping("/product/{id}")
         public String showProduct(Model model, @PathVariable long id) {
@@ -217,19 +263,6 @@
             return "redirect:/products/";
         }
 
-        @GetMapping("/user/{id}/buys")
-        public String showUserPurchase(@PathVariable Long id, Model model) {
-            UserDTO user = userService.findById(id)
-                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-
-            List<PurchaseDTO> purchases = purchaseService.findById(id); // <- ¿este método existe?
-
-            model.addAttribute("user", user);
-            model.addAttribute("purchases", purchases);
-
-            return "userBuys"; // nombre de la vista (HTML)
-        }
-
 
         @GetMapping("/product/{id}/purchase")
         public String newPurchaseForm(Model model, @PathVariable long id, Principal principal) {
@@ -245,7 +278,6 @@
 
             return "newPurchase";
         }
-
 
 
         @PostMapping("/product/{id}/purchase")
