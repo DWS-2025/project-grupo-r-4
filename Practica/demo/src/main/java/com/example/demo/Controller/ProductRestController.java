@@ -110,7 +110,7 @@ public class ProductRestController {
         Optional<ProductDTO> productOpt = productService.findById(id);
         if (productOpt.isEmpty()) return ResponseEntity.notFound().build();
 
-        productService.addReview(productOpt.get(), "user", review, rating);
+        productService.addReview(productOpt.get(), id, review, rating);
         return ResponseEntity.ok(productOpt.get());
     }
 

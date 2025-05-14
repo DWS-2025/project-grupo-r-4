@@ -248,13 +248,19 @@
                     .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-            String username = auth.getName();
-            UserDTO userDto = userService.findByUserName(username);
+            String username = auth.getName(); // Obtener el nombre del usuario logueado
+            UserDTO userDto = userService.findByUserName(username); // Buscar el usuario con el username
 
-            productService.addReview(productDto, username, review, rating);
+            if (userDto == null) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado");
+            }
+
+            // Llamar al método addReview con userId en lugar de username
+            productService.addReview(productDto, userDto.getId(), review, rating);
 
             return "redirect:/product/" + id;
         }
+
 
 
         @PostMapping("/deleteProduct/{id}")

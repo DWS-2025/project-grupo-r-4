@@ -178,13 +178,15 @@ public class ProductService {
         return HtmlUtils.htmlEscape(commentText);
     }
 
-    public Optional<ProductDTO> addReview(ProductDTO productDTO, String username, String reviewText, int rating) {
+    public Optional<ProductDTO> addReview(ProductDTO productDTO, Long userId, String reviewText, int rating) {
 
-        UserDTO user = userService.findByUserName(username);
+        UserDTO user = userService.findById(userId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado"));
+
         String s_review = sanitizeReview(reviewText);
 
         ReviewDTO newReviewDTO = new ReviewDTO();
-        newReviewDTO.setUserId(userService.convertToEntity(user).getId());
+        newReviewDTO.setUserId(userId);
         newReviewDTO.setReview(s_review);
         newReviewDTO.setRating(rating);
         newReviewDTO.setProductId(productDTO.getId());
@@ -193,9 +195,9 @@ public class ProductService {
         ReviewDTO reviewDTO = reviewService.save(newReviewDTO);
         productDTO.getReviewsId().add(reviewDTO.getReviewId());
 
-
         return Optional.of(productDTO);
     }
+
 
     public List<ProductDTO> filterByTypeAndPrice(String type, Float price) {
         Product exampleProduct = new Product();

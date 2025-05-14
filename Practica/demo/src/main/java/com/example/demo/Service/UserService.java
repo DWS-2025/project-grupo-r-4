@@ -44,7 +44,6 @@ public class UserService {
         userDTO.setPhone(user.getPhone());
         userDTO.setNumReviews(user.getNumReviews());
         userDTO.setEncodedPassword(user.getEncodedPassword());
-        userDTO.setRoles(user.getRoles());
         userDTO.setReviewIds(user.getReviews().stream()
                 .map(Review::getReviewId)
                 .collect(Collectors.toList()));
@@ -60,7 +59,7 @@ public class UserService {
             dto.setReview(review.getReview());
             dto.setProductId(review.getProduct() != null ? review.getProduct().getId() : -1);
             dto.setProductName(review.getProduct() != null ? review.getProduct().getName() : "Producto eliminado"); // ✅ nueva línea
-            dto.setUserName(user.getName());
+            dto.setUserName(review.getUser().getName());
             return dto;
         }).collect(Collectors.toList());
 

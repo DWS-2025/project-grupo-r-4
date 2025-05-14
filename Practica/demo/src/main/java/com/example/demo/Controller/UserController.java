@@ -64,31 +64,26 @@ public class UserController {
     }
 
     @GetMapping("/user/{id}/reviews")
-    public String showLoggedInUserReviews(Model model, @AuthenticationPrincipal org.springframework.security.core.userdetails.User userDetails) {
-        if (userDetails == null) {
-            return "redirect:/login";
-        }
+    public String showUserReviewsById(@PathVariable("id") Long userId,
+                                      Principal principal,
+                                      Model model) {
 
-        // Obtenemos el UserDTO por nombre del usuario logueado
-        UserDTO userDTO = userService.findByUserName(userDetails.getUsername());
+        UserDTO user = userService.findById(userId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado"));
 
-        // Agregamos al modelo el usuario completo
-        model.addAttribute("user", userDTO);
+        // Agregamos usuario al modelo
+        model.addAttribute("user", user);
 
-        // Extraemos las reseñas
-        List<ReviewDTO> reviews = userDTO.getReviews(); // Asegúrate de tener este método
-
-        // Añadimos las reseñas al modelo (para que {{#reviews}} funcione)
+        // Obtenemos y agregamos las reseñas
+        List<ReviewDTO> reviews = user.getReviews();
         model.addAttribute("reviews", reviews);
-
-        // Añadimos el número de reseñas
         model.addAttribute("numReviews", reviews != null ? reviews.size() : 0);
-
-        // Puedes también pasar el nombre de usuario directamente si quieres usar {{name}}
-        model.addAttribute("name", userDTO.getName());
+        model.addAttribute("name", user.getName());
 
         return "myReview";
     }
+
+
 
 
     @ModelAttribute
