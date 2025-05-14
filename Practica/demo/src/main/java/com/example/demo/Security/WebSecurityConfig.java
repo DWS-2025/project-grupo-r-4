@@ -126,6 +126,7 @@ public class WebSecurityConfig {
                                 "/contact",
                                 "/user/*/buys",
                                 "/user/*/reviews",
+                                "/reviews/delete",
                                 "/product/{id}/purchase",
                                 "/cart/add/{id}",
                                 "/cart/add",

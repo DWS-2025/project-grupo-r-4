@@ -36,7 +36,7 @@
     import java.util.stream.IntStream;
     import jakarta.servlet.http.HttpServletRequest;
     import org.springframework.security.core.Authentication;
-
+    import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
     @Controller
@@ -431,6 +431,19 @@
 
             return "redirect:/cart";
         }
+        @PostMapping("/reviews/delete")
+        public String deleteReview(@RequestParam("reviewId") long reviewId,
+                                   RedirectAttributes redirectAttributes,
+                                   Principal principal) {
+            try {
+                reviewService.deleteById(reviewId);
+                redirectAttributes.addFlashAttribute("success", "Reseña eliminada correctamente.");
+            } catch (ResponseStatusException e) {
+                redirectAttributes.addFlashAttribute("error", e.getReason());
+            }
+            return "redirect:/myAccount";
+        }
+
 
     }
 
