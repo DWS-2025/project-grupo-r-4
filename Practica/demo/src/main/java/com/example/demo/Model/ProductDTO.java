@@ -22,6 +22,8 @@
         @JsonIgnore
         private Blob imageFile;
 
+        private String imagePath;
+
 
         public ProductDTO() {
             this.reviewsId = new ArrayList<>();
@@ -64,7 +66,13 @@
         }
 
 
+        public String getImagePath() {
+            return imagePath;
+        }
 
+        public void setImagePath(String imagePath) {
+            this.imagePath = imagePath;
+        }
 
         public List<Long> getUsers() {
             return users;

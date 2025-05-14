@@ -49,6 +49,9 @@ public class Product {
     @JsonIgnore
     private Blob imageFile;
 
+    @JsonView(Basic.class)
+    private String imagePath;
+
     public Product() {
 
     }
@@ -86,6 +89,14 @@ public class Product {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
 
     public double getPrice() {
