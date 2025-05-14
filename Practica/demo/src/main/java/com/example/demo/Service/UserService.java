@@ -64,6 +64,27 @@ public class UserService {
 
         userDTO.setReviews(reviewDTOs);
 
+        // NUEVA PARTE: mapear compras (PurchaseDTO)
+        List<PurchaseDTO> purchaseDTOs = user.getProducts().stream().map(purchase -> {
+            PurchaseDTO purchaseDTO = new PurchaseDTO();
+            purchaseDTO.setId(purchase.getId());
+            purchaseDTO.setPrice(purchase.getPrice());
+
+            // Mapear productos dentro de la compra
+            List<ProductDTO> productDTOs = purchase.getProducts().stream().map(product -> {
+                ProductDTO productDTO = new ProductDTO();
+                productDTO.setName(product.getName());
+                productDTO.setPrice(product.getPrice());
+                return productDTO;
+            }).collect(Collectors.toList());
+
+            purchaseDTO.setProducts(productDTOs);
+            return purchaseDTO;
+        }).collect(Collectors.toList());
+
+        userDTO.setPurchases(purchaseDTOs); // <-- esto es clave
+
+
         return userDTO;
     }
 
@@ -171,4 +192,5 @@ public class UserService {
             throw new Exception("Usuario no encontrado");
         }
     }
+
 }

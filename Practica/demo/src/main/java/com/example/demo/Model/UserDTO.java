@@ -13,6 +13,7 @@ public class UserDTO {
     private List<Long> reviewIds;
     private List<Long> productIds;
     private List<ReviewDTO> reviews;
+    private List<PurchaseDTO> purchases;
 
     // Getters y Setters
     public long getId() {
@@ -77,5 +78,13 @@ public class UserDTO {
 
     public void setProductIds(List<Long> productIds) {
         this.productIds = productIds;
+    }
+
+    public List<PurchaseDTO> getPurchases() {
+        return purchases;
+    }
+
+    public void setPurchases(List<PurchaseDTO> purchases) {
+        this.purchases = purchases;
     }
 }

@@ -288,16 +288,25 @@
                 return "redirect:/login"; // Redirigir si no está logueado
             }
 
+            // Obtener el usuario autenticado
             User user = userService.findByNameDatabse(principal.getName());
-            ProductDTO productDTO = productService.findById(id).orElseThrow(() -> new RuntimeException("Producto no encontrado"));
 
+            // Buscar el producto con el id
+            ProductDTO productDTO = productService.findById(id)
+                    .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
+
+            // Crear el DTO de compra y asignar los valores
             PurchaseDTO purchaseDTO = new PurchaseDTO();
             purchaseDTO.setUserId(user.getId());  // Asigna el usuario a la compra
+            purchaseDTO.setProductId(id);  // Asignar el producto a la compra
+            purchaseDTO.setPrice(productDTO.getPrice());  // Asignar el precio del producto a la compra
 
+            // Crear la compra
             purchaseService.createPurchase(purchaseDTO, productDTO);
 
-            return "redirect:/product/" + id;
+            return "redirect:/product/" + id;  // Redirigir al producto después de la compra
         }
+
 
         @PostMapping("/cart/add")
         public String addToCart(@RequestParam("productId") Long productId, Principal principal) {

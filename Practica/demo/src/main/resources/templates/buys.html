@@ -36,7 +36,7 @@
 
             <p><strong>Usuario:</strong> {{user.name}}</p>
 
-            {{#purchases}}
+            {{#buys}}
             <div class="purchase-item">
                 <p><strong>Compra #{{id}}</strong></p>
                 <p><strong>Total:</strong> {{price}}€</p>
@@ -49,11 +49,11 @@
                 </div>
                 {{/products}}
             </div>
-            {{/purchases}}
+            {{/buys}}
 
-            {{^purchases}}
+            {{^buys}}
             <p>No has realizado ninguna compra todavía.</p>
-            {{/purchases}}
+            {{/buys}}
         </div>
     </section>
 </main>

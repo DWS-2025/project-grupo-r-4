@@ -38,11 +38,31 @@ public class UserController {
     private UserRepository userRepository;
 
     @GetMapping("/user/{id}/buys")
-    public String showUserPurchase(@PathVariable Long id, Model model){
-        UserDTO userDTO = userService.findByUserName("user");
+    public String showUserPurchase(@PathVariable Long id, Model model, Principal principal) {
+        // Seguridad: asegurarse de que el usuario autenticado está accediendo a su propia información o es admin
+        User currentUser = userService.findByNameDatabse(principal.getName());
+        boolean isAdmin = currentUser.getRoles().contains("ADMIN");
+
+        if (!isAdmin && currentUser.getId() != id) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "No tienes permiso para ver esta información.");
+        }
+
+        Optional<UserDTO> userDTOOptional = userService.findById(id);
+        if (userDTOOptional.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado.");
+        }
+
+        UserDTO userDTO = userDTOOptional.get();
+
+        // Asegúrate de que el DTO contiene una lista de compras
         model.addAttribute("user", userDTO);
-        return "buys";
+        model.addAttribute("buys", userDTO.getPurchases()); // Asegúrate de tener este método en UserDTO
+        model.addAttribute("numBuys", userDTO.getPurchases() != null ? userDTO.getPurchases().size() : 0);
+        model.addAttribute("name", userDTO.getName());
+
+        return "buys"; // El nombre de tu vista (buys.mustache o buys.html)
     }
+
     @GetMapping("/user/{id}/reviews")
     public String showLoggedInUserReviews(Model model, @AuthenticationPrincipal org.springframework.security.core.userdetails.User userDetails) {
         if (userDetails == null) {

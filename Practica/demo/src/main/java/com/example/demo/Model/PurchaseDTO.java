@@ -9,6 +9,7 @@ public class PurchaseDTO {
     private long id;
     private long userId;
     private List<Long> productIds;
+    private long productId;
     private double price;
     private List<ProductDTO> products = new ArrayList<>();
 
@@ -38,6 +39,13 @@ public class PurchaseDTO {
 
     public void setId(long id) {
         this.id = id;
+    }
+    public long getProductId() {
+        return productId;
+    }
+
+    public void setProductId(long productId) {
+        this.productId = productId;
     }
 
     public long getUserId() {
