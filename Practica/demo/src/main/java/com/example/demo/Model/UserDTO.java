@@ -15,6 +15,10 @@ public class UserDTO {
     private List<ReviewDTO> reviews;
     private List<PurchaseDTO> purchases;
 
+    private String encodedPassword;
+
+    private List<String> roles;
+
     // Getters y Setters
     public long getId() {
         return id;
@@ -87,4 +91,21 @@ public class UserDTO {
     public void setPurchases(List<PurchaseDTO> purchases) {
         this.purchases = purchases;
     }
+
+    public List<String> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<String> roles) {
+        this.roles = roles;
+    }
+
+    public String getEncodedPassword() {
+        return encodedPassword;
+    }
+
+    public void setEncodedPassword(String encodedPassword) {
+        this.encodedPassword = encodedPassword;
+    }
+
 }

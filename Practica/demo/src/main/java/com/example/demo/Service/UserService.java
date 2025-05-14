@@ -43,6 +43,8 @@ public class UserService {
         userDTO.setAddress(user.getAddress());
         userDTO.setPhone(user.getPhone());
         userDTO.setNumReviews(user.getNumReviews());
+        userDTO.setEncodedPassword(user.getEncodedPassword());
+        userDTO.setRoles(user.getRoles());
         userDTO.setReviewIds(user.getReviews().stream()
                 .map(Review::getReviewId)
                 .collect(Collectors.toList()));
@@ -97,6 +99,8 @@ public class UserService {
         user.setAddress(userDTO.getAddress());
         user.setPhone(userDTO.getPhone());
         user.setNumReviews(userDTO.getNumReviews());
+        user.setEncodedPassword(userDTO.getEncodedPassword());
+        user.setRoles(userDTO.getRoles());
 
         return user;
     }
@@ -118,6 +122,7 @@ public class UserService {
     public Optional<UserDTO> findById(long id) {
         return userRepository.findById(id).map(this::convertToDTO);
     }
+
 
 
     public UserDTO save(UserDTO userDTO) {
@@ -168,6 +173,9 @@ public class UserService {
         user.setRoles(List.of("USER"));
 
         return userRepository.save(user);
+    }
+    public String encodePassword(String password) {
+        return passwordEncoder.encode(password); // Usa el mismo bean que en el registro
     }
 
     public void update(User user) {

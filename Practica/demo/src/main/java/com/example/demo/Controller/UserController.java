@@ -207,24 +207,29 @@ public class UserController {
 
 
     @GetMapping("/myAccount")
-    public String showMyAccount(Model model, Principal principal) {
-        // Obtener el usuario actual por su nombre de usuario
-        User currentUser = userService.getCurrentUser();
+    public String showMyAccount(@RequestParam(required = false) Long userId, Principal principal, Model model) {
+        UserDTO user;
 
-        if (currentUser == null) {
-            // Handle the case where the user does not exist
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado");
+        if (userId != null) {
+            user = userService.findById(userId)
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado"));
+        } else {
+            user = userService.findByUserName(principal.getName());
+            if (user == null) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado");
+            }
         }
 
-        // Verificar si el usuario es admin
-        boolean isAdmin = currentUser.getRoles().contains("ADMIN");
 
-        // Agregar los datos al modelo
-        model.addAttribute("user", currentUser);
+        boolean isAdmin = user.getRoles() != null && user.getRoles().contains("ADMIN");
+
+        model.addAttribute("user", user);
         model.addAttribute("isAdmin", isAdmin);
 
-        return "myAccount"; // Devolver la vista 'myAccount.mustache'
+        return "myAccount";
     }
+
+
 
 
     @GetMapping("/updateAccount")
@@ -235,32 +240,41 @@ public class UserController {
     }
 
     @PostMapping("/updateAccount")
-    public String updateAccount(@RequestParam("name") String name,
-                                @RequestParam("encodedPassword") String encodedPassword,
-                                @RequestParam("id") Long userId,
-                                RedirectAttributes redirectAttributes,
-                                Principal principal) {
+    public String updateAccount(@ModelAttribute("user") User updatedUser, RedirectAttributes redirectAttributes, Principal principal) {
+        // Obtener el usuario actual autenticado
+        User currentUser = userService.findByNameDatabse(principal.getName());
 
-        // 1. Get current user
-        User user = userService.getCurrentUser();
+        if (currentUser == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado");
+        }
 
-        // 2. Update user fields
-        user.setName(name);
-        user.setEncodedPassword(encodedPassword);
+        // Solo permitimos actualizar nombre y contraseña
+        if (updatedUser.getName() != null && !updatedUser.getName().isBlank()) {
+            currentUser.setName(updatedUser.getName());
+        }
 
-        // 3. Save changes (void method)
-        userService.update(user);
+        if (updatedUser.getEncodedPassword() != null && !updatedUser.getEncodedPassword().isBlank()) {
+            // Asegúrate de encriptar la nueva contraseña
+            currentUser.setEncodedPassword(userService.encodePassword(updatedUser.getEncodedPassword()));
+        }
 
-        // 4. Get fresh user data for the redirect
-        User updatedUser = userService.findByNameDatabse(principal.getName());
+        // Guardar cambios
+        userService.save(userService.convertToDTO(currentUser));
 
-        // 5. Add to flash attributes
-        redirectAttributes.addFlashAttribute("user", updatedUser);
-        redirectAttributes.addFlashAttribute("isAdmin", updatedUser.getRoles().contains("ADMIN"));
-        redirectAttributes.addFlashAttribute("success", "Account updated successfully!");
+        // Actualizar el Authentication en el SecurityContext con el nuevo nombre
+        Authentication newAuthentication = new UsernamePasswordAuthenticationToken(
+                currentUser.getName(),
+                currentUser.getEncodedPassword(),
+                SecurityContextHolder.getContext().getAuthentication().getAuthorities()
+        );
+        SecurityContextHolder.getContext().setAuthentication(newAuthentication);
 
+        // Mensaje de éxito
+        redirectAttributes.addFlashAttribute("success", "Cuenta actualizada correctamente.");
         return "redirect:/myAccount";
     }
+
+
 
     @PostMapping("/deleteAccount")
     @Transactional

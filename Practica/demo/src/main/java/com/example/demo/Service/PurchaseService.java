@@ -89,6 +89,7 @@ public class PurchaseService {
         return convertToDTO(purchase);
     }
 
+
     public List<PurchaseDTO> getPurchasesByUser(String username) {
         // Obtener el usuario de la base de datos a través del nombre de usuario
         User user = userService.findByNameDatabse(username);
