@@ -1,12 +1,16 @@
 package com.example.demo.Security.jwt;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
+
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -15,6 +19,8 @@ import jakarta.servlet.http.HttpSession;
 
 @Service
 public class UserLoginService {
+    @Autowired
+    private AuthenticationManager authenticationManager;
 
     private final UserDetailsService userDetailsService;
     private final JwtTokenProvider jwtTokenProvider;
@@ -26,6 +32,52 @@ public class UserLoginService {
         this.userDetailsService = userDetailsService;
         this.jwtTokenProvider = jwtTokenProvider;
         this.cookieUtil = cookieUtil;
+    }
+
+
+
+    public ResponseEntity<AuthResponse> login(LoginRequest loginRequest, String encryptedAccessToken, String
+            encryptedRefreshToken) {
+
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        String accessToken = SecurityCipher.decrypt(encryptedAccessToken);
+        String refreshToken = SecurityCipher.decrypt(encryptedRefreshToken);
+
+        String username = loginRequest.getUsername();
+        UserDetails user = userDetailsService.loadUserByUsername(username);
+
+        Boolean accessTokenValid = jwtTokenProvider.validateToken(accessToken);
+        Boolean refreshTokenValid = jwtTokenProvider.validateToken(refreshToken);
+
+        HttpHeaders responseHeaders = new HttpHeaders();
+        Token newAccessToken;
+        Token newRefreshToken;
+        if (!accessTokenValid && !refreshTokenValid) {
+            newAccessToken = jwtTokenProvider.generateToken(user);
+            newRefreshToken = jwtTokenProvider.generateRefreshToken(user);
+            addAccessTokenCookie(responseHeaders, newAccessToken);
+            addRefreshTokenCookie(responseHeaders, newRefreshToken);
+        }
+
+        if (!accessTokenValid && refreshTokenValid) {
+            newAccessToken = jwtTokenProvider.generateToken(user);
+            addAccessTokenCookie(responseHeaders, newAccessToken);
+        }
+
+        if (accessTokenValid && refreshTokenValid) {
+            newAccessToken = jwtTokenProvider.generateToken(user);
+            newRefreshToken = jwtTokenProvider.generateRefreshToken(user);
+            addAccessTokenCookie(responseHeaders, newAccessToken);
+            addRefreshTokenCookie(responseHeaders, newRefreshToken);
+        }
+
+        AuthResponse loginResponse = new AuthResponse(AuthResponse.Status.SUCCESS,
+                "Auth successful. Tokens are created in cookie.");
+        return ResponseEntity.ok().headers(responseHeaders).body(loginResponse);
     }
 
     public ResponseEntity<AuthResponse> handleSuccessfulAuthentication(Authentication authentication,

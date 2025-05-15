@@ -23,6 +23,9 @@ import java.util.stream.Collectors;
 public class UserService {
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private ReviewService reviewService;
     private final PasswordEncoder passwordEncoder;
 
     public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
@@ -45,6 +48,11 @@ public class UserService {
         userDTO.setNumReviews(user.getNumReviews());
         userDTO.setEncodedPassword(user.getEncodedPassword());
         userDTO.setRoles(user.getRoles());
+        userDTO.setReviews(
+                user.getReviews().stream()
+                        .map(reviewService::convertToDTO)
+                        .collect(Collectors.toList())
+        );
         userDTO.setReviewIds(user.getReviews().stream()
                 .map(Review::getReviewId)
                 .collect(Collectors.toList()));
