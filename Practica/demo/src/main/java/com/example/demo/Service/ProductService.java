@@ -22,6 +22,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.web.util.HtmlUtils;
 
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.Blob;
 import java.util.ArrayList;
@@ -36,6 +37,8 @@ public class ProductService {
 
     @Autowired
     private ImageService imageService;
+    @Autowired
+    private FileService fileService;
     @Autowired
     private UserService userService;
     @Autowired
@@ -53,6 +56,7 @@ public class ProductService {
                     product.getDescription(),
                     product.getProductType(),
                     product.getImageFile(),
+                    product.getFile(),
                     reviewIds
             );
         }else{
@@ -62,7 +66,8 @@ public class ProductService {
                     product.getPrice(),
                     product.getDescription(),
                     product.getProductType(),
-                    product.getImageFile()
+                    product.getImageFile(),
+                    product.getFile()
             );
         }
     }
@@ -109,7 +114,7 @@ public class ProductService {
                 .map(this::convertToDTO);
     }
 
-    public ProductDTO save(ProductDTO productDTO, MultipartFile imageField) throws IOException {
+    public ProductDTO save(ProductDTO productDTO, MultipartFile imageField, MultipartFile fileField) throws IOException {
         Product product = convertToEntity(productDTO);
 
         if (imageField != null && !imageField.isEmpty()) {
@@ -117,6 +122,10 @@ public class ProductService {
             product.setImage(path);
             product.setImageFile(BlobProxy.generateProxy(imageField.getInputStream(), imageField.getSize()));
         }
+        if(fileField != null && !fileField.isEmpty()){
+            String path = fileService.createFile(fileField);
+            product.setFile(path);
+        }else product.setFile("vacio.txt");
 
         if (product.getImage() == null || product.getImage().isEmpty()) {
             product.setImage("no-image.png");

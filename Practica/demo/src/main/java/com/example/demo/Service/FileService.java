@@ -25,23 +25,31 @@ public class FileService {
 
         String originalName = multiPartFile.getOriginalFilename();
 
-        if(!originalName.matches(".*\\.(pdf|txt)")){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The url is not a file resource");
+        if (originalName == null || !originalName.matches(".*\\.(pdf|txt)")) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Solo se permiten archivos .pdf o .txt");
         }
-
 
         try {
-            String safeFilePath = sanitize(multiPartFile.getOriginalFilename());
-            Path imagePath = Paths.get(safeFilePath);
-            multiPartFile.transferTo(imagePath);
-            multiPartFile.transferTo(imagePath);
-        } catch (Exception ex) {
-            System.err.println(ex);
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Can't save file locally", ex);
-        }
+            // Sanitiza y valida el nombre
+            String sanitizedFileName = sanitize(originalName);
 
-        return originalName;
+            // Crea el path completo
+            Path imagePath = FILES_FOLDER.resolve(sanitizedFileName).normalize();
+
+            // Asegura que el directorio exista
+            Files.createDirectories(FILES_FOLDER);
+
+            // Guarda el archivo (una sola vez)
+            multiPartFile.transferTo(imagePath);
+
+            return sanitizedFileName;
+
+        } catch (Exception ex) {
+            System.err.println("Error al guardar archivo: " + ex.getMessage());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No se pudo guardar el archivo", ex);
+        }
     }
+
 
     public Resource getFile(String fileName) throws IOException {
         Path filePath = FILES_FOLDER.resolve(sanitize(fileName));

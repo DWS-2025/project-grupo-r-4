@@ -37,6 +37,9 @@ public class Product {
     @JsonView(ProdRev.class)
     private List<Review> reviews;
 
+    @JsonView(Basic.class)
+    private String file;
+
 
     @JsonView(ProdUser.class)
     @ManyToMany
@@ -138,6 +141,15 @@ public class Product {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+
+    public String getFile() {
+        return file;
+    }
+
+    public void setFile(String file) {
+        this.file = file;
     }
 
     public void setProductType(String type) {

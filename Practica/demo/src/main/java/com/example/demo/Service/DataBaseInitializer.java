@@ -42,6 +42,7 @@ public class DataBaseInitializer {
     private ReviewService reviewService;
 
     private static final Path IMAGES_FOLDER = Paths.get(System.getProperty("user.dir"), "/demo/images");
+    private static final Path FILES_FOLDER = Paths.get(System.getProperty("user.dir"), "/demo/Files");
 
     @PostConstruct
     public void init() {
@@ -93,26 +94,56 @@ public class DataBaseInitializer {
 
         for (ProductDTO productDTO : productDTOs) {
 
-            String imageFileName = productDTO.getName().replaceAll("\\s+", "-") + ".jpg"; // Ej: Casa Moderna -> Casa-Moderna.jpg
+            String baseName = productDTO.getName().replaceAll("\\s+", "-");
+
+            // ---------- Cargar imagen ----------
+            String imageFileName = baseName + ".jpg";
             Path imagePath = IMAGES_FOLDER.resolve(imageFileName);
+            MultipartFile imageFile = null;
 
             if (!Files.exists(imagePath)) {
                 System.err.println("Advertencia: El archivo de imagen no existe para el producto: " + productDTO.getName());
-                continue;
+            } else {
+                try (FileInputStream fis = new FileInputStream(imagePath.toFile())) {
+                    imageFile = new MockMultipartFile(
+                            imageFileName,
+                            imageFileName,
+                            "image/jpeg",
+                            fis
+                    );
+                    productDTO.setImage(imageFileName);
+                } catch (IOException e) {
+                    System.err.println("Error al cargar imagen para producto: " + productDTO.getName());
+                    e.printStackTrace();
+                }
             }
 
-            try (FileInputStream fis = new FileInputStream(imagePath.toFile())) {
-                MultipartFile imageFile = new MockMultipartFile(
-                        imageFileName,
-                        imageFileName,
-                        "image/jpeg",
-                        fis
-                );
-                String imageName = productDTO.getName().replaceAll("\\s+", "-") + ".jpg";
-                productDTO.setImage(imageName);
-                productService.save(productDTO, imageFile);
+            // ---------- Cargar archivo .txt ----------
+            String textFileName = baseName + ".txt";
+            Path textPath = FILES_FOLDER.resolve(textFileName); // Asegúrate de definir FILES_FOLDER correctamente
+            MultipartFile textFile = null;
+
+            if (!Files.exists(textPath)) {
+                System.err.println("Advertencia: El archivo .txt no existe para el producto: " + productDTO.getName());
+            } else {
+                try (FileInputStream fis = new FileInputStream(textPath.toFile())) {
+                    textFile = new MockMultipartFile(
+                            textFileName,
+                            textFileName,
+                            "text/plain",
+                            fis
+                    );
+                } catch (IOException e) {
+                    System.err.println("Error al cargar archivo .txt para producto: " + productDTO.getName());
+                    e.printStackTrace();
+                }
+            }
+
+            // ---------- Guardar producto con ambos archivos ----------
+            try {
+                productService.save(productDTO, imageFile, textFile);
             } catch (IOException e) {
-                System.err.println("Error al cargar imagen para producto: " + productDTO.getName());
+                System.err.println("Error al guardar producto con archivos: " + productDTO.getName());
                 e.printStackTrace();
             }
         }

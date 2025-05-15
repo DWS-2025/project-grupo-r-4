@@ -137,7 +137,8 @@ public class WebSecurityConfig {
                                 "/editUser/*",
                                 "/updateAccount",
                                 "/deleteAccount",
-                                "/product/{id}/review"
+                                "/product/{id}/review",
+                                "/products/{id}/file"
                         ).hasAnyRole("USER")
 
                         // PRIVATE PAGES - ADMIN

@@ -58,6 +58,11 @@
                     <input type="hidden" name="_csrf" value="{{token}}">
                     <button type="submit" class="purchase-button">Añadir a la cesta 🛒</button>
                 </form>
+                <form action="/products/{{product.id}}/file" method="post">
+                    <input type="hidden" name="productId" value="{{product.id}}">
+                    <input type="hidden" name="_csrf" value="{{token}}">
+                    <button type="submit" class="purchase-button">File</button>
+                </form>
 
             </div>
         </div>

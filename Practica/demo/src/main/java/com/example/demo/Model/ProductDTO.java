@@ -2,6 +2,7 @@
 
     import com.fasterxml.jackson.annotation.JsonIgnore;
     import jakarta.persistence.Lob;
+    import org.springframework.web.multipart.MultipartFile;
 
     import java.sql.Blob;
     import java.util.ArrayList;
@@ -14,6 +15,7 @@
         private String description;
         private String type;
         private String image;
+        private String file;
         private List<Long> users = new ArrayList<>();;
         private List<Long> reviewsId = new ArrayList<>();
         private List<Long> purchasesId = new ArrayList<>();
@@ -46,22 +48,24 @@
             this.type = type;
         }
 
-        public ProductDTO(long id, String name, double price, String description, String productType, Blob imageFile) {
+        public ProductDTO(long id, String name, double price, String description, String productType, Blob imageFile, String file) {
             this.id = id;
             this.name = name;
             this.price = price;
             this.description = description;
             this.type = productType;
             this.imageFile = imageFile;
+            this.file = file;
         }
 
-        public ProductDTO(long id, String name, double price, String description, String productType, Blob imageFile, List<Long> reviewIds) {
+        public ProductDTO(long id, String name, double price, String description, String productType, Blob imageFile,String file, List<Long> reviewIds) {
             this.id = id;
             this.name = name;
             this.price = price;
             this.description = description;
             this.type = productType;
             this.imageFile = imageFile;
+            this.file = file;
             this.reviewsId = new ArrayList<>(reviewIds);
         }
 
@@ -150,6 +154,14 @@
 
         public void setImage(String image) {
             this.image = image;
+        }
+
+        public String getFile() {
+            return file;
+        }
+
+        public void setFile(String file) {
+            this.file = file;
         }
 
     }

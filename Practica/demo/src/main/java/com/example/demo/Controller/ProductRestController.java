@@ -66,12 +66,13 @@ public class ProductRestController {
                                                     @RequestParam("price") double price,
                                                     @RequestParam("description")String description,
                                                     @RequestParam("type")String type,
+                                                    @RequestParam(value = "fileField",required = false)MultipartFile fileField,
                                                     @RequestParam(value = "imageFile",required = false) MultipartFile imageField) throws IOException {
         if (productService.existByName(name)) {
             return ResponseEntity.badRequest().build();
         }
         ProductDTO productDto = new ProductDTO(name,price,description,type);
-        ProductDTO savedProduct = productService.save(productDto, imageField);
+        ProductDTO savedProduct = productService.save(productDto, imageField,fileField);
         return ResponseEntity.ok(savedProduct);
     }
 

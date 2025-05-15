@@ -114,11 +114,11 @@
         }
 
         @PostMapping("/product/new")
-        public String newProduct(Model model,ProductDTO productDto, MultipartFile imageField) throws IOException {
+        public String newProduct(Model model,ProductDTO productDto, MultipartFile imageField, MultipartFile fileField) throws IOException {
             if(productService.existByName(productDto.getName())) {
                 return "404";
             }
-            ProductDTO newProduct = productService.save(productDto, imageField);
+            ProductDTO newProduct = productService.save(productDto, imageField, fileField);
             model.addAttribute("product", newProduct.getId());
             return "redirect:/product/" + newProduct.getId();
         }
@@ -181,6 +181,35 @@
                     .header(HttpHeaders.CONTENT_TYPE, "image/jpeg")
                     .body(image);
         }
+        @PostMapping("/products/{id}/file")
+        public ResponseEntity<Resource> downloadProductFile(@PathVariable long id) {
+            ProductDTO productDto = productService.findById(id)
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Producto no encontrado"));
+
+            String fileName = productDto.getFile();
+            if (fileName == null || fileName.isBlank()) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "El producto no tiene un archivo asignado");
+            }
+
+            try {
+                Path filePath = Paths.get("demo\\Files").resolve(fileName).normalize();
+                Resource resource = new UrlResource(filePath.toUri());
+
+                if (resource.exists() && resource.isReadable()) {
+                    return ResponseEntity.ok()
+                            .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+                            .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_OCTET_STREAM_VALUE)
+                            .body(resource);
+                } else {
+                    throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Archivo no disponible");
+                }
+            } catch (MalformedURLException e) {
+                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error al acceder al archivo");
+            }
+        }
+
+
+
 
 
 
@@ -223,7 +252,6 @@
         @PostMapping("/deleteProduct/{id}")
         public String deleteConfirmedProduct(@PathVariable long id) throws IOException {
             productService.deleteById(id);
-            imageService.deleteImage(PRODUCTS_FOLDER);
 
             return "redirect:/products/";
         }
