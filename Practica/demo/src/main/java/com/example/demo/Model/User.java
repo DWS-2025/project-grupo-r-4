@@ -21,6 +21,7 @@ public class User {
     @JsonView(UserInfo.class)
     private long id;
     @JsonView(UserInfo.class)
+    @Column(unique = true)
     private String name;
     @JsonView(UserInfo.class)
     private String encodedPassword;

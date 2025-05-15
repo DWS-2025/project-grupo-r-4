@@ -144,49 +144,6 @@
             return "redirect:/product/" + id;
         }
 
-        @PostMapping("/product/{id}/uploadImage")
-        public String uploadImage(@PathVariable Long id, @RequestParam("file") MultipartFile file, Model model) {
-            try {
-                Optional<Product> optionalProduct = productRepository.findById(id);
-                if (optionalProduct.isEmpty()) {
-                    return "redirect:/products";
-                }
-
-                Product product = optionalProduct.get();
-                String fileName = UUID.randomUUID() + "_" + file.getOriginalFilename();
-                String uploadDir = "uploads/";
-
-                File uploadPath = new File(uploadDir);
-                if (!uploadPath.exists()) {
-                    uploadPath.mkdirs();
-                }
-
-                File dest = new File(uploadDir + fileName);
-                file.transferTo(dest);
-
-                product.setImagePath(fileName);
-                productRepository.save(product);
-
-                return "redirect:/product/" + id;
-            } catch (IOException e) {
-                model.addAttribute("error", "Error al subir la imagen.");
-                return "error";
-            }
-        }
-
-
-        @GetMapping("/images/{fileName}")
-        public ResponseEntity<Resource> getImage(@PathVariable String fileName) throws MalformedURLException {
-            Path path = Paths.get("uploads/").resolve(fileName).normalize();
-            Resource resource = new UrlResource(path.toUri());
-            if (!resource.exists()) {
-                return ResponseEntity.notFound().build();
-            }
-            return ResponseEntity.ok()
-                    .contentType(MediaType.IMAGE_JPEG) // cambia según tipo
-                    .body(resource);
-        }
-
 
         @GetMapping("/product/{id}")
         public String showProduct(Model model, @PathVariable long id) {

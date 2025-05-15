@@ -109,7 +109,7 @@ public class WebSecurityConfig {
                                 "/register",
                                 "/register/**",
                                 "/products",
-                                "/product/*",
+                                "/product/**",
                                 "/filter",
                                 "/products/filter",
                                 "/products/loadMore",
