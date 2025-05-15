@@ -330,48 +330,57 @@
 
 
         @PostMapping("/cart/checkout")
-        public String checkout(HttpSession session) throws IOException {
-            @SuppressWarnings("unchecked")
-            List<Long> cart = (List<Long>) session.getAttribute("cart");
+        public String checkout(Principal principal) throws IOException {
+            String username = principal.getName();
+            User user = userRepository.findByName(username)
+                    .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
-            if (cart == null || cart.isEmpty()) {
+            Cart cart = cartRepository.findByUser(user)
+                    .orElseThrow(() -> new RuntimeException("Carrito no encontrado"));
+
+            List<Product> products = cart.getProducts();
+
+            if (products == null || products.isEmpty()) {
                 return "redirect:/cart";
             }
 
-            // Crear la compra
             PurchaseDTO purchaseDTO = new PurchaseDTO();
-            purchaseDTO.setProductIds(new ArrayList<>(cart));
+            purchaseDTO.setUserId(user.getId());
+            purchaseDTO.setProductIds(
+                    products.stream().map(Product::getId).collect(Collectors.toList())
+            );
+
+// 👇 Aquí calculamos y seteamos el precio total
+            double totalPrice = products.stream()
+                    .mapToDouble(Product::getPrice)
+                    .sum();
+            purchaseDTO.setPrice(totalPrice);
 
             PurchaseDTO savedPurchase = purchaseService.save(purchaseDTO);
 
-            // Procesar cada producto del carrito
-            for (Long productId : cart) {
-                ProductDTO productDTO = productService.findById(productId)
+            for (Product product : products) {
+                ProductDTO productDTO = productService.findById(product.getId())
                         .orElseThrow(() -> new ResponseStatusException(
-                                HttpStatus.NOT_FOUND, "Producto con ID " + productId + " no encontrado"));
+                                HttpStatus.NOT_FOUND, "Producto con ID " + product.getId() + " no encontrado"));
 
-                // Verificar si la lista de compras está vacía y, si es así, inicializarla
                 List<Long> purchases = Optional.ofNullable(productDTO.getPurchasesId())
                         .orElseGet(ArrayList::new);
 
-                // Evitar duplicados
                 if (!purchases.contains(savedPurchase.getId())) {
                     purchases.add(savedPurchase.getId());
                 }
 
-                // Asignar la lista de compras al DTO
                 productDTO.setPurchasesId(purchases);
-
-                // Llamar al servicio de actualización de productos. Pasamos 'null' para la imagen si no es necesaria.
-                productService.updateProduct(productId, productDTO, null);
+                productService.updateProduct(product.getId(), productDTO, null);
             }
 
-            // Limpiar el carrito
-            session.removeAttribute("cart");
+            // Limpiar el carrito del usuario
+            cart.setProducts(new ArrayList<>());
+            cartRepository.save(cart);
 
-            // Redirigir a los productos
             return "redirect:/products";
         }
+
 
 
 
