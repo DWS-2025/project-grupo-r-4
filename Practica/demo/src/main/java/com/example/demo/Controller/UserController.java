@@ -12,6 +12,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -36,6 +37,10 @@ public class UserController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
 
     @GetMapping("/user/{id}/buys")
     public String showUserPurchase(@PathVariable Long id, Model model, Principal principal) {
@@ -124,25 +129,16 @@ public class UserController {
     public String registerUser(User user, Model model) {
         try {
             // Registrar el nuevo usuario
-            User registeredUser = userService.registerNewUser(user);
+            userService.registerNewUser(user);
 
-            // Autenticar automáticamente al usuario después del registro
-            Authentication authentication = new UsernamePasswordAuthenticationToken(
-                    registeredUser.getName(),
-                    user.getEncodedPassword() // Usamos la contraseña original para autenticar al usuario
-            );
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-
-            // Redirigir a la página principal o al dashboard del usuario
-            return "redirect:/";
-
+            return "redirect:/login";
         } catch (RuntimeException e) {
-            // Mostrar el error si algo falla durante el registro
             model.addAttribute("error", "Error al registrar el usuario: " + e.getMessage());
-            e.printStackTrace(); // Esto es útil para depurar el error
-            return "register";  // Redirigir a la página de registro
+            e.printStackTrace();
+            return "register";
         }
     }
+
 
     @GetMapping("/editUser/{id}")
     public String editUser(@PathVariable Long id, Model model) {

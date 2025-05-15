@@ -49,8 +49,14 @@
                 <button onclick="location.href='/product/{{product.id}}/review'">Añadir reseña</button>
                 <button onclick="location.href='/product/{{product.id}}/purchase'">Comprar</button>
                 <button onclick="location.href='/products'">Atrás</button>
-                <button onclick="location.href='/showdeleteProduct/{{product.id}}'">Borrar producto</button>
                 <button onclick="location.href='/product/{{product.id}}/modify'">Modificar</button>
+
+
+                <form action="/deleteProduct/{{product.id}}" method="post">
+                    <input type="hidden" name="productId" value="{{product.id}}">
+                    <input type="hidden" name="_csrf" value="{{token}}">
+                    <button type="submit" class="purchase-button">Borrar producto</button>
+                </form>
 
                 <!-- Formulario para añadir a la cesta -->
                 <form action="/cart/add" method="post">

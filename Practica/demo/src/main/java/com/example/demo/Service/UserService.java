@@ -44,6 +44,7 @@ public class UserService {
         userDTO.setPhone(user.getPhone());
         userDTO.setNumReviews(user.getNumReviews());
         userDTO.setEncodedPassword(user.getEncodedPassword());
+        userDTO.setRoles(user.getRoles());
         userDTO.setReviewIds(user.getReviews().stream()
                 .map(Review::getReviewId)
                 .collect(Collectors.toList()));
