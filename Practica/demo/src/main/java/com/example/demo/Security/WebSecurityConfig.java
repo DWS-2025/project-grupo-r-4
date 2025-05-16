@@ -69,9 +69,19 @@ public class WebSecurityConfig {
         http
                 .authorizeHttpRequests(authorize -> authorize
                         // PRIVATE ENDPOINTS
-                        .requestMatchers(HttpMethod.POST,"/api/competitions/").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET,"/api/products").hasRole("USER")
-                        .requestMatchers(HttpMethod.GET,"/api/product/**").hasRole("USER")
+                        .requestMatchers(HttpMethod.GET,"/api/products/*").hasRole("USER")
+                        .requestMatchers(HttpMethod.GET,"/api/products/*/filter").hasRole("USER")
+                        .requestMatchers(HttpMethod.GET,"/api/product/*").hasRole("USER")
+                        .requestMatchers(HttpMethod.GET,"/api/product/*/image").hasRole("USER")
+                        .requestMatchers(HttpMethod.GET,"/api/filter").hasRole("USER")
+                        .requestMatchers(HttpMethod.POST,"/api/product/new").hasRole("USER")
+                        .requestMatchers(HttpMethod.POST,"/api/product/*/modify").hasRole("USER")
+                        .requestMatchers(HttpMethod.POST,"/api/product/*/purchase").hasRole("USER")
+                        .requestMatchers(HttpMethod.POST,"/api/product/*/review").hasRole("USER")
+                        .requestMatchers(HttpMethod.POST,"/api/product/*/file").hasRole("USER")
+                        .requestMatchers(HttpMethod.PUT,"/api/product/*").hasRole("USER")
+                        .requestMatchers(HttpMethod.DELETE,"/api/product/*").hasRole("USER")
 
                         // PUBLIC ENDPOINTS
                         .anyRequest().permitAll()
