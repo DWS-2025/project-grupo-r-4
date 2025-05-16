@@ -232,27 +232,25 @@ public class UserController {
 
     @PostMapping("/updateAccount")
     public String updateAccount(@ModelAttribute("user") User updatedUser, RedirectAttributes redirectAttributes, Principal principal) {
-        // Obtener el usuario actual autenticado
         User currentUser = userService.findByNameDatabse(principal.getName());
 
         if (currentUser == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado");
         }
 
-        // Solo permitimos actualizar nombre y contraseña
+        // Solo actualizar campos válidos
         if (updatedUser.getName() != null && !updatedUser.getName().isBlank()) {
             currentUser.setName(updatedUser.getName());
         }
 
         if (updatedUser.getEncodedPassword() != null && !updatedUser.getEncodedPassword().isBlank()) {
-            // Asegúrate de encriptar la nueva contraseña
             currentUser.setEncodedPassword(userService.encodePassword(updatedUser.getEncodedPassword()));
         }
 
-        // Guardar cambios
-        userService.save(userService.convertToDTO(currentUser));
+        // Guardar sin convertir a DTO
+        userService.update(currentUser);
 
-        // Actualizar el Authentication en el SecurityContext con el nuevo nombre
+        // Actualizar autenticación
         Authentication newAuthentication = new UsernamePasswordAuthenticationToken(
                 currentUser.getName(),
                 currentUser.getEncodedPassword(),
@@ -260,7 +258,6 @@ public class UserController {
         );
         SecurityContextHolder.getContext().setAuthentication(newAuthentication);
 
-        // Mensaje de éxito
         redirectAttributes.addFlashAttribute("success", "Cuenta actualizada correctamente.");
         return "redirect:/myAccount";
     }

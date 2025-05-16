@@ -74,14 +74,14 @@ public class FileService {
             throw new IOException("Filename contains invalid characters: \\ (are you using ../ ?)");
         }
 
-        Path filePath =FILES_FOLDER.resolve(originalFileName);
-        var pathFile = filePath.toFile().getCanonicalPath().toString();
-        var pathFolder = FILES_FOLDER.toAbsolutePath().toString();
-        if(pathFile.startsWith(pathFolder)){
-            return pathFile;
-        }else{
-            throw new IOException("File is outside of the allowed directory (are you using ../ ?)");
+        Path filePath = FILES_FOLDER.resolve(originalFileName).normalize();
+        String canonicalPath = filePath.toFile().getCanonicalPath();
+        String folderPath = FILES_FOLDER.toAbsolutePath().toFile().getCanonicalPath();
+        if (!canonicalPath.startsWith(folderPath)) {
+            throw new IOException("File is outside of allowed directory");
         }
+
+        return originalFileName;
 
     }
     public void deleteFile(String file_url) {

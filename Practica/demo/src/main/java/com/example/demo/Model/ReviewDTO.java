@@ -72,10 +72,10 @@ public class ReviewDTO {
         this.productName = productName;
     }
     public String getUserName() {
-        return productName;
+        return userName;
     }
-    public void setUserName(String productName) {
-        this.productName = productName;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
 
