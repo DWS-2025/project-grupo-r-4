@@ -60,10 +60,6 @@ public class ProductRestController {
         return productService.findPaginated(page,size);
     }
 
-    @GetMapping("/filter")
-    public ResponseEntity<String> showFilterPage() {
-        return ResponseEntity.ok("filter page logic no longer needed in REST");
-    }
 
     @GetMapping("/products/filter")
     public ResponseEntity<List<ProductDTO>> filterProducts(
@@ -76,9 +72,12 @@ public class ProductRestController {
     public ResponseEntity<List<ProductDTO>> loadMoreProducts(
             @RequestParam int page,
             @RequestParam(defaultValue = "2") int size) {
+
         int offset = 10 + (page * size);
-        return ResponseEntity.ok(productService.findPaginated(offset, size));
+        List<ProductDTO> products = productService.findPaginated(offset, size);
+        return ResponseEntity.ok(products);
     }
+
 
     @PostMapping("/product/new")
     public ResponseEntity<ProductDTO> newProduct(
@@ -124,7 +123,7 @@ public class ProductRestController {
                 .body(image);
     }
 
-    @PostMapping("/products/{id}/file")
+    @GetMapping("/product/{id}/file")
     public ResponseEntity<Resource> downloadProductFile(@PathVariable long id) {
         ProductDTO productDto = productService.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Producto no encontrado"));
@@ -179,26 +178,32 @@ public class ProductRestController {
 
         ProductDTO product = productOpt.get();
 
-        productService.deleteById(id);
-        if (product.getImageFile() != null) {
-            imageService.deleteImage(product.getImage());
+        // Primero intenta borrar la imagen si existe
+        String imageUrl = product.getImage();
+        if (imageUrl != null && !imageUrl.isBlank()) {
+            imageService.deleteImage(imageUrl);
         }
+
+        // Luego borra el producto
+        productService.deleteById(id);
 
         return ResponseEntity.ok("Producto eliminado");
     }
 
+
     @PostMapping("/product/{id}/review")
-    public ResponseEntity<ProductDTO> addReview(@PathVariable long id,
-                                                @RequestParam("review") String review,
-                                                @RequestParam("rating") int rating,
-                                                Principal principal) {
+    public ResponseEntity<ProductDTO> addReview(
+            @PathVariable long id,
+            @RequestBody Review reviewRequest,
+            Principal principal) {
+
         Optional<ProductDTO> productOpt = productService.findById(id);
         if (productOpt.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
 
         UserDTO user = userService.findByUserName(principal.getName());
-        productService.addReview(productOpt.get(), user.getId(), review, rating);
+        productService.addReview(productOpt.get(), user.getId(), reviewRequest.getReview(), reviewRequest.getRating());
 
         return ResponseEntity.ok(productOpt.get());
     }
