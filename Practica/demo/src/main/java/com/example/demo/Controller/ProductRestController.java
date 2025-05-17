@@ -1,6 +1,9 @@
 package com.example.demo.Controller;
 
 import com.example.demo.Model.*;
+import com.example.demo.Repository.CartRepository;
+import com.example.demo.Repository.ProductRepository;
+import com.example.demo.Repository.UserRepository;
 import com.example.demo.Service.*;
 import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,6 +53,16 @@ public class ProductRestController {
 
     @Autowired
     private ReviewService reviewService;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private CartRepository cartRepository;
+
+    @Autowired
+    private ProductRepository productRepository;
+
 
     interface ProductView extends Product.Basic, Product.ProdUser, Product.ProdRev, Product.ProdPurch {}
 
@@ -224,5 +237,116 @@ public class ProductRestController {
 
         return ResponseEntity.ok(product);
     }
+    @PostMapping("/product/{id}/addToCart")
+    public ResponseEntity<?> addToCart(@PathVariable("id") Long productId, Principal principal) {
+        User user = getUserFromPrincipal(principal);
+        Cart cart = cartRepository.findByUser(user).orElseGet(() -> {
+            Cart newCart = new Cart();
+            newCart.setUser(user);
+            newCart.setProducts(new ArrayList<>());
+            return cartRepository.save(newCart);
+        });
+
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Producto no encontrado"));
+
+        if (!cart.getProducts().contains(product)) {
+            cart.getProducts().add(product);
+            cartRepository.save(cart);
+        }
+
+        return ResponseEntity.ok("Producto añadido al carrito");
+    }
+
+
+    @GetMapping("/cart")
+    public ResponseEntity<?> viewCart(Principal principal) {
+        User user = getUserFromPrincipal(principal);
+        Cart cart = cartRepository.findByUser(user).orElseGet(() -> {
+            Cart newCart = new Cart();
+            newCart.setUser(user);
+            newCart.setProducts(new ArrayList<>());
+            return cartRepository.save(newCart);
+        });
+
+        List<ProductDTO> productsInCart = cart.getProducts().stream()
+                .map(productService::convertToDTO)
+                .toList();
+
+        double total = productsInCart.stream().mapToDouble(ProductDTO::getPrice).sum();
+        Map<String, Object> response = new HashMap<>();
+        response.put("products", productsInCart);
+        response.put("total", total);
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/cart/checkout")
+    public ResponseEntity<?> checkout(Principal principal) throws IOException {
+        User user = getUserFromPrincipal(principal);
+        Cart cart = cartRepository.findByUser(user)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Carrito no encontrado"));
+
+        List<Product> products = cart.getProducts();
+        if (products == null || products.isEmpty()) {
+            return ResponseEntity.badRequest().body("El carrito está vacío");
+        }
+
+        PurchaseDTO purchaseDTO = new PurchaseDTO();
+        purchaseDTO.setUserId(user.getId());
+        purchaseDTO.setProductIds(products.stream().map(Product::getId).toList());
+        purchaseDTO.setPrice(products.stream().mapToDouble(Product::getPrice).sum());
+
+        PurchaseDTO savedPurchase = purchaseService.save(purchaseDTO);
+
+        for (Product product : products) {
+            ProductDTO productDTO = productService.findById(product.getId())
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+            List<Long> purchases = Optional.ofNullable(productDTO.getPurchasesId()).orElseGet(ArrayList::new);
+            if (!purchases.contains(savedPurchase.getId())) {
+                purchases.add(savedPurchase.getId());
+                productDTO.setPurchasesId(purchases);
+                productService.updateProduct(product.getId(), productDTO, null);
+            }
+        }
+
+        cart.setProducts(new ArrayList<>());
+        cartRepository.save(cart);
+        return ResponseEntity.ok("Compra realizada con éxito");
+    }
+
+    @PostMapping("/product/{id}/removeFromCart")
+    public ResponseEntity<?> removeFromCart(@PathVariable("id") Long productId, Principal principal) {
+        User user = getUserFromPrincipal(principal);
+        Cart cart = cartRepository.findByUser(user)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Carrito no encontrado"));
+
+        productRepository.findById(productId).ifPresent(product -> {
+            cart.getProducts().remove(product);
+            cartRepository.save(cart);
+        });
+
+        return ResponseEntity.ok("Producto eliminado del carrito");
+    }
+
+
+    @DeleteMapping("/reviews/{reviewId}")
+    public ResponseEntity<?> deleteReview(@PathVariable("reviewId") long reviewId) {
+        try {
+            reviewService.deleteById(reviewId);
+            return ResponseEntity.ok("Reseña eliminada correctamente");
+        } catch (ResponseStatusException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getReason());
+        }
+    }
+
+    // ------------------------
+    // UTILS
+    // ------------------------
+
+    private User getUserFromPrincipal(Principal principal) {
+        return userRepository.findByName(principal.getName())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Usuario no encontrado"));
+    }
+
 
 }
