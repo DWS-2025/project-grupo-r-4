@@ -54,7 +54,7 @@ public class UserRestController {
     }
 
     // Listar todos los usuarios (solo admin)
-    @GetMapping
+    @GetMapping("/showAll")
     public ResponseEntity<List<UserDTO>> getAllUsers(Principal principal) {
         User currentUser = userService.findByNameDatabse(principal.getName());
         if (currentUser == null || !currentUser.getRoles().contains("ADMIN")) {
@@ -96,7 +96,7 @@ public class UserRestController {
         );
         SecurityContextHolder.getContext().setAuthentication(newAuthentication);
 
-        return ResponseEntity.ok("Cuenta actualizada correctamente");
+        return ResponseEntity.ok("Cuenta actualizada correctamente. Logueate de nuevo para utilizar la cuenta");
     }
 
     // Eliminar cuenta (propia o por admin)
