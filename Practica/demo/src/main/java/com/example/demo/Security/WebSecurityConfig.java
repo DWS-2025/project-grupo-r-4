@@ -82,7 +82,13 @@ public class WebSecurityConfig {
                         .requestMatchers(HttpMethod.POST,"/api/product/*/file").hasRole("USER")
                         .requestMatchers(HttpMethod.PUT,"/api/product/*").hasRole("USER")
                         .requestMatchers(HttpMethod.DELETE,"/api/product/*").hasRole("USER")
-
+                        .requestMatchers(HttpMethod.GET,"/api/users/me").hasRole("USER")
+                        .requestMatchers(HttpMethod.PUT,"/api/users/me").hasRole("USER")
+                        .requestMatchers(HttpMethod.GET,"/api/users/{id}").hasRole("USER")
+                        .requestMatchers(HttpMethod.DELETE,"/api/users/{id}").hasRole("USER")
+                        .requestMatchers(HttpMethod.DELETE,"/api/users/{id}/reviews").hasRole("USER")
+                        .requestMatchers(HttpMethod.DELETE,"/api/users/{id}/purchases").hasRole("USER")
+                        .requestMatchers(HttpMethod.GET,"/api/users/showAll").hasRole("ADMIN")
                         // PUBLIC ENDPOINTS
                         .anyRequest().permitAll()
                 );
