@@ -61,7 +61,7 @@ public class ProductRestController {
     }
 
 
-    @GetMapping("/products/filter")
+    @PostMapping("/products/filter")
     public ResponseEntity<List<ProductDTO>> filterProducts(
             @RequestParam(required = false) String type,
             @RequestParam(required = false) Float price) {
@@ -134,7 +134,9 @@ public class ProductRestController {
         }
 
         try {
-            Path filePath = Paths.get("demo\\Files").resolve(fileName).normalize();
+            Path filePath = Paths.get("demo", "Files").resolve(fileName).normalize();
+            System.out.println("Buscando archivo en: " + filePath.toAbsolutePath()); // LOG
+
             Resource resource = new UrlResource(filePath.toUri());
 
             if (resource.exists() && resource.isReadable()) {
@@ -178,18 +180,13 @@ public class ProductRestController {
 
         ProductDTO product = productOpt.get();
 
-        // Primero intenta borrar la imagen si existe
-        String imageUrl = product.getImage();
-        if (imageUrl != null && !imageUrl.isBlank()) {
-            imageService.deleteImage(imageUrl);
-        }
-
-        // Luego borra el producto
         productService.deleteById(id);
+        if (product.getImageFile() != null) {
+            imageService.deleteImage(product.getImage());
+        }
 
         return ResponseEntity.ok("Producto eliminado");
     }
-
 
     @PostMapping("/product/{id}/review")
     public ResponseEntity<ProductDTO> addReview(
