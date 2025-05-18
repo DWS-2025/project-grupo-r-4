@@ -24,6 +24,7 @@
 - **Purchase**: representa una compra realizada por un usuario.
 - **Review**: permite a los usuarios dejar comentarios y valoraciones sobre los productos.
 - **Image**: representa la imagen del producto al que esta asignado.
+- **Cart**: representa la cesta en la que se podran comprar los productos.
 
 
 ### Relaciones entre entidades
@@ -36,12 +37,14 @@ Un usuario puede realizar muchas compras.
 
 3.User ↔ Product
 Un usuario puede estar asociado a muchos productos, y un producto puede estar asociado a muchos usuarios.
+(Relación muchos a muchos mediante la tabla products_users)
 
 4.Product ↔ Review
 Un producto puede tener muchas reseñas.
 
 5.Product ↔ Purchase
 Un producto puede estar en muchas compras, y una compra puede contener muchos productos.
+(Relación muchos a muchos mediante la tabla purchase_products)
 
 6.Purchase ↔ User
 Cada compra pertenece a un único usuario.
@@ -52,13 +55,25 @@ Cada reseña es escrita por un único usuario.
 8.Review ↔ Product
 Cada reseña pertenece a un único producto.
 
+9.User ↔ Cart
+Un usuario tiene un carrito asociado.
+(Relación uno a uno)
+
+10.Cart ↔ Product
+Un carrito puede contener muchos productos, y un producto puede estar en muchos carritos.
+(Relación muchos a muchos mediante la tabla cart_product)
+
+
+
+
 ---
 
 ## Permisos de los usuarios
 
 | Tipo de usuario | Permisos |
 |-----------------|----------|
-| **User** | Añadir/modificar/eliminar productos, ver todas las compras . Es dueño de la gestión global. |
+| **Admin** | Añadir/modificar/eliminar productos, ver todas las compras . Es dueño de la gestión global. |
+| **User** | Comprar/añadir reseñas/añadir a la cesta y todo poder sobre su perfil |
 
 ---
 
@@ -70,7 +85,8 @@ Cada reseña pertenece a un único producto.
 
 ## Diagrama de Entidades
 
-![image](https://github.com/user-attachments/assets/1d054b65-b3d4-4851-8831-132fcee30b12)
+![Imagen](https://github.com/user-attachments/assets/871c24a0-c991-44d4-ac3b-550b43687900)
+
 
 
 ---
@@ -82,32 +98,32 @@ Cada reseña pertenece a un único producto.
 
 **Commits más relevantes**:
 
-1. [Creación de los RestController]
-   Se crearon los restController con las exigencias pedidas en la práctica.
-2. [Inicialización de la base de datos]
-   Se inició la base de datos y se consiguió insertar los productos e imágenes en esta.
-3. [Visualización de las imágenes]
-   Se pudo visualizar las imágenes en la página web.
-4. [Cambio de la estructura completa para Dtos]
-   Se crearon las entidades y se modificaron los services y controllers para que se usasen Dtos.
-5. [Filtrar una entidad por varias de sus variables]
-   Los productos se consiguió que se pudiesen filtrar por tipo y por precio.
+1. [Actualizacion productRestontroller]
+   Se actualizaron los metodos con respecto a la fase anterior.
+2. [Texto enriquecido]
+   Adición del texto enriquecido.
+3. [Implementacion de la entidad Cart]
+   Creacion de cart y comienzo de su uso.
+4. [Correción relación NM]
+   Correcto funcionamiento de la relación.
+5. [Seguridad en BBDD]
+   Implementación de seguridad para la Base de datos.
 
 
 - #### Jorge Punzón
 
 **Commits más relevantes**:
 
-1. [Actualización de los RestController]
-   Se actualizaron los restController para su correcto funcionamiento.
-2. [Paginación AJAX]
-   Creación de la paginación según el enunciado de la prácica.
-3. [Correccion de los html]
-   Corrección de los html tras los cambios de los Dtos y base de datos.
-4. [Visualización de las reseñas]
-   Correcto funcionamiento de la creacion y visualización de reseñas de cada producto.
-5. [Funcionamiento de borrado de producto]
-   Corrección de problemas específicos al borrar un producto.
+1. [Actualización de los userRestController]
+   Se actualizaron los metodos de user con respecto a la fase anterior.
+2. [Obtencion de HTTPS]
+   Certificado para HTTPS.
+3. [Creacion del fichero]
+   Adición del fichero para descargar.
+4. [Implementación de el borrado de reseña]
+   Borrado de reseña completado.
+5. [Compras individuales y carrito]
+   Funcionamiento completo de compras tanto individuales como con la cesta.
 
 
 
