@@ -28,6 +28,7 @@
   <section class="contact">
     <h2>Contacta con nosotros</h2>
     <form action="/contact" method="post">
+      <input type="hidden" name="_csrf" value="{{token}}">
       <div class="form-field">
         <label for="user">Nombre de Usuario:</label>
         <input type="text" id="user" name="user" required>

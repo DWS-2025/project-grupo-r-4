@@ -32,7 +32,6 @@
     <form action="/updateAccount" method="post">
       <input type="hidden" name="_csrf" value="{{token}}" />
       <input type="hidden" name="id" value="{{user.id}}" />
-      <input type="hidden" name="_csrf" value="{{token}}" />
 
       <label for="name">Nombre:</label>
       <input type="text" id="name" name="name" value="{{user.name}}" required />
