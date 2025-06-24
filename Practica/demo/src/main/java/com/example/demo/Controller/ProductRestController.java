@@ -331,26 +331,14 @@ public class ProductRestController {
 
     @DeleteMapping("/reviews/{id}")
     public ResponseEntity<?> deleteReview(@PathVariable("id") long id, Principal principal) {
-        ReviewDTO review = reviewService.findById(id);
-        if (review == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Reseña no encontrada");
+        try {
+            reviewService.deleteById(id, principal.getName());
+            return ResponseEntity.ok("Reseña eliminada correctamente.");
+        } catch (ResponseStatusException e) {
+            return ResponseEntity.status(e.getStatusCode()).body(e.getReason());
         }
-
-        // Obtener el usuario autenticado
-        User currentUser = getUserFromPrincipal(principal);
-
-        if (review.getUserId() != (currentUser.getId())) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "No puedes eliminar reseñas de otros usuarios");
-        }
-
-        reviewService.deleteById(id);
-        return ResponseEntity.ok("Reseña eliminada correctamente.");
     }
 
-
-    // ------------------------
-    // UTILS
-    // ------------------------
 
     private User getUserFromPrincipal(Principal principal) {
         return userRepository.findByName(principal.getName())

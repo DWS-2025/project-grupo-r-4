@@ -436,14 +436,13 @@
                                    RedirectAttributes redirectAttributes,
                                    Principal principal) {
             try {
-                reviewService.deleteById(reviewId);
+                reviewService.deleteById(reviewId, principal.getName()); // Pasar el nombre del usuario autenticado
                 redirectAttributes.addFlashAttribute("success", "Reseña eliminada correctamente.");
             } catch (ResponseStatusException e) {
                 redirectAttributes.addFlashAttribute("error", e.getReason());
             }
             return "redirect:/myAccount";
         }
-
 
     }
 

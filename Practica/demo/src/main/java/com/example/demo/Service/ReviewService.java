@@ -102,30 +102,29 @@ public class ReviewService {
     }
 
 
-    public void deleteById(long id) {
-        if (!reviewRepository.existsById(id)) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Reseña no encontrada");
-        }
-
-
+    public void deleteById(long id, String username) {
         Review review = reviewRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Reseña no encontrada"));
 
+        User authUser = userRepository.findByName(username)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Usuario no encontrado"));
+
+        if (!review.getUser().getName().equals(username) && !authUser.getRoles().contains("ADMIN")) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "No tienes permiso para eliminar esta reseña");
+        }
+
         Product product = review.getProduct();
         User user = review.getUser();
-
 
         product.getReviews().remove(review);
         user.getReviews().remove(review);
         user.setNumReviews(user.getNumReviews() - 1);
 
-
         reviewRepository.deleteById(id);
-
-
         productRepository.save(product);
         userRepository.save(user);
     }
+
 
 
     public List<ReviewDTO> findByUser(UserDTO userDTO) {
