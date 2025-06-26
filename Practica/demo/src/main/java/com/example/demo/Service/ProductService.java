@@ -20,6 +20,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.web.util.HtmlUtils;
+import org.jsoup.Jsoup;
+import org.jsoup.safety.Safelist;
 
 
 import java.io.File;
@@ -184,7 +186,7 @@ public class ProductService {
     }
 
     public String sanitizeReview(String commentText) {
-        return HtmlUtils.htmlEscape(commentText);
+        return Jsoup.clean(commentText, Safelist.basic());
     }
 
     public Optional<ProductDTO> addReview(ProductDTO productDTO, Long userId, String reviewText, int rating) {

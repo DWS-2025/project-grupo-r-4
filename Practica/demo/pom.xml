@@ -75,6 +75,11 @@
             <artifactId>jaxb-api</artifactId>
             <version>2.3.1</version>
         </dependency>
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>1.17.2</version> <!-- Verifica si hay una versión más reciente -->
+        </dependency>
     </dependencies>
 
     <build>
