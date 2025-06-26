@@ -147,7 +147,14 @@ public class UserController {
 
 
     @GetMapping("/editUser/{id}")
-    public String editUser(@PathVariable Long id, Model model) {
+    public String editUser(@PathVariable Long id, Model model,Principal principal) {
+
+        User currentUser = userService.findByNameDatabse(principal.getName());
+        boolean isAdmin = currentUser.getRoles().contains("ADMIN");
+
+        if (!isAdmin && currentUser.getId() != id) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "No tienes permiso para ver esta información.");
+        }
 
         Optional<UserDTO> optionalUser = userService.findById(id);
         if (optionalUser.isPresent()) {
