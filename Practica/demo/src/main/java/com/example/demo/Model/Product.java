@@ -47,7 +47,9 @@ public class Product {
     @JsonView(ProdPurch.class)
     @ManyToMany(mappedBy = "products",cascade = CascadeType.REMOVE)
     private List<Purchase> purchase;
-
+    @Lob
+    @JsonIgnore
+    private Blob fileFile;
     @Lob
     @JsonIgnore
     private Blob imageFile;
@@ -93,6 +95,14 @@ public class Product {
     public void setName(String name) {
         this.name = name;
     }
+    public Blob getFileFile() {
+        return fileFile;
+    }
+
+    public void setFileFile(Blob fileFile) {
+        this.fileFile = fileFile;
+    }
+
 
     public String getImagePath() {
         return imagePath;

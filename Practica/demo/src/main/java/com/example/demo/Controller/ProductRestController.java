@@ -127,7 +127,7 @@ public class ProductRestController {
         return ResponseEntity.status(HttpStatus.CREATED).body(newProduct);
     }*/
 
-    @PutMapping("/product/{id}/modify")
+    /*@PutMapping("/product/{id}/modify")
     public ResponseEntity<ProductDTO> modifyProduct(
             ProductDTO productDto,
             @PathVariable long id,
@@ -137,7 +137,7 @@ public class ProductRestController {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         productService.updateProduct(id, productDto, imageField);
         return ResponseEntity.ok(existingProduct);
-    }
+    }*/
 
     @GetMapping("/product/{id}")
     public ResponseEntity<ProductDTO> showProduct(@PathVariable long id) {
@@ -187,7 +187,7 @@ public class ProductRestController {
     }
 
 
-    @PutMapping(value = "/product/{id}", consumes = "multipart/form-data")
+    /*@PutMapping(value = "/product/{id}", consumes = "multipart/form-data")
     public ResponseEntity<ProductDTO> updateProductMultipart(@PathVariable long id,
                                                              @RequestParam("name") String name,
                                                              @RequestParam("description") String description,
@@ -202,7 +202,31 @@ public class ProductRestController {
 
         ProductDTO updatedProduct = productService.updateProduct(id, productDto, imageField);
         return ResponseEntity.ok(updatedProduct);
+    }*/
+
+    @PutMapping("/product/{id}/modify")
+    public ResponseEntity<ProductDTO> updateProductData(@PathVariable long id,
+                                                        @RequestBody ProductDTO productDto) {
+        if (!productService.existById(id)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Producto no encontrado");
+        }
+
+        ProductDTO updatedProduct = productService.updateProductData(id, productDto); // sin archivos
+        return ResponseEntity.ok(updatedProduct);
     }
+
+    @PutMapping("/product/{id}/upload")
+    public ResponseEntity<String> updateProductFiles(@PathVariable long id,
+                                                     @RequestParam(value = "imageField", required = false) MultipartFile imageField,
+                                                     @RequestParam(value = "fileField", required = false) MultipartFile fileField) throws IOException {
+        if (!productService.existById(id)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Producto no encontrado");
+        }
+
+        productService.updateProductFiles(id, imageField, fileField);
+        return ResponseEntity.ok("Archivos actualizados correctamente");
+    }
+
 
 
     @DeleteMapping("/product/{id}")

@@ -216,6 +216,40 @@ public class ProductService {
         return convertToDTO(updatedProduct);
     }
 
+    public ProductDTO updateProductData(long id, ProductDTO productDetails) {
+        Product existingProduct = productRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Producto no encontrado"));
+
+        existingProduct.setName(productDetails.getName());
+        existingProduct.setDescription(productDetails.getDescription());
+        existingProduct.setPrice(productDetails.getPrice());
+        existingProduct.setProductType(productDetails.getType());
+
+        Product updatedProduct = productRepository.save(existingProduct);
+        return convertToDTO(updatedProduct);
+    }
+
+    public void updateProductFiles(long id, MultipartFile imageField, MultipartFile fileField) throws IOException {
+        Product existingProduct = productRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Producto no encontrado"));
+
+        // Procesar imagen
+        if (imageField != null && !imageField.isEmpty()) {
+            String imagePath = imageService.createImage(imageField); // guarda imagen y devuelve ruta
+            existingProduct.setImage(imagePath);
+            existingProduct.setImageFile(BlobProxy.generateProxy(imageField.getInputStream(), imageField.getSize()));
+        }
+
+        // Procesar archivo (PDF u otro)
+        if (fileField != null && !fileField.isEmpty()) {
+            existingProduct.setFile(fileField.getOriginalFilename()); // nombre o ruta del archivo
+            existingProduct.setFileFile(BlobProxy.generateProxy(fileField.getInputStream(), fileField.getSize()));
+        }
+
+        productRepository.save(existingProduct);
+    }
+
+
     public ProductDTO findProductById(Long id) {
         Optional<Product> productOptional = productRepository.findById(id);
         convertToDTO(productOptional.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Producto no encontrado")));
