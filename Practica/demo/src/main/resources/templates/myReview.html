@@ -36,7 +36,7 @@
             <div class="review-item">
                 <p><strong>Producto:</strong> {{productName}}</p>
                 <p><strong>Valoración:</strong> {{rating}} / 5</p>
-                <p><strong>Comentario:</strong> {{review}}</p>
+                <p><strong>Comentario:</strong> {{{review}}}</p>
                 <form action="/reviews/delete" method="post" style="display:inline;">
                     <input type="hidden" name="reviewId" value="{{reviewId}}" />
                     <input type="hidden" name="_csrf" value="{{token}}" />
