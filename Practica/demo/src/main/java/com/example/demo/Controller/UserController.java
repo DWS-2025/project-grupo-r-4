@@ -76,6 +76,12 @@ public class UserController {
         UserDTO user = userService.findById(userId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado"));
 
+
+
+        if(!user.getName().equals(principal.getName())){
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "No tienes permiso ver las reseñas");
+        }
+
         // Agregamos usuario al modelo
         model.addAttribute("user", user);
 

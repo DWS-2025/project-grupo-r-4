@@ -136,10 +136,47 @@ public class ProductService {
         Product savedProduct = productRepository.save(product);
         return convertToDTO(savedProduct);
     }
+    public ProductDTO saveRest(ProductDTO productDTO) {
+        Product product = convertToEntity(productDTO);
+
+        if (product.getImage() == null || product.getImage().isEmpty()) {
+            product.setImage("no-image.png");
+        }
+
+        if (product.getFile() == null || product.getFile().isEmpty()) {
+            product.setFile("vacio.txt");
+        }
+
+        Product savedProduct = productRepository.save(product);
+        return convertToDTO(savedProduct);
+    }
+
+
+    public void saveFiles(Long id, MultipartFile imageField, MultipartFile fileField) throws IOException {
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Producto no encontrado"));
+
+        if (imageField != null && !imageField.isEmpty()) {
+            String imagePath = imageService.createImage(imageField);
+            product.setImage(imagePath);
+            product.setImageFile(BlobProxy.generateProxy(imageField.getInputStream(), imageField.getSize()));
+        }
+
+        if (fileField != null && !fileField.isEmpty()) {
+            String filePath = fileService.createFile(fileField);
+            product.setFile(filePath);
+        }
+
+        productRepository.save(product);
+    }
+
 
 
     public boolean existByName(String name) {
         return productRepository.existsByName(name);
+    }
+    public boolean existById(Long id) {
+        return productRepository.existsById(id);
     }
 
     public void deleteById(long id) {

@@ -91,8 +91,29 @@ public class ProductRestController {
         return ResponseEntity.ok(products);
     }
 
-
     @PostMapping("/product/new")
+    public ResponseEntity<ProductDTO> newProduct(@RequestBody ProductDTO productDto) {
+        if (productService.existByName(productDto.getName())) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Producto ya existe");
+        }
+
+        ProductDTO newProduct = productService.saveRest(productDto); // sin archivos
+        return ResponseEntity.status(HttpStatus.CREATED).body(newProduct);
+    }
+    @PostMapping("/product/{id}/upload")
+    public ResponseEntity<String> uploadFiles(
+            @PathVariable Long id,
+            @RequestParam MultipartFile imageField,
+            @RequestParam MultipartFile fileField) throws IOException {
+
+        if (!productService.existById(id)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Producto no encontrado");
+        }
+
+        productService.saveFiles(id, imageField, fileField);
+        return ResponseEntity.ok("Archivos subidos correctamente");
+    }
+    /*@PostMapping("/product/new")
     public ResponseEntity<ProductDTO> newProduct(
             ProductDTO productDto,
             @RequestParam MultipartFile imageField,
@@ -104,7 +125,7 @@ public class ProductRestController {
 
         ProductDTO newProduct = productService.save(productDto, imageField, fileField);
         return ResponseEntity.status(HttpStatus.CREATED).body(newProduct);
-    }
+    }*/
 
     @PutMapping("/product/{id}/modify")
     public ResponseEntity<ProductDTO> modifyProduct(
